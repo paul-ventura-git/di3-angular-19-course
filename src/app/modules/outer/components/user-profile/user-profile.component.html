@@ -1,1 +1,10 @@
-<p>user-profile works!</p>
+<div class="ml-5">
+  <h3>This is the USER PROFILE of {{someUser}}</h3>
+  <button type="button" class="btn btn-info" [disabled]="isFormValid">Save</button>
+  <button attr.aria-label="Save changes to {{ objectType }}"></button>
+  <ul [class.expanded]="isExpanded">
+    <li>item 1</li>
+  </ul>
+  <app-profile-photo />
+</div>
+
