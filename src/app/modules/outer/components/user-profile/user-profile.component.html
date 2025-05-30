@@ -5,6 +5,11 @@
   <ul [class.expanded]="isExpanded">
     <li>item 1</li>
   </ul>
-  <app-profile-photo />
+
+  <h2>Hello {{ firstName }}!</h2>
+  <input type="text" [(ngModel)]="firstName" />
+
+  <h1>Counter: {{ initialCount }}</h1>
+  <app-profile-photo [(count)]="initialCount" />
 </div>
 

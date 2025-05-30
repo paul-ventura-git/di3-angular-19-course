@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ProfilePhotoComponent } from '../profile-photo/profile-photo.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [ProfilePhotoComponent],
+  imports: [ProfilePhotoComponent, FormsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
@@ -13,4 +14,6 @@ export class UserProfileComponent {
   isFormValid = false;
   objectType = "ABC";
   isExpanded = true;
+  firstName = "Alberto";
+  initialCount = 18;
 }

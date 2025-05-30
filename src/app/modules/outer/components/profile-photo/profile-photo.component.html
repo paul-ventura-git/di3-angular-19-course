@@ -1,5 +1,9 @@
 <div>
   <h5>This is the PROFILE PHOTO</h5>
   <img [src]="myImage" alt="Profile Photo of {{someUser}}" >
+
+  <button (click)="updateCount(-1)">-</button>
+  <span>{{ count() }}</span>
+  <button (click)="updateCount(+1)">+</button>
 </div>
 
