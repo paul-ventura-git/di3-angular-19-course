@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserProfileComponent {
   someUser = "Juan Perez";
-  isFormValid = false;
+  isFormValid = true;
   objectType = "ABC";
   isExpanded = true;
   firstName = "Alberto";

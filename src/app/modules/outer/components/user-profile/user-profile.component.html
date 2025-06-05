@@ -1,15 +1,25 @@
-<div class="ml-5">
-  <h3>This is the USER PROFILE of {{someUser}}</h3>
+<div class="component-user-profile ml-5">
+  <h3>This is the USER PROFILE of {{someUser}} [Text interpolation]</h3>
+  <p>[This is the component app-user-profile]</p>
+
+  <h3>Binding dynamic [properties] (for example, in a button)</h3>
   <button type="button" class="btn btn-info" [disabled]="isFormValid">Save</button>
-  <button attr.aria-label="Save changes to {{ objectType }}"></button>
+  <button attr.aria-label="Save changes to {{ objectType }}">aria-label</button>
+
+  <h3>Binding CSS Classes (styles are applied when TRUE)</h3>
   <ul [class.expanded]="isExpanded">
     <li>item 1</li>
   </ul>
 
-  <h2>Hello {{ firstName }}!</h2>
+  <h3>Two-way binding</h3>
+  <h5>Hello {{ firstName }}!</h5>
   <input type="text" [(ngModel)]="firstName" />
+  <br/>
+  <br/>
 
-  <h1>Counter: {{ initialCount }}</h1>
+  <h3>Two-way binding between components</h3>
+  <h5>Counter: {{ initialCount }}</h5>
+  <p>Referirse al componente app-profile-photo</p>
   <app-profile-photo [(count)]="initialCount" />
 </div>
 

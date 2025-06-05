@@ -1,3 +1,14 @@
+.component-user-profile {
+  padding: 20px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  background-color: lightcoral;
+  font-family: Arial, sans-serif;
+}
+
 .expanded {
-  background-color: greenyellow;
+  background-color: lightblue;
+  border-color: blue;
+  color: white;
 }

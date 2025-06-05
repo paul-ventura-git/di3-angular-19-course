@@ -1,0 +1,8 @@
+.component-profile-photo {
+  padding: 20px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  background-color: rgb(104, 98, 255);
+  font-family: Arial, sans-serif;
+}
