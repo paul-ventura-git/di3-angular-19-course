@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Directives</h1>
+  <h3>Conditionally display content with IF</h3>
+  @if (a > b) {
+    <p>{{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)</p>
+  }
+
+  @if (a > b) {
+    {{a}} is greater than {{b}}
+  } @else if (b > a) {
+    {{a}} is less than {{b}}
+  } @else {
+    {{a}} is equal to {{b}}
+  }
+  <h3>Repeating content with FOR</h3>
+
+  @for (item of items; track item.id) {
+    <li>{{item.name}}</li>
+  } @empty {
+    <li aria-hidden="true"> There are no items. </li>
+  }
+
+  <h3>Conditionally display content with SWITCH</h3>
+  @switch (userPermissions) {
+    @case ('admin') {
+      <p>Se muestra el dashboard de "admin"</p>
+    }
+    @case ('reviewer') {
+      <p>Se muestra el dashboard de "reviewer"</p>
+    }
+    @case ('editor') {
+      <p>Se muestra el dashboard de "editor"</p>
+    }
+    @default {
+      <p>Se muestra el dashboard de "viewer"</p>
+    }
+  }
+
+  <h3>NgClass</h3>
+  <div [ngClass]="currentClasses">
+    This div is initially saveable, unchanged, and special.
+  </div>
+
+  <h3>NgStyle</h3>
+  <div [ngStyle]="currentStyles">
+    This div is initially italic, normal weight, and extra large (24px).
+  </div>
+
+  <h3>NgModel</h3>
+  <p>Two-way data binding with ngModel</p>
+
+    <h5>{{abc}}</h5>
+    <input [(ngModel)]="abc">
+
+</div>
