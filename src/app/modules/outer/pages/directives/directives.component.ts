@@ -15,8 +15,8 @@ export class DirectivesComponent {
     throw new Error('Method not implemented.');
   }
 
-  a= 3;
-  b= 4;
+  a= 5;
+  b= 5;
 
   items = [
     { id: 1, name: 'Item 1', value: 10 },

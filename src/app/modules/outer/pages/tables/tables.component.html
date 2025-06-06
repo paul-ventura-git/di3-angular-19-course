@@ -1,0 +1,38 @@
+<div class="container myTables">
+  <h1>Tables with FOR</h1>
+  <br/>
+  <button type="button" class="btn btn-warning">Add new user</button>
+  <br/>
+    <br/>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Website</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of items; track item.id) {
+        <tr>
+          <th scope="row">{{item.id}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.username}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.website}}</td>
+          <td>
+            <button type="button" class="btn btn-warning">View</button>
+            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      }
+
+    </tbody>
+  </table>
+</div>
