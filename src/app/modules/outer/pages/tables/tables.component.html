@@ -9,22 +9,22 @@
       <tr>
         <th scope="col">id</th>
         <th scope="col">Name</th>
-        <th scope="col">Username</th>
+        <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
-        <th scope="col">Website</th>
+        <th scope="col">Birth Date</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      @for (item of items; track item.id) {
+      @for (item of users; track item.id) {
         <tr>
           <th scope="row">{{item.id}}</th>
-          <td>{{item.name}}</td>
-          <td>{{item.username}}</td>
+          <td>{{item.firstName}}</td>
+          <td>{{item.lastName}}</td>
           <td>{{item.email}}</td>
           <td>{{item.phone}}</td>
-          <td>{{item.website}}</td>
+          <td>{{item.birthDate}}</td>
           <td>
             <button type="button" class="btn btn-warning">View</button>
             <button type="button" class="btn btn-primary">Edit</button>

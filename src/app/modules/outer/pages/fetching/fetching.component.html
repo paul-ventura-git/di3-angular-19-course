@@ -1,0 +1,5 @@
+@for (item of users; track item.id) {
+  <li>{{item.firstName}} - {{item.email}}</li>
+} @empty {
+  <li aria-hidden="true"> There are no items. </li>
+}

@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../../core/services/user.service';
 @Component({
   selector: 'app-tables',
   imports: [],
   templateUrl: './tables.component.html',
   styleUrl: './tables.component.css'
 })
-export class TablesComponent {
+export class TablesComponent implements OnInit {
+  users: any[] = [];
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(data => {
+      this.users = data.users; // Ajusta según la estructura de la respuesta
+    });
+  }
+
+}
+  /*
   items = [
   {
     "id": 1,
@@ -240,3 +252,4 @@ export class TablesComponent {
   }
 ]
 }
+*/
