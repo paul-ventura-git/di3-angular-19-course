@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../core/services/user.service';
+import { PostFormComponent } from '../../components/post-form/post-form.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-fetching',
+  standalone: true,
+  imports: [PostFormComponent, FormsModule],
   templateUrl: './fetching.component.html',
   styleUrl: './fetching.component.css'
 })
-export class FetchingComponent implements OnInit {
-  users: any[] = [];
+export class FetchingComponent {
 
-  constructor(private userService: UserService) { }
-
-  ngOnInit(): void {
-    this.userService.getUsers().subscribe(data => {
-      this.users = data.users; // Ajusta según la estructura de la respuesta
-    });
-  }
 }
