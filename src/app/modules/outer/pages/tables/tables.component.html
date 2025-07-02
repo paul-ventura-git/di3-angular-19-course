@@ -18,14 +18,14 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of users; track item.id) {
+      @for (customer of customers; track customer.id) {
         <tr>
-          <td>{{item.name}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.phone}}</td>
-          <td>{{item.address}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.email}}</td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.address}}</td>
           <td>
-            <button type="button" class="btn btn-warning" routerLink="952104fed4bc564e913c73255aa00dbf">View</button>
+            <button type="button" class="btn btn-warning" [routerLink]="'/view-customer/'+customer.id">View</button>
             <button type="button" class="btn btn-primary">Edit</button>
             <button type="button" class="btn btn-danger">Delete</button>
           </td>

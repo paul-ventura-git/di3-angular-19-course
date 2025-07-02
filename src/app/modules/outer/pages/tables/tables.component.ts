@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { NewUserService } from '../../../../core/services/new-user.service';
 import { UserService } from '../../../../core/services/user.service';
 import { FormsModule } from '@angular/forms';
@@ -15,12 +15,16 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class TablesComponent implements OnInit {
   users: any[] = [];
+  customers : Customer[] = []; // Array to hold customers
+
+  customer = input.required<Customer>();
 
   constructor(private userService: UserService, private newUserService: NewUserService) { }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(data => {
       this.users = data.customers;
+      this.customers = data.customers; // Assigning the fetched customers to the customers array
     });
     this.getUserById('952104fed4bc564e913c73255aa00dbf');
     //this.createUser({name: 'John Doe', email: 'abc@abc.com'})
