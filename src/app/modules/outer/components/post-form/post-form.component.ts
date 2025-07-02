@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-post-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './post-form.component.html',
   styleUrl: './post-form.component.css'
 })
@@ -21,6 +21,7 @@ export class PostFormComponent implements OnInit {
 
   addCustomer(customer: Customer) {
     this.newUserService.createCustomer(customer).subscribe((data: Customer) => {
+      alert("Cliente agregado correctamente");
       console.log(data); // Ajusta según la estructura de la respuesta
     })
   }

@@ -8,6 +8,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { TablesComponent } from './modules/outer/pages/tables/tables.component';
 import { LoginComponent } from './modules/outer/pages/login/login.component';
 import { FetchingComponent } from './modules/outer/pages/fetching/fetching.component';
+import { ModalComponent } from './modules/outer/components/modal/modal.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -15,6 +16,8 @@ export const routes: Routes = [
   { path: 'gallery/:category/:id', component: ProductDetailsComponent },
   { path: 'directives', component: DirectivesComponent},
   { path: 'tables', component: TablesComponent},
+  { path: 'tables/add-user', component: ModalComponent},
+  { path: 'tables/edit-user/:id', component: TablesComponent},
   { path: 'fetching', component: FetchingComponent},
   { path: 'login', component: LoginComponent},
   { path: '**', component: NotFoundComponent }
