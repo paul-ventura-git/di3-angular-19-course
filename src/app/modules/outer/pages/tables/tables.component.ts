@@ -5,12 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { Customer } from '../../../../interfaces/interfaceCustomer'; // Adjust the import path as necessary
 import { CommonModule } from '@angular/common';
 
-import { RouterModule } from '@angular/router';
-
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tables',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, RouterLink],
   templateUrl: './tables.component.html',
   styleUrl: './tables.component.css'
 })
