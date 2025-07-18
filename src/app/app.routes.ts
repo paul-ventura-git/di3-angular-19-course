@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 import { HomeComponent } from './modules/outer/pages/home/home.component';
 import { DirectivesComponent } from './modules/outer/pages/directives/directives.component';
@@ -12,7 +13,16 @@ import { ModalComponent } from './modules/outer/components/modal/modal.component
 import { ViewCardComponent } from './modules/outer/components/view-card/view-card.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent},
+  {
+    path: 'auth/login',
+    loadComponent: () => import('./auth/login'),
+  },
+  {
+    canMatch: [authGuard],
+    path: '',
+    loadComponent: () => import('./modules/inner/pages/page-layout'),
+    loadChildren: () => import('./modules/inner/pages/page.routes'),
+  },
   { path: 'gallery', component: GalleryComponent },
   { path: 'gallery/:category/:id', component: ProductDetailsComponent },
   { path: 'directives', component: DirectivesComponent},
@@ -20,7 +30,5 @@ export const routes: Routes = [
   { path: 'tables/view-customer/:customerId', component: ViewCardComponent},
   { path: 'tables/add-user', component: ModalComponent},
   { path: 'tables/edit-user/:id', component: TablesComponent},
-  { path: 'fetching', component: FetchingComponent},
-  { path: 'login', component: LoginComponent},
-  { path: '**', component: NotFoundComponent }
+  { path: 'fetching', component: FetchingComponent}
 ];

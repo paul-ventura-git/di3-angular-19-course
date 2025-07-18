@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.11.8",
     "angular-course": "file:",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
