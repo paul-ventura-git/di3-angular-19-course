@@ -1,68 +1,114 @@
-import { Component, input, OnInit } from '@angular/core';
-import { NewUserService } from '../../../../core/services/new-user.service';
-import { UserService } from '../../../../core/services/user.service';
-import { FormsModule } from '@angular/forms';
-import { Customer } from '../../../../interfaces/interfaceCustomer'; // Adjust the import path as necessary
+import { Component, OnInit } from '@angular/core';
+import { ProductsService } from '../../../../core/services/products.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-tables',
-  imports: [FormsModule, CommonModule, RouterModule, RouterLink],
+  selector: 'app-products-tables',
   templateUrl: './tables.component.html',
-  styleUrl: './tables.component.css'
+  styleUrls: ['./tables.component.css'],
+  imports: [CommonModule, FormsModule]
 })
 export class TablesComponent implements OnInit {
-  users: any[] = [];
-  customers : Customer[] = []; // Array to hold customers
+  products: any[] = [];
+  selectedProduct: any = null;
+  editProduct: any = null;
 
-  customer = input.required<Customer>();
-
-  constructor(private userService: UserService, private newUserService: NewUserService) { }
+  constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(data => {
-      this.users = data.customers;
-      this.customers = data.customers; // Assigning the fetched customers to the customers array
-    });
-    this.getUserById('952104fed4bc564e913c73255aa00dbf');
-    //this.createUser({name: 'John Doe', email: 'abc@abc.com'})
-  }
-
-  /**
-   * Este identificador de método (definido aquí) se utiliza para obtener un usuario por su ID.
-   * @param id
-   */
-  getUserById(id: any) {
-    this.userService.getUserById(id).subscribe(data => {
-      console.log(data);
+    this.productsService.getProducts().subscribe(data => {
+      this.products = data.products || data;
     });
   }
 
-  createUser(customer: Customer) {
-    this.userService.createUser(customer).subscribe(data => {
-      console.log(data);
+  addProduct(product: any, form?: any) {
+    this.productsService.createProduct(product).subscribe({
+      next: (data: any) => {
+        alert('Producto creado exitosamente');
+        this.productsService.getProducts().subscribe(data => {
+          this.products = data.products || data;
+        });
+        // Cierra el modal de agregar producto
+        const modal = document.getElementById('productModal');
+        if (modal) {
+          // @ts-ignore
+          const bsModal = window.bootstrap.Modal.getInstance(modal);
+          if (bsModal) bsModal.hide();
+        }
+        if (form) {
+          form.resetForm();
+        }
+      },
+      error: (err) => {
+        alert('Error al crear el producto: ' + err.message);
+      }
     });
   }
 
-  updateUser(id: any, customer: Customer) {
-    this.userService.updateUser(id, customer).subscribe(data => {
-      console.log(data);
+  verProducto(item: any) {
+    this.selectedProduct = item;
+    const modal = document.getElementById('verProductoModal');
+    if (modal) {
+      // @ts-ignore
+      const bsModal = new window.bootstrap.Modal(modal);
+      bsModal.show();
+    }
+  }
+
+  abrirEditarProducto(item: any) {
+    this.editProduct = { ...item };
+    const modal = document.getElementById('editarProductoModal');
+    if (modal) {
+      // @ts-ignore
+      const bsModal = new window.bootstrap.Modal(modal);
+      bsModal.show();
+    }
+  }
+
+  updateProduct(form: any) {
+    this.productsService.updateProduct(this.editProduct).subscribe({
+      next: () => {
+        alert('Producto actualizado exitosamente');
+        this.productsService.getProducts().subscribe(data => {
+          this.products = data.products || data;
+        });
+        // Cierra el modal
+        const modal = document.getElementById('editarProductoModal');
+        if (modal) {
+          // @ts-ignore
+          const bsModal = window.bootstrap.Modal.getInstance(modal);
+          bsModal.hide();
+        }
+      },
+      error: (err) => {
+        alert('Error al actualizar el producto: ' + err.message);
+      }
     });
   }
 
-  /**
-   * Este identificador de método (definido aquí) se utiliza para agregar un nuevo cliente.
-   * @param customer
-   */
-  /*
-  addCustomer(customer: Customer) {
-    this.newUserService.createCustomer(customer).subscribe((data: Customer) => {
-      console.log(data);
-    })
+  eliminarProducto(item: any) {
+    window.confirm(`¿Estás seguro de eliminar el producto ${item.name}?`);
+    then((result: any) => {
+      if (result.isConfirmed) {
+        this.productsService.deleteProduct(item.id).subscribe({
+          next: () => {
+            alert('Producto eliminado exitosamente');
+            this.productsService.getProducts().subscribe(data => {
+              this.products = data.products || data;
+            });
+          },
+          error: (err) => {
+            alert('Error al eliminar el producto: ' + err.message);
+          }
+        });
+      }
+    });
   }
-*/
 }
 
+function then(callback: (result: any) => void) {
+  callback({ isConfirmed: true });
+}
 

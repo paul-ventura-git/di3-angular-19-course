@@ -1,65 +1,137 @@
 <div class="container myTables">
-  <h1>Tables with FOR</h1>
+  <h1>Mantenimiento de Productos</h1>
   <br/>
-  <button
-    type="button"
-    class="btn btn-warning"
-    [routerLink]="['/tables/add-user']">Add new user</button>
+  <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#productModal">Nuevo producto</button>
   <br/>
-    <br/>
+  <br/>
   <table class="table">
     <thead class="table-dark">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Birth Date</th>
-        <th scope="col">Actions</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Acciones</th>
+
       </tr>
     </thead>
     <tbody>
-      @for (customer of customers; track customer.id) {
+      @for (item of products; track item.id) {
         <tr>
-          <td>{{customer.name}}</td>
-          <td>{{customer.email}}</td>
-          <td>{{customer.phone}}</td>
-          <td>{{customer.address}}</td>
+          <td>{{item.title}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.stock}}</td>
           <td>
-            <button type="button" class="btn btn-warning" [routerLink]="'/view-customer/'+customer.id">View</button>
-            <button type="button" class="btn btn-primary">Edit</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-primary text-white flex-grow-1" (click)="verProducto(item)">Ver</button>
+              <button type="button" class="btn btn-secondary text-white flex-grow-1" (click)="abrirEditarProducto(item)">Editar</button>
+              <button type="button" class="btn btn-danger flex-grow-1" (click)="eliminarProducto(item)">Eliminar</button>
+            </div>
           </td>
         </tr>
       }
-
     </tbody>
   </table>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal agregar producto -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar nuevo Cliente</h1>
+          <h1 class="modal-title fs-5" id="productModalLabel">Agregar nuevo Producto</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form #userForm="ngForm" (ngSubmit)="createUser(userForm.value)">
-            <input type="text" class="form-control" placeholder="Enter name" name="name" ngModel>
+          <form #productForm="ngForm" (ngSubmit)="addProduct(productForm.value, productForm)">
+            <input type="text" class="form-control" placeholder="Título" name="title" ngModel>
             <br>
-            <input type="text" class="form-control" placeholder="Enter email" name="email" ngModel>
+            <input type="text" class="form-control" placeholder="Descripción" name="description" ngModel>
             <br>
-            <input type="text" class="form-control" placeholder="Enter phone" name="phone" ngModel>
+            <input type="text" class="form-control" placeholder="Categoría" name="category" ngModel>
             <br>
-            <input type="text" class="form-control" placeholder="Enter address" name="address" ngModel>
+            <input type="number" class="form-control" placeholder="Precio" name="price" ngModel>
             <br>
-            <button class="btn btn-danger">Agregar cliente</button>
+            <input type="number" class="form-control" placeholder="Stock" name="stock" ngModel>
+            <br>
+            <input type="url" class="form-control" placeholder="URL de la imagen" name="image" ngModel>
+            <br>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Producto</button>
+              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+            </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detalles Producto -->
+  <div class="modal fade" id="verProductoModal" tabindex="-1" aria-labelledby="verProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="verProductoModalLabel">Detalles del Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedProduct">
+          <div class="mb-3 text-center" *ngIf="selectedProduct.image">
+            <img [src]="selectedProduct.image" alt="Imagen del producto" class="img-fluid rounded" style="max-height:180px;">
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Título:</strong> {{selectedProduct.title}}</li>
+            <li class="list-group-item"><strong>Descripción:</strong> {{selectedProduct.description}}</li>
+            <li class="list-group-item"><strong>Categoría:</strong> {{selectedProduct.category}}</li>
+            <li class="list-group-item"><strong>Precio:</strong> {{selectedProduct.price}}</li>
+            <li class="list-group-item"><strong>Stock:</strong> {{selectedProduct.stock}}</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Producto -->
+  <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editarProductoModalLabel">Editar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="editProduct" #editForm="ngForm" (ngSubmit)="updateProduct(editForm)">
+            <label for="editTitle" class="form-label"><strong>Título:</strong></label>
+            <input id="editTitle" type="text" class="form-control" placeholder="Título" name="title" [(ngModel)]="editProduct.title">
+            <br>
+            <label for="editDescription" class="form-label"><strong>Descripción:</strong></label>
+            <input id="editDescription" type="text" class="form-control" placeholder="Descripción" name="description" [(ngModel)]="editProduct.description">
+            <br>
+            <label for="editCategory" class="form-label"><strong>Categoría:</strong></label>
+            <input id="editCategory" type="text" class="form-control" placeholder="Categoría" name="category" [(ngModel)]="editProduct.category">
+            <br>
+            <label for="editPrice" class="form-label"><strong>Precio:</strong></label>
+            <input id="editPrice" type="number" class="form-control" placeholder="Precio" name="price" [(ngModel)]="editProduct.price">
+            <br>
+            <label for="editStock" class="form-label"><strong>Stock:</strong></label>
+            <input id="editStock" type="number" class="form-control" placeholder="Stock" name="stock" [(ngModel)]="editProduct.stock">
+            <br>
+            <label for="editImage" class="form-label"><strong>URL de la imagen:</strong></label>
+            <input id="editImage" type="url" class="form-control" placeholder="URL de la imagen" name="image" [(ngModel)]="editProduct.image">
+            <br>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="submit" class="btn text-white" style="background-color: #6f42c1;">Guardar Cambios</button>
+              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
       </div>
     </div>
   </div>

@@ -1,5 +1,4 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { UserService } from '../../../../core/services/user.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -9,10 +8,5 @@ import { map } from 'rxjs';
   styleUrl: './view-card.component.css'
 })
 export class ViewCardComponent {
-  customerId = input.required<string>();
-  private customersService = inject(UserService); // Assuming you have a service to fetch customer data
 
-  customerName$ = this.customersService.getUsers().pipe(
-    map(users => users.find((u: any) => u.id === this.customerId())?.name)
-  );
 }
