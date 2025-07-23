@@ -1,0 +1,126 @@
+<div class="container myTables">
+  <h1>Mantenimiento de Clientes</h1>
+  <br/>
+  <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#clienteModal">Nuevo cliente</button>
+  <br/>
+  <br/>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of customers; track item.id) {
+        <tr>
+          <td>{{item.name}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.address}}</td>
+          <td>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-primary text-white flex-grow-1" (click)="verCliente(item)">Ver</button>
+              <button type="button" class="btn btn-secondary text-white flex-grow-1" (click)="abrirEditarCliente(item)">Editar</button>
+              <button type="button" class="btn btn-danger flex-grow-1" (click)="eliminarCliente(item)">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Modal agregar producto -->
+  <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="customerModalLabel">Agregar nuevo Cliente</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #customerForm="ngForm" (ngSubmit)="addCustomer(customerForm.value, customerForm)">
+            <input type="text" class="form-control" placeholder="Título" name="name" ngModel>
+            <br>
+            <input type="text" class="form-control" placeholder="Descripción" name="email" ngModel>
+            <br>
+            <input type="text" class="form-control" placeholder="Categoría" name="phone" ngModel>
+            <br>
+            <input type="text" class="form-control" placeholder="Precio" name="address" ngModel>
+            <br>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Cliente</button>
+              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detalles Producto -->
+  <div class="modal fade" id="verClienteModal" tabindex="-1" aria-labelledby="verClienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="verClienteModalLabel">Detalles del Cliente</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedCustomer">
+          <div class="mb-3 text-center" *ngIf="selectedCustomer.image">
+            <img [src]="selectedCustomer.image" alt="Imagen del cliente" class="img-fluid rounded" style="max-height:180px;">
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Nombre:</strong> {{selectedCustomer.name}}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{selectedCustomer.email}}</li>
+            <li class="list-group-item"><strong>Phone:</strong> {{selectedCustomer.phone}}</li>
+            <li class="list-group-item"><strong>Address:</strong> {{selectedCustomer.address}}</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Producto -->
+  <div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editarClienteModalLabel">Editar cliente</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="editCustomer" #editForm="ngForm" (ngSubmit)="updateCustomer(editForm)">
+            <label for="editTitle" class="form-label"><strong>Nombre:</strong></label>
+            <input id="editTitle" type="text" class="form-control" placeholder="Nombre" name="name" [(ngModel)]="editCustomer.name">
+            <br>
+            <label for="editDescription" class="form-label"><strong>Email:</strong></label>
+            <input id="editDescription" type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="editCustomer.email">
+            <br>
+            <label for="editCategory" class="form-label"><strong>Telefóno:</strong></label>
+            <input id="editCategory" type="text" class="form-control" placeholder="Teléfono" name="phone" [(ngModel)]="editCustomer.phone">
+            <br>
+            <label for="editPrice" class="form-label"><strong>Dirección:</strong></label>
+            <input id="editPrice" type="number" class="form-control" placeholder="Dirección" name="address" [(ngModel)]="editCustomer.address">
+            <br>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="submit" class="btn text-white" style="background-color: #6f42c1;">Guardar Cambios</button>
+              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

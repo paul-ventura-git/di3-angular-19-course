@@ -22,7 +22,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 class="nav-link active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 routerLinkActive="active"
-                routerLink="/"
+                routerLink="/intranet"
               >
                 Dashboard
               </a>
@@ -32,7 +32,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 class="nav-link active"
                 *hasRole="['sales', 'admin']"
                 routerLinkActive="active"
-                routerLink="/orders"
+                routerLink="/intranet/orders"
               >
                 Órdenes
               </a>
@@ -42,7 +42,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 class="nav-link active"
                 *hasRole="['manager', 'admin']"
                 routerLinkActive="active"
-                routerLink="/reports"
+                routerLink="/intranet/reports"
               >
                 Reportes
               </a>
@@ -52,7 +52,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 class="nav-link active"
                 *hasRole="['admin']"
                 routerLinkActive="active"
-                routerLink="/admin"
+                routerLink="/intranet/admin"
               >
                 Admin
               </a>
