@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../../core/services/products.service';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-products-tables',
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [FormsModule]
 })
 export class TablesComponent implements OnInit {
   products: any[] = [];

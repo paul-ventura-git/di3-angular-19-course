@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomersService } from '../../../../core/services/customers.service';
 
 @Component({
   selector: 'app-customers',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })

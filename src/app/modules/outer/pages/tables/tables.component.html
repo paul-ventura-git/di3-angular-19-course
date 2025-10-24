@@ -47,92 +47,98 @@
           <form #productForm="ngForm" (ngSubmit)="addProduct(productForm.value, productForm)">
             <input type="text" class="form-control" placeholder="Título" name="title" ngModel>
             <br>
-            <input type="text" class="form-control" placeholder="Descripción" name="description" ngModel>
-            <br>
-            <input type="text" class="form-control" placeholder="Categoría" name="category" ngModel>
-            <br>
-            <input type="number" class="form-control" placeholder="Precio" name="price" ngModel>
-            <br>
-            <input type="number" class="form-control" placeholder="Stock" name="stock" ngModel>
-            <br>
-            <input type="url" class="form-control" placeholder="URL de la imagen" name="image" ngModel>
-            <br>
-            <div class="d-flex justify-content-end gap-2">
-              <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Producto</button>
-              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
+              <input type="text" class="form-control" placeholder="Descripción" name="description" ngModel>
+              <br>
+                <input type="text" class="form-control" placeholder="Categoría" name="category" ngModel>
+                <br>
+                  <input type="number" class="form-control" placeholder="Precio" name="price" ngModel>
+                  <br>
+                    <input type="number" class="form-control" placeholder="Stock" name="stock" ngModel>
+                    <br>
+                      <input type="url" class="form-control" placeholder="URL de la imagen" name="image" ngModel>
+                      <br>
+                        <div class="d-flex justify-content-end gap-2">
+                          <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Producto</button>
+                          <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  <!-- Modal Detalles Producto -->
-  <div class="modal fade" id="verProductoModal" tabindex="-1" aria-labelledby="verProductoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="verProductoModalLabel">Detalles del Producto</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" *ngIf="selectedProduct">
-          <div class="mb-3 text-center" *ngIf="selectedProduct.image">
-            <img [src]="selectedProduct.image" alt="Imagen del producto" class="img-fluid rounded" style="max-height:180px;">
-          </div>
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Título:</strong> {{selectedProduct.title}}</li>
-            <li class="list-group-item"><strong>Descripción:</strong> {{selectedProduct.description}}</li>
-            <li class="list-group-item"><strong>Categoría:</strong> {{selectedProduct.category}}</li>
-            <li class="list-group-item"><strong>Precio:</strong> {{selectedProduct.price}}</li>
-            <li class="list-group-item"><strong>Stock:</strong> {{selectedProduct.stock}}</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+              <!-- Modal Detalles Producto -->
+              <div class="modal fade" id="verProductoModal" tabindex="-1" aria-labelledby="verProductoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="verProductoModalLabel">Detalles del Producto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    @if (selectedProduct) {
+                      <div class="modal-body">
+                        @if (selectedProduct.image) {
+                          <div class="mb-3 text-center">
+                            <img [src]="selectedProduct.image" alt="Imagen del producto" class="img-fluid rounded" style="max-height:180px;">
+                          </div>
+                        }
+                        <ul class="list-group">
+                          <li class="list-group-item"><strong>Título:</strong> {{selectedProduct.title}}</li>
+                          <li class="list-group-item"><strong>Descripción:</strong> {{selectedProduct.description}}</li>
+                          <li class="list-group-item"><strong>Categoría:</strong> {{selectedProduct.category}}</li>
+                          <li class="list-group-item"><strong>Precio:</strong> {{selectedProduct.price}}</li>
+                          <li class="list-group-item"><strong>Stock:</strong> {{selectedProduct.stock}}</li>
+                        </ul>
+                      </div>
+                    }
+                    <div class="modal-footer">
+                      <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  <!-- Modal Editar Producto -->
-  <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editarProductoModalLabel">Editar Producto</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form *ngIf="editProduct" #editForm="ngForm" (ngSubmit)="updateProduct(editForm)">
-            <label for="editTitle" class="form-label"><strong>Título:</strong></label>
-            <input id="editTitle" type="text" class="form-control" placeholder="Título" name="title" [(ngModel)]="editProduct.title">
-            <br>
-            <label for="editDescription" class="form-label"><strong>Descripción:</strong></label>
-            <input id="editDescription" type="text" class="form-control" placeholder="Descripción" name="description" [(ngModel)]="editProduct.description">
-            <br>
-            <label for="editCategory" class="form-label"><strong>Categoría:</strong></label>
-            <input id="editCategory" type="text" class="form-control" placeholder="Categoría" name="category" [(ngModel)]="editProduct.category">
-            <br>
-            <label for="editPrice" class="form-label"><strong>Precio:</strong></label>
-            <input id="editPrice" type="number" class="form-control" placeholder="Precio" name="price" [(ngModel)]="editProduct.price">
-            <br>
-            <label for="editStock" class="form-label"><strong>Stock:</strong></label>
-            <input id="editStock" type="number" class="form-control" placeholder="Stock" name="stock" [(ngModel)]="editProduct.stock">
-            <br>
-            <label for="editImage" class="form-label"><strong>URL de la imagen:</strong></label>
-            <input id="editImage" type="url" class="form-control" placeholder="URL de la imagen" name="image" [(ngModel)]="editProduct.image">
-            <br>
-            <div class="d-flex justify-content-end gap-2">
-              <button type="submit" class="btn text-white" style="background-color: #6f42c1;">Guardar Cambios</button>
-              <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer"></div>
-      </div>
-    </div>
-  </div>
+              <!-- Modal Editar Producto -->
+              <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="editarProductoModalLabel">Editar Producto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      @if (editProduct) {
+                        <form #editForm="ngForm" (ngSubmit)="updateProduct(editForm)">
+                          <label for="editTitle" class="form-label"><strong>Título:</strong></label>
+                          <input id="editTitle" type="text" class="form-control" placeholder="Título" name="title" [(ngModel)]="editProduct.title">
+                          <br>
+                            <label for="editDescription" class="form-label"><strong>Descripción:</strong></label>
+                            <input id="editDescription" type="text" class="form-control" placeholder="Descripción" name="description" [(ngModel)]="editProduct.description">
+                            <br>
+                              <label for="editCategory" class="form-label"><strong>Categoría:</strong></label>
+                              <input id="editCategory" type="text" class="form-control" placeholder="Categoría" name="category" [(ngModel)]="editProduct.category">
+                              <br>
+                                <label for="editPrice" class="form-label"><strong>Precio:</strong></label>
+                                <input id="editPrice" type="number" class="form-control" placeholder="Precio" name="price" [(ngModel)]="editProduct.price">
+                                <br>
+                                  <label for="editStock" class="form-label"><strong>Stock:</strong></label>
+                                  <input id="editStock" type="number" class="form-control" placeholder="Stock" name="stock" [(ngModel)]="editProduct.stock">
+                                  <br>
+                                    <label for="editImage" class="form-label"><strong>URL de la imagen:</strong></label>
+                                    <input id="editImage" type="url" class="form-control" placeholder="URL de la imagen" name="image" [(ngModel)]="editProduct.image">
+                                    <br>
+                                      <div class="d-flex justify-content-end gap-2">
+                                        <button type="submit" class="btn text-white" style="background-color: #6f42c1;">Guardar Cambios</button>
+                                        <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
+                                      </div>
+                                    </form>
+                                  }
+                                </div>
+                                <div class="modal-footer"></div>
+                              </div>
+                            </div>
+                          </div>
 
-</div>
+                        </div>
