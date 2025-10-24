@@ -22,3 +22,4 @@ export default [
     loadComponent: () => import('./admin/admin'), // admin
   },
 ] as Routes;
+

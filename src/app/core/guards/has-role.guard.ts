@@ -6,7 +6,7 @@ import { AuthService } from '../../auth/auth.service';
 
 export const hasRoleGuard = (roles: UserRole[]): CanActivateFn => {
   return () => {
-    return inject(AuthService).currentUser$.pipe(
+    return inject(AuthService).currentUser$.pipe( // called inside an injection context.
       map((user) => {
         if (!user) return false;
 
@@ -15,3 +15,5 @@ export const hasRoleGuard = (roles: UserRole[]): CanActivateFn => {
     );
   };
 };
+
+
