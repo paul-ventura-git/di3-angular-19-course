@@ -50,6 +50,7 @@ export class CustomersComponent implements OnInit {
   verCliente(item: any) {
     this.selectedCustomer = item;
     const modal = document.getElementById('verClienteModal');
+    console.log("aaaaaaaaa", modal);
     if (modal) {
       // @ts-ignore
       const bsModal = new window.bootstrap.Modal(modal);
