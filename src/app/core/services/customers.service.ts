@@ -10,7 +10,6 @@ export class CustomersService {
 
   constructor(private http: HttpClient) { }
 
-
   // Obtener clientes (GET)
   getCustomers(): Observable<any> {
     return this.http.get<any>(this.apiUrl);

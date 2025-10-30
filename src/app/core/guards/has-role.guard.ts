@@ -9,7 +9,6 @@ export const hasRoleGuard = (roles: UserRole[]): CanActivateFn => {
     return inject(AuthService).currentUser$.pipe( // called inside an injection context.
       map((user) => {
         if (!user) return false;
-
         return user.roles.some((role) => roles.includes(role));
       }),
     );

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { hasRoleGuard } from '../../../core/guards/has-role.guard';
+import { hasRoleGuard } from '../../../core/guards/has-role.guard'; // Roles based guard
 
 export default [
   {

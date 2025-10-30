@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-  someUser = "Juan Perez";
+  someUser = "Braulio Bohorquez";
   isFormValid = true;
   objectType = "ABC";
   isExpanded = true;

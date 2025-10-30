@@ -18,5 +18,7 @@ export const routes: Routes = [
   { path: 'tables/add-user', component: ModalComponent},
   { path: 'tables/edit-user/:id', component: TablesComponent},
   { path: 'customers', component: CustomersComponent}
-
 ]
+
+
+
