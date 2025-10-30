@@ -12,6 +12,7 @@ export class ProfilePhotoComponent {
   someUser = 'Juan Vargas';
 
   count = model<number>(0);
+
   updateCount(amount: number): void {
     this.count.update(currentCount => currentCount + amount);
   }
