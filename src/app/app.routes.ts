@@ -4,7 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./shared/components/layout/layout.component').then(m => m.LayoutComponent),
+    loadComponent: () => import('./modules/outer/components/layout/layout.component').then(m => m.LayoutComponent),
     loadChildren: () => import('./modules/outer/pages/pages.routes').then(m => m.routes),
   },
   {

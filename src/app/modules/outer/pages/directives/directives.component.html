@@ -1,56 +1,137 @@
-<div class="container">
+<div class="component-directives container">
   <h1>Directives</h1>
-  <h3>Conditionally display content with IF</h3>
-  @if (a > b) {
-    <p>{{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)</p>
-  }
+  <section class="bg-light text-dark directives-section">
+    <h3>1. Conditionally display content with &#64;if (former *ngIf)</h3>
 
-  @if (a > b) {
-    {{a}} is greater than {{b}}
-  } @else if (b > a) {
-    {{a}} is less than {{b}}
-  } @else {
-    {{a}} is equal to {{b}}
-  }
+    <pre ngNonBindable class="card bg-dark text-white">
+      @if (a > b) {
+        {{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)
+      }
+    </pre>
 
-  <h3>Repeating content with FOR</h3>
-
-  @for (item of items; track item.id) {
-    <li>{{item.name}}</li>
-  } @empty {
-    <li aria-hidden="true"> There are no items. </li>
-  }
-
-  <h3>Conditionally display content with SWITCH</h3>
-  @switch (userPermissions) {
-    @case ('admin') {
-      <p>Se muestra el dashboard de "admin"</p>
+    @if (a > b) {
+      <p>{{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)</p>
     }
-    @case ('reviewer') {
-      <p>Se muestra el dashboard de "reviewer"</p>
+
+    <pre ngNonBindable class="card bg-dark text-white">
+      @if (a > b) {
+        {{a}} is greater than {{b}}
+      } @else if (b > a) {
+        {{a}} is less than {{b}}
+      } @else {
+        {{a}} is equal to {{b}}
+      }
+    </pre>
+
+    @if (a > b) {
+      {{a}} is greater than {{b}}
+    } @else if (b > a) {
+      {{a}} is less than {{b}}
+    } @else {
+      {{a}} is equal to {{b}}
     }
-    @case ('editor') {
-      <p>Se muestra el dashboard de "editor"</p>
+  </section>
+
+  <section class="bg-light text-dark directives-section">
+    <h3>2. Repeating content with &#64;for (former *ngFor)</h3>
+
+    <pre ngNonBindable class="card bg-dark text-white">
+      @for (item of items; track item.id) {
+        &lt;li&gt;{{item.name}}&lt;/li&gt;
+      } @empty {
+        &lt;li aria-hidden="true"&gt; There are no items. &lt;/li&gt;
+      }
+    </pre>
+
+    @for (item of items; track item.id) {
+      <li>{{item.name}}</li>
+    } @empty {
+      <li aria-hidden="true"> There are no items. </li>
     }
-    @default {
-      <p>Se muestra el dashboard de "viewer"</p>
+  </section>
+
+  <section class="bg-light text-dark directives-section">
+    <h3>3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
+    @switch (userPermissions) {
+      @case ('admin') {
+        <p>Se muestra el dashboard de "admin"</p>
+      }
+      @case ('reviewer') {
+        <p>Se muestra el dashboard de "reviewer"</p>
+      }
+      @case ('editor') {
+        <p>Se muestra el dashboard de "editor"</p>
+      }
+      @default {
+        <p>Se muestra el dashboard de "viewer"</p>
+      }
     }
-  }
 
-  <h3>NgClass</h3>
-  <div [ngClass]="currentClasses">
-    This div is initially saveable, unchanged, and special.
-  </div>
+    <pre ngNonBindable class="card bg-dark text-white">
+      @switch (userPermissions) {
+        @case ('admin') {
+          &lt;p&gt;Se muestra el dashboard de "admin"&lt;/p&gt;
+        }
+        @case ('reviewer') {
+          &lt;p&gt;Se muestra el dashboard de "reviewer"&lt;/p&gt;
+        }
+        @case ('editor') {
+          &lt;p&gt;Se muestra el dashboard de "editor"&lt;/p&gt;
+        }
+        @default {
+          &lt;p&gt;Se muestra el dashboard de "viewer"&lt;/p&gt;
+        }
+      }
+    </pre>
+  </section>
 
-  <h3>NgStyle</h3>
-  <div [ngStyle]="currentStyles">
-    This div is initially italic, normal weight, and extra large (24px).
-  </div>
+  <section class="bg-light text-dark directives-section">
+    <h3>4. NgClass</h3>
+    <div [ngClass]="currentClasses">
+      This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="canSave" (change)="onToggleChange1()" checked>
+      <label class="form-check-label" for="switchCheckChecked">Saveable ("Guardable")</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isUnchanged" (change)="onToggleChange2()" unchecked>
+      <label class="form-check-label" for="switchCheckChecked">Unchanged ("Inmutable")</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isSpecial" (change)="onToggleChange3()" checked>
+      <label class="form-check-label" for="switchCheckChecked">Special ("Especial")</label>
+    </div>
+  </section>
 
-  <h3>NgModel</h3>
-  <p>Two-way data binding with ngModel</p>
+  <section class="bg-light text-dark directives-section">
+    <h3>5. NgStyle</h3>
+    <div [ngStyle]="currentStyles">
+      This div is initially italic, normal weight, and extra large (24px).
+    </div>
+  </section>
 
-    <h5>{{abc}}</h5>
-    <input [(ngModel)]="abc">
+  <section class="bg-light text-dark directives-section">
+    <h3>6. NgModel</h3>
+    <p>Two-way data binding with ngModel</p>
 
+      <h5>{{abc}}</h5>
+      <input [(ngModel)]="abc">
+  </section>
+
+  <section class="bg-light text-dark directives-section">
+    <h3>7. NgOnInit</h3>
+    <p>Check the component code to see how ngOnInit is used to set initial styles and classes.</p>
+  </section>
+
+    <section class="bg-light text-dark directives-section">
+    <h3>8. NgOnDestroy</h3>
+    <p>Check the component code to see how ngOnDestroy is used for cleanup.</p>
+    <p>
+      Angular destruye el componente cuando navegas fuera de la ruta, incluso si el cambio está controlado por un guard.
+    </p>
+    <p>
+      Ver el guard: "CanDeactivate".
+    </p>
+  </section>
 </div>

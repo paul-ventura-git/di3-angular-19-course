@@ -1,8 +1,7 @@
 .component-home {
+  margin-top: 2rem;
+  border-radius: 5px;
   padding: 20px;
-  border-style: solid;
-  border-width: 4px;
-  border-color: black;
   background-color: rgb(148, 240, 128);
   font-family: Arial, sans-serif;
 }
