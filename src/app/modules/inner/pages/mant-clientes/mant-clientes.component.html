@@ -1,3 +1,5 @@
+<br>
+<br>
 <div class="container myTables">
   <h1>Mantenimiento de Clientes</h1>
   <br/>
@@ -43,13 +45,13 @@
         </div>
         <div class="modal-body">
           <form #customerForm="ngForm" (ngSubmit)="addCustomer(customerForm.value, customerForm)">
-            <input type="text" class="form-control" placeholder="Título" name="name" ngModel>
+            <input type="text" class="form-control" placeholder="Nombre" name="name" ngModel>
             <br>
-              <input type="text" class="form-control" placeholder="Descripción" name="email" ngModel>
+              <input type="text" class="form-control" placeholder="Email" name="email" ngModel>
               <br>
-                <input type="text" class="form-control" placeholder="Categoría" name="phone" ngModel>
+                <input type="text" class="form-control" placeholder="Teléfono" name="phone" ngModel>
                 <br>
-                  <input type="text" class="form-control" placeholder="Precio" name="address" ngModel>
+                  <input type="text" class="form-control" placeholder="Dirección" name="address" ngModel>
                   <br>
                     <div class="d-flex justify-content-end gap-2">
                       <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Cliente</button>

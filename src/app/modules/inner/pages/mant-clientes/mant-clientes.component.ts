@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CustomersService } from '../../../../core/services/customers.service';
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-mant-clientes',
   imports: [FormsModule],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css'
+  templateUrl: './mant-clientes.component.html',
+  styleUrl: './mant-clientes.component.css'
 })
-export class CustomersComponent implements OnInit {
+export class MantClientesComponent implements OnInit {
   customers: any[] = [];
   selectedCustomer: any = null;
   editCustomer: any = null;

@@ -22,6 +22,16 @@ export default [
     loadComponent: () => import('./admin/admin'), // admin
   },
   {
+    path: 'clientes',
+    canActivate: [hasRoleGuard(['admin'])],
+    loadComponent: () => import('./mant-clientes/mant-clientes.component').then(m => m.MantClientesComponent), // admin
+  },
+  {
+    path: 'productos',
+    canActivate: [hasRoleGuard(['admin'])],
+    loadComponent: () => import('./mant-productos/mant-productos.component').then(m => m.MantProductosComponent), // admin
+  },
+  {
     path: 'formNuevaMascota',
     canActivate: [hasRoleGuard(['veterinary', 'admin'])],
     loadComponent: () => import('../components/form-nueva-mascota/form-nueva-mascota.component').then(m => m.FormNuevaMascotaComponent), // admin

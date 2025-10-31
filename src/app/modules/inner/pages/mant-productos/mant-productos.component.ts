@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../../core/services/products.service';
-
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-products-tables',
-  templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css'],
+  selector: 'app-mant-productos',
+  templateUrl: './mant-productos.component.html',
+  styleUrls: ['./mant-productos.component.css'],
   imports: [FormsModule]
 })
-export class TablesComponent implements OnInit {
+export class MantProductosComponent implements OnInit {
   products: any[] = [];
   selectedProduct: any = null;
   editProduct: any = null;

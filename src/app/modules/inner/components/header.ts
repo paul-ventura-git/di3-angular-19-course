@@ -11,7 +11,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
   template: `
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container">
-        <a class="navbar-brand" href="#">App con roles en Angular</a>
+        <a class="navbar-brand mx-6" href="#">Sistema web con roles en Angular 20</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,6 +45,26 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 routerLink="/intranet/historial"
               >
                 Historial
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                *hasRole="['admin']"
+                routerLinkActive="active"
+                routerLink="/intranet/clientes"
+              >
+                Clientes
+              </a>
+            </li>
+                        <li class="nav-item">
+              <a
+                class="nav-link active"
+                *hasRole="['admin']"
+                routerLinkActive="active"
+                routerLink="/intranet/productos"
+              >
+                Productos
               </a>
             </li>
           </ul>
