@@ -6,7 +6,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { User } from '../../../../../backend'; // Adjust the import path as necessary
+import { User } from '../../../../../backend-vet'; // Adjust the import path as necessary
 
 @Component({
   selector: 'app-header-selector',

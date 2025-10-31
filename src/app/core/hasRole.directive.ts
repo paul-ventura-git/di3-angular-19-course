@@ -7,7 +7,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { User, UserRole } from '../../../backend';
+import { User, UserRole } from '../../../backend-vet';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Directive({

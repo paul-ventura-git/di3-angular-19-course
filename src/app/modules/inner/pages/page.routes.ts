@@ -4,22 +4,27 @@ import { hasRoleGuard } from '../../../core/guards/has-role.guard'; // Roles bas
 export default [
   {
     path: '',
-    loadComponent: () => import('./dashboard/dashboard'), // public
+    loadComponent: () => import('./mascotas/mascotas.component').then(m => m.MascotasComponent), // public
   },
   {
-    path: 'orders',
-    canActivate: [hasRoleGuard(['sales', 'admin'])],
-    loadComponent: () => import('./orders/orders'), // sales
+    path: 'citas',
+    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    loadComponent: () => import('./citas/citas.component').then(m => m.CitasComponent), // sales
   },
   {
-    path: 'reports',
-    canActivate: [hasRoleGuard(['manager', 'admin'])],
-    loadComponent: () => import('./reports/reports'), // manager
+    path: 'historial',
+    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    loadComponent: () => import('./historial/historial.component').then(m => m.HistorialComponent), // manager
   },
   {
     path: 'admin',
     canActivate: [hasRoleGuard(['admin'])],
     loadComponent: () => import('./admin/admin'), // admin
   },
+  {
+    path: 'formNuevaMascota',
+    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    loadComponent: () => import('../components/form-nueva-mascota/form-nueva-mascota.component').then(m => m.FormNuevaMascotaComponent), // admin
+  }
 ] as Routes;
 

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { User, UserRole, users } from '../../../../../backend';
+import { User, UserRole, users } from '../../../../../backend-vet';
 import { AuthService } from '../../../auth/auth.service';
 import HeaderSelector from './header-selector';
 import { HasRoleDirective } from '../../../core/hasRole.directive';
@@ -24,37 +24,27 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 routerLinkActive="active"
                 routerLink="/intranet"
               >
-                Dashboard
+                Mascotas
               </a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link active"
-                *hasRole="['sales', 'admin']"
+                *hasRole="['veterinary', 'admin']"
                 routerLinkActive="active"
-                routerLink="/intranet/orders"
+                routerLink="/intranet/citas"
               >
-                Órdenes
+                Citas
               </a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link active"
-                *hasRole="['manager', 'admin']"
+                *hasRole="['veterinary', 'admin']"
                 routerLinkActive="active"
-                routerLink="/intranet/reports"
+                routerLink="/intranet/historial"
               >
-                Reportes
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                *hasRole="['admin']"
-                routerLinkActive="active"
-                routerLink="/intranet/admin"
-              >
-                Admin
+                Historial
               </a>
             </li>
           </ul>

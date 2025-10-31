@@ -1,0 +1,35 @@
+<main>
+
+  <button class="btn btn-primary my-4" >
+    <a
+      class="nav-link active"
+      routerLinkActive="active"
+      routerLink="/intranet/formNuevaMascota"
+    >
+      Agregar Mascota
+    </a>
+  </button>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @for (mascota of mascotas; track mascota.name) {
+        <div class="col">
+          <div class="card" style="width: 26rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{mascota.name}}</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">{{mascota.raza}}</h6>
+              <p class="card-text">{{mascota.owner}}</p>
+              <p class="card-text">{{mascota.peso}}</p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+</main>
