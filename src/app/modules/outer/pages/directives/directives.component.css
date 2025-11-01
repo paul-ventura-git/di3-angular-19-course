@@ -8,7 +8,7 @@ section {
 
 .component-directives {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .directives-section {
@@ -94,6 +94,7 @@ section {
   width: 200px;
   max-height: calc(100vh - 150px); /* 150px = altura aproximada del footer */
   overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Estilo cuando el paso está activo */

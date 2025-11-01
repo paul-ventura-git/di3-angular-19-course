@@ -1,1 +1,159 @@
-<p>signals works!</p>
+<div class="component-directives container">
+  <div class="row">
+    <div class="col-3">
+      <div class="stepper-wrapper">
+        <ul class="stepper list-unstyled">
+          <li class="step"
+              *ngFor="let step of steps"
+              [class.active]="activeStep === step.id"
+              (click)="scrollToSection(step.id)"
+          >
+            <div class="step-icon bg-primary text-white">{{ step.number }}</div>
+            <div class="step-label">{{ step.label }}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-9">
+      <h1 class="mt-4 mb-4">Signals</h1>
+      <section #sectionRef id="whatSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">What are Signals?</h3>
+        <p>
+          Signals are a new reactivity primitive in Angular that allow you to manage and react to state changes in a more efficient way.
+          Un signal es un contenedor reactivo para un valor (puede ser primitivo, objeto, array, etc) que notifica cuando su valor cambia.
+        </p>
+        <p>
+          They provide a way to create reactive data sources that can be observed and updated, enabling fine-grained reactivity in your applications.
+        </p>
+      </section>
+      <section #sectionRef id="methodsSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">1. Métodos principales de un Signal</h3>
+        <p>Cuando creas un signal: </p>
+
+        <pre ngNonBindable class="card bg-dark text-white">
+          <code class="language-typescript">
+            import &#123; signal &#125; from '@angular/core';
+
+            const counter = signal(0);
+          </code>
+        </pre>
+
+        <h5>1.1. <code>()</code> — Accessor (lector del valor actual) </h5>
+          <p>Tipo: <code>() => T</code></p>
+          <ul>
+            <li>Es la forma de leer el valor del signal.</li>
+            <li>Se invoca como una función, no como una propiedad.</li>
+          </ul>
+        <pre ngNonBindable class="card bg-dark text-white">
+
+        </pre>
+
+
+      </section>
+
+      <section #sectionRef id="forSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">2. Repeating content with &#64;for (former *ngFor)</h3>
+
+        <pre ngNonBindable class="card bg-dark text-white">
+          @for (item of items; track item.id) {
+            &lt;li&gt;{{item.name}}&lt;/li&gt;
+          } @empty {
+            &lt;li aria-hidden="true"&gt; There are no items. &lt;/li&gt;
+          }
+        </pre>
+
+        @for (item of items; track item.id) {
+          <li>{{item.name}}</li>
+        } @empty {
+          <li aria-hidden="true"> There are no items. </li>
+        }
+      </section>
+
+      <section #sectionRef id="switchSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
+        @switch (userPermissions) {
+          @case ('admin') {
+            <p>Se muestra el dashboard de "admin"</p>
+          }
+          @case ('reviewer') {
+            <p>Se muestra el dashboard de "reviewer"</p>
+          }
+          @case ('editor') {
+            <p>Se muestra el dashboard de "editor"</p>
+          }
+          @default {
+            <p>Se muestra el dashboard de "viewer"</p>
+          }
+        }
+
+        <pre ngNonBindable class="card bg-dark text-white">
+          @switch (userPermissions) {
+            @case ('admin') {
+              &lt;p&gt;Se muestra el dashboard de "admin"&lt;/p&gt;
+            }
+            @case ('reviewer') {
+              &lt;p&gt;Se muestra el dashboard de "reviewer"&lt;/p&gt;
+            }
+            @case ('editor') {
+              &lt;p&gt;Se muestra el dashboard de "editor"&lt;/p&gt;
+            }
+            @default {
+              &lt;p&gt;Se muestra el dashboard de "viewer"&lt;/p&gt;
+            }
+          }
+        </pre>
+      </section>
+
+      <section #sectionRef id="ngClassSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">4. NgClass</h3>
+        <div [ngClass]="currentClasses">
+          <p>This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).</p>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="canSave" (change)="onToggleChange1()" checked>
+          <label class="form-check-label" for="switchCheckChecked">Saveable ("Guardable")</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isUnchanged" (change)="onToggleChange2()" unchecked>
+          <label class="form-check-label" for="switchCheckChecked">Unchanged ("Inmutable")</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isSpecial" (change)="onToggleChange3()" checked>
+          <label class="form-check-label" for="switchCheckChecked">Special ("Especial")</label>
+        </div>
+      </section>
+
+      <section #sectionRef id="ngStyleSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">5. NgStyle</h3>
+        <div [ngStyle]="currentStyles">
+          This div is initially italic, normal weight, and extra large (24px).
+        </div>
+      </section>
+
+      <section #sectionRef id="ngModelSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">6. NgModel</h3>
+        <p>Two-way data binding with ngModel</p>
+
+          <h5>{{abc}}</h5>
+          <input [(ngModel)]="abc">
+      </section>
+
+      <section #sectionRef id="ngOnInitSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">7. NgOnInit</h3>
+        <p>Check the component code to see how ngOnInit is used to set initial styles and classes.</p>
+      </section>
+
+      <section #sectionRef id="ngOnDestroySection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">8. NgOnDestroy</h3>
+        <p>Check the component code to see how ngOnDestroy is used for cleanup.</p>
+        <p>
+          Angular destruye el componente cuando navegas fuera de la ruta, incluso si el cambio está controlado por un guard.
+        </p>
+        <p>
+          Ver el guard: "CanDeactivate".
+        </p>
+      </section>
+    </div>
+  </div>
+</div>
+

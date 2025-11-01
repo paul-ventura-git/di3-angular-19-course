@@ -1,0 +1,111 @@
+html {
+  scroll-behavior: smooth; /* animación suave al desplazarse */
+}
+
+section {
+  padding: 4rem 2rem;
+}
+
+.component-directives {
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.directives-section {
+  padding: 40px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.currentClasses {
+  font-weight: bold;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+.currentStyles {
+  font-size: 24px;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.canSave {
+  color: green;
+}
+
+/* Estilos existentes */
+.stepper {
+  position: relative;
+  margin-top: 60px;
+  margin-left: 20px;
+  padding-left: 17px;
+  border-left: 2px solid #dee2e6;
+}
+
+.step {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.step-icon {
+  position: absolute;
+  left: -31px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.step-label {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.step-label:hover {
+  font-weight: 700;
+}
+
+.step.completed .step-icon {
+  background-color: #198754; /* Verde Bootstrap */
+}
+
+.step.active .step-icon {
+  background-color: #0d6efd; /* Azul Bootstrap */
+}
+
+.step .step-icon {
+  background-color: #adb5bd; /* Gris inactivo */
+  color: white;
+}
+
+/* NUEVO: para hacer la barra lateral fija y visible */
+.stepper-wrapper {
+  position: sticky;
+  top: 60px;
+  width: 200px;
+  max-height: calc(100vh - 150px); /* 150px = altura aproximada del footer */
+  overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo cuando el paso está activo */
+.step.active .step-label {
+  font-weight: 600;          /* Negrita más fuerte */
+  color: #000000;            /* Azul Bootstrap (puedes cambiarlo) */
+}
+
+/* Opcional: destacar el icono activo */
+.step.active .step-icon {
+  background-color: #0d6efd; /* Azul Bootstrap */
+  transform: scale(1.1);     /* Ligero aumento de tamaño */
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
