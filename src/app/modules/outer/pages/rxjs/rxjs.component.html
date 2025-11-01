@@ -15,21 +15,62 @@
       </div>
     </div>
     <div class="col-9">
-      <h1 class="mt-4 mb-4">Signals</h1>
+      <h1 class="mt-4 mb-4">Rxjs (Reactive Extensions for JavaScript)</h1>
       <!--WHATSECTION-->
       <section #sectionRef id="whatSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">What are Signals?</h3>
+        <h3 class="mb-4">What is RxJS?</h3>
         <p>
-          Signals are a new reactivity primitive in Angular that allow you to manage and react to state changes in a more efficient way.
-          Un signal es un contenedor reactivo para un valor (puede ser primitivo, objeto, array, etc) que notifica cuando su valor cambia.
+          Es una librería para programación reactiva que permite manejar flujo de datos asíncronos y eventos de forma <b>declarativa</b>, mediante el uso de <b>Observables</b>.
         </p>
-        <p>
-          They provide a way to create reactive data sources that can be observed and updated, enabling fine-grained reactivity in your applications.
-        </p>
+        <p>RxJS te ayuda a trabajar con datos que cambian con el tiempo, como:</p>
+        <ul>
+          <li>Datos de APIs</li>
+          <li>Respuestas HTTP</li>
+          <li>Eventos del usuario</li>
+          <li>Temporizadores</li>
+          <li>Streams en tiempo real</li>
+        </ul>
+        <p>Todo esto lo hace usando un modelo basado en streams (flujos) y observadores.</p>
       </section>
-      <!--MAINMETHODSSECTION-->
-      <section #sectionRef id="mainMethodsSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">1. Métodos principales de un Signal</h3>
+      <!--CONCEPTSSECTION-->
+      <section #sectionRef id="conceptsSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">1. Conceptos principales de RxJS</h3>
+
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Concepto</th>
+              <th scope="col">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Observable</th>
+              <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
+            </tr>
+            <tr>
+              <th scope="row">Observer (Observador)</th>
+              <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
+            </tr>
+            <tr>
+              <th scope="row">Subscription (Suscripción)</th>
+              <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con <code>.unsubscribe()</code>.</td>
+            </tr>
+            <tr>
+              <th scope="row">Operators (Operadores)</th>
+              <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: <code>map</code>, <code>filter</code>, <code>mergeMap</code>, <code>switchMap</code>, etc.</td>
+            </tr>
+            <tr>
+              <th scope="row">Subject</th>
+              <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
+            </tr>
+            <tr>
+              <th scope="row">Behavior subject</th>
+              <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
+            </tr>
+          </tbody>
+        </table>
+
         <p>Cuando creas un signal: </p>
 
         <pre ngNonBindable class="card bg-dark text-white">
@@ -223,4 +264,5 @@
     </div>
   </div>
 </div>
+
 

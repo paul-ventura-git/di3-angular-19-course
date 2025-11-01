@@ -17,17 +17,17 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 
 @Component({
-  selector: 'app-signals',
+  selector: 'app-rxjs',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './signals.component.html',
-  styleUrls: ['./signals.component.css']
+  templateUrl: './rxjs.component.html',
+  styleUrls: ['./rxjs.component.css']
 })
-export class SignalsComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
+export class RxjsComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
   // --- Datos y estado ---
 
   steps = [
-    { id: 'whatSection', label: 'What are Signals?', number: 1 },
+    { id: 'whatSection', label: '¿Qué es RxJS?', number: 1 },
     { id: 'mainMethodsSection', label: 'Main Methods', number: 2 },
     { id: 'complementaryMethodsSection', label: 'Complementary Methods', number: 3 },
     { id: 'otherHelpersSection', label: 'Other Helpers', number: 4 }
