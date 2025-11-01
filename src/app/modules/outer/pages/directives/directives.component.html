@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="col-9">
-      <h1>Directives</h1>
+      <h1 class="mt-4 mb-4">Directives</h1>
       <section #sectionRef id="ifSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">1. Conditionally display content with &#64;if (former *ngIf)</h3>
 
@@ -104,7 +104,7 @@
       <section #sectionRef id="ngClassSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">4. NgClass</h3>
         <div [ngClass]="currentClasses">
-          This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).
+          <p>This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).</p>
         </div>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="canSave" (change)="onToggleChange1()" checked>
