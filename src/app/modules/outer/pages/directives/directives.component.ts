@@ -1,17 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgClass, NgStyle } from '@angular/common';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChildren, AfterViewInit, QueryList, NgZone } from '@angular/core';
+import { CommonModule, NgClass, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription, interval } from 'rxjs';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-directives',
-  imports: [NgClass, NgStyle, FormsModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgClass,
+    NgStyle,
+    FormsModule,
+  ],
   templateUrl: './directives.component.html',
-  styleUrl: './directives.component.css'
+  styleUrls: ['./directives.component.css']
 })
+export class DirectivesComponent implements OnInit, OnDestroy, AfterViewInit {
 
-export class DirectivesComponent implements OnInit, OnDestroy {
+  constructor(private zone: NgZone) {} // 👈 inyectamos NgZone
 
-  // Variables del componente
+  // Variables
   a = 95;
   b = 5;
   abc = "Hello World";
@@ -22,60 +30,74 @@ export class DirectivesComponent implements OnInit, OnDestroy {
     { id: 3, name: 'Item 3', value: 30 }
   ];
 
-  userPermissions: string = "admin";
-
+  userPermissions = "admin";
   canSave = true;
   isUnchanged = false;
   isSpecial = true;
 
   currentClasses: Record<string, boolean> = {};
   currentStyles: Record<string, string> = {};
-
-  // Ejemplo: simulamos un observable activo (por ejemplo, actualizaciones en tiempo real)
   private timerSubscription?: Subscription;
+
+  steps = [
+    { id: 'ifSection', label: '@if', number: 1 },
+    { id: 'forSection', label: '@for', number: 2 },
+    { id: 'switchSection', label: '@switch', number: 3 },
+    { id: 'ngClassSection', label: 'ngClass', number: 4 },
+    { id: 'ngStyleSection', label: 'ngStyle', number: 5 },
+    { id: 'ngModelSection', label: 'ngModel', number: 6 },
+    { id: 'ngOnInitSection', label: 'ngOnInit', number: 7 },
+    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 8 },
+  ];
+
+  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
+
+  activeStep: string = '';
+
+  scrollToSection(id: string) {
+    const section = this.sections.find(s => s.nativeElement.id === id);
+    if (section) {
+      section.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.activeStep = id; // 👈 activa inmediatamente al hacer click
+    }
+  }
 
   ngOnInit() {
     this.setCurrentClasses();
     this.setCurrentStyles();
-
-    // Iniciamos una suscripción de ejemplo
-    // this.timerSubscription = interval(1000).subscribe(count => {
-    //   console.log(`⏱️ Tick #${count}`);
-    // });
-
-    console.log('DirectivesComponent inicializado');
   }
 
-  // Limpieza del componente
-  ngOnDestroy() {
-    console.log('DirectivesComponent destruido');
+  ngAfterViewInit() {
+    // ⚠️ Solo ejecutamos el observer si el entorno del navegador lo soporta
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.zone.run(() => {
+              this.activeStep = entry.target.id;
+            });
+          }
+        });
+      }, { threshold: 0.2 });
 
-    // Cancelar suscripciones activas
+      this.sections.forEach(section => observer.observe(section.nativeElement));
+    } else {
+      console.warn('⚠️ IntersectionObserver no está disponible en este entorno.');
+    }
+  }
+
+  ngOnDestroy() {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
-      console.log('🧹 Suscripción cancelada');
     }
-
-    // Liberar referencias (buena práctica)
     this.items = [];
     this.currentClasses = {};
     this.currentStyles = {};
   }
 
-  onToggleChange1() {
-    console.log('El switch cambió. Nuevo valor:', this.canSave);
-    this.setCurrentStyles();
-  }
-
-  onToggleChange2() {
-    console.log('El switch cambió. Nuevo valor:', this.isUnchanged);
-    this.setCurrentStyles();
-  }
-
-  onToggleChange3() {
-    console.log('El switch cambió. Nuevo valor:', this.isSpecial);
-    this.setCurrentStyles();
-  }
+  onToggleChange1() { this.setCurrentStyles(); }
+  onToggleChange2() { this.setCurrentStyles(); }
+  onToggleChange3() { this.setCurrentStyles(); }
 
   setCurrentClasses() {
     this.currentClasses = {
@@ -93,4 +115,3 @@ export class DirectivesComponent implements OnInit, OnDestroy {
     };
   }
 }
-

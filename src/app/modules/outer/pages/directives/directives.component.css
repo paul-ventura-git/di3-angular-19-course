@@ -1,3 +1,11 @@
+html {
+  scroll-behavior: smooth; /* animación suave al desplazarse */
+}
+
+section {
+  padding: 4rem 2rem;
+}
+
 .component-directives {
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -25,6 +33,7 @@
   color: green;
 }
 
+/* Estilos existentes */
 .stepper {
   position: relative;
   margin-top: 60px;
@@ -61,6 +70,10 @@
   font-weight: 500;
 }
 
+.step-label:hover {
+  font-weight: 700;
+}
+
 .step.completed .step-icon {
   background-color: #198754; /* Verde Bootstrap */
 }
@@ -72,4 +85,26 @@
 .step .step-icon {
   background-color: #adb5bd; /* Gris inactivo */
   color: white;
+}
+
+/* NUEVO: para hacer la barra lateral fija y visible */
+.stepper-wrapper {
+  position: sticky;
+  top: 60px;
+  width: 200px;
+  max-height: calc(100vh - 150px); /* 150px = altura aproximada del footer */
+  overflow-y: auto;
+}
+
+/* Estilo cuando el paso está activo */
+.step.active .step-label {
+  font-weight: 600;          /* Negrita más fuerte */
+  color: #000000;            /* Azul Bootstrap (puedes cambiarlo) */
+}
+
+/* Opcional: destacar el icono activo */
+.step.active .step-icon {
+  background-color: #0d6efd; /* Azul Bootstrap */
+  transform: scale(1.1);     /* Ligero aumento de tamaño */
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
