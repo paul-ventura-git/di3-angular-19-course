@@ -24,3 +24,52 @@
 .canSave {
   color: green;
 }
+
+.stepper {
+  position: relative;
+  margin-top: 60px;
+  margin-left: 20px;
+  padding-left: 17px;
+  border-left: 2px solid #dee2e6;
+}
+
+.step {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.step-icon {
+  position: absolute;
+  left: -31px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.step-label {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.step.completed .step-icon {
+  background-color: #198754; /* Verde Bootstrap */
+}
+
+.step.active .step-icon {
+  background-color: #0d6efd; /* Azul Bootstrap */
+}
+
+.step .step-icon {
+  background-color: #adb5bd; /* Gris inactivo */
+  color: white;
+}
