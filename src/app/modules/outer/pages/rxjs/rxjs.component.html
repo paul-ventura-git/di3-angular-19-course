@@ -70,196 +70,48 @@
             </tr>
           </tbody>
         </table>
-
-        <p>Cuando creas un signal: </p>
+      </section>
+      <!--EXAMPLESECTION-->
+      <section #sectionRef id="exampleSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">2. Ejemplo</h3>
 
         <pre ngNonBindable class="card bg-dark text-white">
           <code class="language-typescript">
-            import &#123; signal &#125; from '@angular/core';
+            import &#123; Component, OnInit &#125; from '@angular/core';
+            import &#123; HttpClient &#125; from '@angular/common/http';
+            import &#123; map, catchError &#125; from 'rxjs/operators';
+            import &#123; of &#125; from 'rxjs';
 
-            const counter = signal(0);
+            @Component(&#123;
+              selector: 'app-users',
+              template: `&lt;ul&gt;&lt;li *ngFor=&quot;let user of users&quot;&gt;{{ user.name }}&lt;/li&gt;&lt;/ul&gt;`
+            &#125;)
+            export class UsersComponent implements OnInit &#123;
+              users: any[] = [];
+
+              constructor(private http: HttpClient) &#123;&#125;
+
+              ngOnInit() &#123;
+                this.http.get('https://jsonplaceholder.typicode.com/users')
+                  .pipe(
+                    map((data: any) =&gt; data.filter((u: any) =&gt; u.id &lt; 5)),
+                    catchError(err =&gt; &#123;
+                      console.error(err);
+                      return of([]); // Devuelve un observable vacío si hay error
+                    &#125;)
+                  )
+                  .subscribe(result =&gt; this.users = result);
+              &#125;
+            &#125;
           </code>
         </pre>
-
-        <h5>1.1. <code>()</code> — Accessor (lector del valor actual) </h5>
-          <p>Tipo: <code>() => T</code></p>
-          <ul>
-            <li>Es la forma de leer el valor del signal.</li>
-            <li>Se invoca como una función, no como una propiedad.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            console.log(counter()); // imprime 0
-          </code>
-        </pre>
-
-        <h5>1.2. <code>.set(value: T)</code> — Mutator (asignación directa)</h5>
-          <p>Tipo: <code>(newValue: T) => void</code></p>
-          <ul>
-            <li>Cambia el valor del signal asignando un nuevo valor.</li>
-            <li>Angular notificará automáticamente a todos los <code>computed()</code> y <code>effect()</code> dependientes que deben recalcularse.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            counter.set(10);
-            console.log(counter()); // imprime 10
-          </code>
-        </pre>
-
-        <h5>1.3. <code>.update(updaterFn: (value: T) => T)</code> — Mutator (actualización basada en el valor actual)</h5>
-          <p>Tipo: <code>(updater: (currentValue: T) => T) => void</code></p>
-          <ul>
-            <li>Permite modificar el valor en función del valor actual.</li>
-            <li>Es muy útil para operaciones incrementales o acumulativas.</li>
-          </ul>
-          <pre class="card bg-dark p-3">
-            <code class="language-typescript">
-              counter.update(value =&gt; value + 1);
-              console.log(counter()); // imprime 11
-            </code>
-          </pre>
-
-        <h5>1.4. <code>.mutate(mutatorFn: (value: T) => void)</code> — Mutator para objetos o arrays (modificación in place)</h5>
-          <p>Tipo: <code>(mutator: (currentValue: T) => void) => void</code></p>
-          <ul>
-            <li>Permite mutar directamente objetos o arrays sin reemplazarlos por completo.</li>
-            <li>Angular detecta los cambios y los propaga automáticamente.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            const user = signal(&#123; name: 'Ana', age: 25 &#125;);
-
-            user.mutate(u => u.age++);
-
-            console.log(user()); // &#123; name: 'Ana', age: 26 &#125;
-          </code>
-        </pre>
+        <p>Resultado:</p>
+        <ul>
+          <li *ngFor="let user of users">{{ user.name }}</li>
+        </ul>
 
       </section>
 
-      <!--COMPLEMENTARYMETHODSSECTION-->
-      <section #sectionRef id="complementaryMethodsSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">2. Métodos complementarios de lectura y control</h3>
-        <p>Además de los métodos principales, los signals también ofrecen métodos complementarios para facilitar la lectura y el control de su estado.</p>
-
-        <h5>2.1. <code>.asReadonly()</code> — Lector (solo lectura)</h5>
-          <p>Tipo: <code>() =&gt; ReadonlySignal&lt;T&gt; </code></p>
-          <ul>
-            <li>Devuelve una versión solo de lectura del signal, para exponerlo públicamente sin permitir que otros lo modifiquen.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            const _count = signal(0);
-            export const count = _count.asReadonly();
-          </code>
-        </pre>
-
-        <h5>2.2. <code>.peek()</code> (nuevo en Angular 17+ y parte de Angular 20)</h5>
-          <p>Tipo: <code>() =&gt; T; </code></p>
-          <ul>
-            <li>Devuelve el valor actual sin registrar dependencia reactiva.</li>
-            <li>Ideal cuando quieres leer un signal dentro de un <code>computed()</code> o <code>effect()</code> sin que ese signal dispare re-ejecuciones.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            effect(() =&gt; &#123;
-              console.log('El contador es', counter.peek());
-              // No reacciona si counter cambia
-            &#125;);
-          </code>
-        </pre>
-      </section>
-
-      <!--OTHERHELPERSSECTION-->
-      <section #sectionRef id="otherHelpersSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">3. Otros helpers relacionados con Signals</h3>
-
-        <h5>3.1. <code>computed(() => …)</code> </h5>
-          <p>Tipo: <code>&lt;T&gt;(computeFn: () =&gt; T) =&gt; ComputedSignal&lt;T&gt;</code></p>
-          <ul>
-            <li>Un computed signal (o señal derivada) es un valor calculado automáticamente a partir de uno o más signals.</li>
-            <li>Cada vez que alguno de los signals dependientes cambia, el <code>computed()</code> se recalcula automáticamente.</li>
-            <li>Angular rastrea automáticamente qué signals se leen dentro del <code>computed()</code>.</li>
-            <li>Cuando alguno cambia, recalcula el valor y notifica a quien lo use.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            import &#123; signal, computed &#125; from '@angular/core';
-
-            const count = signal(1);
-            const double = computed(() =&gt; count() * 2);
-          </code>
-        </pre>
-
-        <h5>3.2. <code>effect(() => …)</code> </h5>
-          <p>Tipo: <code>&lt;T&gt;(computeFn: () =&gt; T) =&gt; ComputedSignal&lt;T&gt;</code></p>
-          <ul>
-            <li>Un computed signal (o señal derivada) es un valor calculado automáticamente a partir de uno o más signals.</li>
-            <li>Cada vez que alguno de los signals dependientes cambia, el <code>computed()</code> se recalcula automáticamente.</li>
-            <li>Angular rastrea automáticamente qué signals se leen dentro del <code>computed()</code>.</li>
-            <li>Cuando alguno cambia, recalcula el valor y notifica a quien lo use.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            import &#123; signal, computed &#125; from '@angular/core';
-
-            const count = signal(1);
-            const double = computed(() =&gt; count() * 2);
-          </code>
-        </pre>
-
-        <h5>3.3. <code>untracked(() => …)</code> </h5>
-          <p>Tipo: <code>&lt;T&gt;(computeFn: () =&gt; T) =&gt; ComputedSignal&lt;T&gt;</code></p>
-          <ul>
-            <li>Un computed signal (o señal derivada) es un valor calculado automáticamente a partir de uno o más signals.</li>
-            <li>Cada vez que alguno de los signals dependientes cambia, el <code>computed()</code> se recalcula automáticamente.</li>
-            <li>Angular rastrea automáticamente qué signals se leen dentro del <code>computed()</code>.</li>
-            <li>Cuando alguno cambia, recalcula el valor y notifica a quien lo use.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            import &#123; signal, computed &#125; from '@angular/core';
-
-            const count = signal(1);
-            const double = computed(() =&gt; count() * 2);
-          </code>
-        </pre>
-
-        <h5>3.4. <code>toSignal(observable)</code> </h5>
-          <p>Tipo: <code>&lt;T&gt;(computeFn: () =&gt; T) =&gt; ComputedSignal&lt;T&gt;</code></p>
-          <ul>
-            <li>Un computed signal (o señal derivada) es un valor calculado automáticamente a partir de uno o más signals.</li>
-            <li>Cada vez que alguno de los signals dependientes cambia, el <code>computed()</code> se recalcula automáticamente.</li>
-            <li>Angular rastrea automáticamente qué signals se leen dentro del <code>computed()</code>.</li>
-            <li>Cuando alguno cambia, recalcula el valor y notifica a quien lo use.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            import &#123; signal, computed &#125; from '@angular/core';
-
-            const count = signal(1);
-            const double = computed(() =&gt; count() * 2);
-          </code>
-        </pre>
-
-        <h5>3.5. <code>linkedSignal()</code> (nuevo en Angular 20) </h5>
-          <p>Tipo: <code>&lt;T&gt;(computeFn: () =&gt; T) =&gt; ComputedSignal&lt;T&gt;</code></p>
-          <ul>
-            <li>Un computed signal (o señal derivada) es un valor calculado automáticamente a partir de uno o más signals.</li>
-            <li>Cada vez que alguno de los signals dependientes cambia, el <code>computed()</code> se recalcula automáticamente.</li>
-            <li>Angular rastrea automáticamente qué signals se leen dentro del <code>computed()</code>.</li>
-            <li>Cuando alguno cambia, recalcula el valor y notifica a quien lo use.</li>
-          </ul>
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            import &#123; signal, computed &#125; from '@angular/core';
-
-            const count = signal(1);
-            const double = computed(() =&gt; count() * 2);
-          </code>
-        </pre>
-
-      </section>
 
     </div>
   </div>

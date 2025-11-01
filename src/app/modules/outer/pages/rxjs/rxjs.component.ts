@@ -15,6 +15,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-rxjs',
@@ -26,11 +29,12 @@ import 'prismjs/components/prism-typescript';
 export class RxjsComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
   // --- Datos y estado ---
 
+  users: any[] = [];
+
   steps = [
     { id: 'whatSection', label: '¿Qué es RxJS?', number: 1 },
-    { id: 'mainMethodsSection', label: 'Main Methods', number: 2 },
-    { id: 'complementaryMethodsSection', label: 'Complementary Methods', number: 3 },
-    { id: 'otherHelpersSection', label: 'Other Helpers', number: 4 }
+    { id: 'conceptsSection', label: 'Main Concepts', number: 2 },
+    { id: 'exampleSection', label: 'Example', number: 3 }
   ];
 
   @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
@@ -43,7 +47,8 @@ export class RxjsComponent implements OnInit, AfterViewInit, OnDestroy, AfterVie
 
   constructor(
     private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
   ) {}
 
   // -----------------------
@@ -51,6 +56,15 @@ export class RxjsComponent implements OnInit, AfterViewInit, OnDestroy, AfterVie
   // -----------------------
   ngOnInit(): void {
     console.log('🆕 SignalsComponent inicializado');
+    this.http.get('https://jsonplaceholder.typicode.com/users')
+      .pipe(
+        map((data: any) => data.filter((u: any) => u.id < 5)),
+        catchError(err => {
+          console.error(err);
+          return of([]); // Devuelve un observable vacío si hay error
+        })
+      )
+      .subscribe(result => this.users = result);
   }
 
   ngAfterViewChecked() {
