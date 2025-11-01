@@ -17,7 +17,7 @@
     <div class="col-9">
       <h1>Directives</h1>
       <section #sectionRef id="ifSection" class="bg-light text-dark directives-section">
-        <h3>1. Conditionally display content with &#64;if (former *ngIf)</h3>
+        <h3 class="mb-4">1. Conditionally display content with &#64;if (former *ngIf)</h3>
 
         <pre ngNonBindable class="card bg-dark text-white">
           @if (a > b) {
@@ -49,7 +49,7 @@
       </section>
 
       <section #sectionRef id="forSection" class="bg-light text-dark directives-section">
-        <h3>2. Repeating content with &#64;for (former *ngFor)</h3>
+        <h3 class="mb-4">2. Repeating content with &#64;for (former *ngFor)</h3>
 
         <pre ngNonBindable class="card bg-dark text-white">
           @for (item of items; track item.id) {
@@ -67,7 +67,7 @@
       </section>
 
       <section #sectionRef id="switchSection" class="bg-light text-dark directives-section">
-        <h3>3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
+        <h3 class="mb-4">3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
         @switch (userPermissions) {
           @case ('admin') {
             <p>Se muestra el dashboard de "admin"</p>
@@ -102,7 +102,7 @@
       </section>
 
       <section #sectionRef id="ngClassSection" class="bg-light text-dark directives-section">
-        <h3>4. NgClass</h3>
+        <h3 class="mb-4">4. NgClass</h3>
         <div [ngClass]="currentClasses">
           This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).
         </div>
@@ -121,14 +121,14 @@
       </section>
 
       <section #sectionRef id="ngStyleSection" class="bg-light text-dark directives-section">
-        <h3>5. NgStyle</h3>
+        <h3 class="mb-4">5. NgStyle</h3>
         <div [ngStyle]="currentStyles">
           This div is initially italic, normal weight, and extra large (24px).
         </div>
       </section>
 
       <section #sectionRef id="ngModelSection" class="bg-light text-dark directives-section">
-        <h3>6. NgModel</h3>
+        <h3 class="mb-4">6. NgModel</h3>
         <p>Two-way data binding with ngModel</p>
 
           <h5>{{abc}}</h5>
@@ -136,12 +136,12 @@
       </section>
 
       <section #sectionRef id="ngOnInitSection" class="bg-light text-dark directives-section">
-        <h3>7. NgOnInit</h3>
+        <h3 class="mb-4">7. NgOnInit</h3>
         <p>Check the component code to see how ngOnInit is used to set initial styles and classes.</p>
       </section>
 
       <section #sectionRef id="ngOnDestroySection" class="bg-light text-dark directives-section">
-        <h3>8. NgOnDestroy</h3>
+        <h3 class="mb-4">8. NgOnDestroy</h3>
         <p>Check the component code to see how ngOnDestroy is used for cleanup.</p>
         <p>
           Angular destruye el componente cuando navegas fuera de la ruta, incluso si el cambio está controlado por un guard.
