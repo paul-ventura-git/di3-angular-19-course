@@ -3,8 +3,8 @@
   <p>[This is the component app-user-profile]</p>
 
   <h3>Binding dynamic [properties] (for example, in a button)</h3>
-  <button type="button" class="btn btn-info" [disabled]="isFormValid">Save</button>
-  <button attr.aria-label="Save changes to {{ objectType }}">aria-label</button>
+  <button type="button" class="btn btn-warning" attr.aria-label="Save changes to {{ objectType }}">aria-label</button>
+  <p>Inspeccionar elemento y ver el atributo aria-label.</p>
 
   <h3>Binding CSS Classes (styles are applied when TRUE)</h3>
   <ul [class.expanded]="isExpanded">

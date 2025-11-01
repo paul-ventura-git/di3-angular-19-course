@@ -1,18 +1,26 @@
 import { Routes } from '@angular/router';
-import { GalleryComponent } from './gallery/gallery.component';
-import { ProductDetailsComponent } from '../components/product-details/product-details.component';
 import { DirectivesComponent } from './directives/directives.component';
-import { ViewCardComponent } from '../components/view-card/view-card.component';
-import { ModalComponent } from '../components/modal/modal.component';
 import { HomeComponent } from './home/home.component';
+import { ReactiveFormsComponent } from './reactive-forms/reactive-forms.component';
+import { ServicesComponent } from './services/services.component';
+import { SignalsComponent } from './signals/signals.component';
+import { ObservablesComponent } from './observables/observables.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { DependencyInjectionComponent } from './dependency-injection/dependency-injection.component';
+import { HttpMethodsComponent } from './http-methods/http-methods.component';
+import { NotFoundComponent } from '../../../shared/components/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'gallery', component: GalleryComponent },
-  { path: 'gallery/:category/:id', component: ProductDetailsComponent },
   { path: 'directives', component: DirectivesComponent},
-  { path: 'tables/view-customer/:customerId', component: ViewCardComponent},
-  { path: 'tables/add-user', component: ModalComponent},
+  { path: 'signals', component: SignalsComponent},
+  { path: 'reactive-forms', component: ReactiveFormsComponent },
+  { path: 'services', component: ServicesComponent },
+  { path: 'services/dependency-injection', component: DependencyInjectionComponent },
+  { path: 'services/observables', component: ObservablesComponent },
+  { path: 'services/subscriptions', component: SubscriptionsComponent },
+  { path: 'services/http-methods', component: HttpMethodsComponent },
+  { path: '**', component: NotFoundComponent }
 ]
 
 
