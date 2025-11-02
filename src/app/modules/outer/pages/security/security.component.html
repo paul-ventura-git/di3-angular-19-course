@@ -1,0 +1,118 @@
+<div class="component-directives container"> <!--TODO Implementar la lógica de los formularios reactivos -->
+  <div class="row">
+    <div class="col-3">
+      <h3 class="mt-4 px-5">Contenido</h3>
+      <div class="stepper-wrapper">
+        <ul class="stepper list-unstyled">
+          <li class="step"
+              *ngFor="let step of steps"
+              [class.active]="activeStep === step.id"
+              (click)="scrollToSection(step.id)"
+          >
+            <div class="step-icon bg-primary text-white">{{ step.number }}</div>
+            <div class="step-label">{{ step.label }}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-9">
+      <h1 class="mt-4 mb-4">Seguridad</h1>
+      <!--WHATSECTION-->
+      <section #sectionRef id="whatSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">¿Qué son los formularios reactivos?</h3>
+        <p>
+          Los formularios reactivos son una forma de manejar formularios en Angular utilizando un enfoque más programático y reactivo. A diferencia de los formularios basados en plantillas, los formularios reactivos se definen en el componente y se gestionan mediante el uso de <b>ReactiveFormsModule</b>.
+        </p>
+        <p>Los formularios reactivos ofrecen varias ventajas, como:</p>
+        <ul>
+          <li>Mayor control sobre la validación y el estado del formulario.</li>
+          <li>Facilidad para manejar formularios complejos y anidados.</li>
+          <li>Mejor escalabilidad y mantenibilidad del código.</li>
+        </ul>
+      </section>
+      <!--CONCEPTSSECTION-->
+      <section #sectionRef id="conceptsSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">1. Conceptos principales de RxJS</h3>
+
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Concepto</th>
+              <th scope="col">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Observable</th>
+              <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
+            </tr>
+            <tr>
+              <th scope="row">Observer (Observador)</th>
+              <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
+            </tr>
+            <tr>
+              <th scope="row">Subscription (Suscripción)</th>
+              <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con <code>.unsubscribe()</code>.</td>
+            </tr>
+            <tr>
+              <th scope="row">Operators (Operadores)</th>
+              <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: <code>map</code>, <code>filter</code>, <code>mergeMap</code>, <code>switchMap</code>, etc.</td>
+            </tr>
+            <tr>
+              <th scope="row">Subject</th>
+              <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
+            </tr>
+            <tr>
+              <th scope="row">Behavior subject</th>
+              <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!--EXAMPLESECTION-->
+      <section #sectionRef id="exampleSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">2. Ejemplo</h3>
+
+        <pre ngNonBindable class="card bg-dark text-white">
+          <code class="language-typescript">
+            import &#123; Component, OnInit &#125; from '@angular/core';
+            import &#123; HttpClient &#125; from '@angular/common/http';
+            import &#123; map, catchError &#125; from 'rxjs/operators';
+            import &#123; of &#125; from 'rxjs';
+
+            @Component(&#123;
+              selector: 'app-users',
+              template: `&lt;ul&gt;&lt;li *ngFor=&quot;let user of users&quot;&gt;{{ user.name }}&lt;/li&gt;&lt;/ul&gt;`
+            &#125;)
+            export class UsersComponent implements OnInit &#123;
+              users: any[] = [];
+
+              constructor(private http: HttpClient) &#123;&#125;
+
+              ngOnInit() &#123;
+                this.http.get('https://jsonplaceholder.typicode.com/users')
+                  .pipe(
+                    map((data: any) =&gt; data.filter((u: any) =&gt; u.id &lt; 5)),
+                    catchError(err =&gt; &#123;
+                      console.error(err);
+                      return of([]); // Devuelve un observable vacío si hay error
+                    &#125;)
+                  )
+                  .subscribe(result =&gt; this.users = result);
+              &#125;
+            &#125;
+          </code>
+        </pre>
+        <p>Resultado:</p>
+        <ul>
+          <li *ngFor="let user of users">{{ user.name }}</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+
+

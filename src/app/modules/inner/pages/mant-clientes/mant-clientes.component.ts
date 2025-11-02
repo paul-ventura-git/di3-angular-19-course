@@ -92,7 +92,7 @@ export class MantClientesComponent implements OnInit {
         if (modal) {
           // @ts-ignore
           const bsModal = window.bootstrap.Modal.getInstance(modal);
-          bsModal.hide();
+          if (bsModal) bsModal.hide();
         }
       },
       error: err => alert('Error al actualizar el cliente: ' + err.message)

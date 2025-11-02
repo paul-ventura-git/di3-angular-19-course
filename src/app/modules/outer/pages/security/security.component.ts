@@ -5,57 +5,36 @@ import {
   ElementRef,
   ViewChildren,
   AfterViewInit,
+  AfterViewChecked,
   QueryList,
   NgZone,
   Inject,
   PLATFORM_ID
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-directives',
+  selector: 'app-rxjs',
   standalone: true,
-  imports: [NgClass, NgStyle, FormsModule, CommonModule],
-  templateUrl: './directives.component.html',
-  styleUrls: ['./directives.component.css']
+  imports: [FormsModule, CommonModule],
+  templateUrl: './security.component.html',
+  styleUrls: ['./security.component.css']
 })
-export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SecurityComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
   // --- Datos y estado ---
-  a = 95;
-  b = 5;
-  abc = 'Hello World';
 
-  items = [
-    { id: 1, name: 'Item 1', value: 10 },
-    { id: 2, name: 'Item 2', value: 20 },
-    { id: 3, name: 'Item 3', value: 30 }
-  ];
-
-  userPermissions = 'admin';
-
-  canSave = true;
-  isUnchanged = false;
-  isSpecial = true;
-
-  currentClasses: Record<string, boolean> = {};
-  currentStyles: Record<string, string> = {};
-
-  private timerSubscription?: Subscription;
+  users: any[] = [];
 
   steps = [
-    { id: 'whatSection', label: 'What are directives?', number: 1 },
-    { id: 'ifSection', label: '@if', number: 2 },
-    { id: 'forSection', label: '@for', number: 3 },
-    { id: 'switchSection', label: '@switch', number: 4 },
-    { id: 'ngClassSection', label: 'ngClass', number: 5 },
-    { id: 'ngStyleSection', label: 'ngStyle', number: 6 },
-    { id: 'ngModelSection', label: 'ngModel', number: 7 },
-    { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
-    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
+    { id: 'whatSection', label: '¿Qué es RxJS?', number: 1 },
+    { id: 'conceptsSection', label: 'Main Concepts', number: 2 },
+    { id: 'exampleSection', label: 'Example', number: 3 }
   ];
 
   @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
@@ -68,17 +47,24 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
   ) {}
 
   // -----------------------
   // Lifecycle
   // -----------------------
   ngOnInit(): void {
-    // inicializa clases/estilos reactivos
-    this.setCurrentClasses();
-    this.setCurrentStyles();
-    console.log('✅ DirectivesComponent inicializado');
+    console.log('🆕 SignalsComponent inicializado');
+    this.http.get('https://jsonplaceholder.typicode.com/users')
+      .pipe(
+        map((data: any) => data.filter((u: any) => u.id < 5)),
+        catchError(err => {
+          console.error(err);
+          return of([]); // Devuelve un observable vacío si hay error
+        })
+      )
+      .subscribe(result => this.users = result);
   }
 
   ngAfterViewChecked() {
@@ -88,6 +74,10 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    // Esto evita que Prism se ejecute en el servidor y solo lo haga en el navegador.
+    if (typeof document !== 'undefined') {
+      Prism.highlightAll();
+    }
     // No ejecutar en SSR
     if (!isPlatformBrowser(this.platformId)) return;
 
@@ -153,11 +143,7 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('🧹 DirectivesComponent destruido');
-
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
+    console.log('🧹 SignalsComponent destruido');
 
     if (this.sectionObserver) {
       this.sectionObserver.disconnect();
@@ -168,11 +154,6 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
       win.removeEventListener('scroll', this.scrollHandler);
       win.removeEventListener('resize', this.scrollHandler);
     }
-
-    // limpiar referencias
-    this.items = [];
-    this.currentClasses = {};
-    this.currentStyles = {};
   }
 
   // -----------------------
@@ -189,39 +170,5 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setActiveStep(step: string): void {
     this.activeStep = step;
-  }
-
-  onToggleChange1(): void {
-    console.log('El switch cambió. Nuevo valor:', this.canSave);
-    this.setCurrentStyles();
-  }
-
-  onToggleChange2(): void {
-    console.log('El switch cambió. Nuevo valor:', this.isUnchanged);
-    this.setCurrentStyles();
-  }
-
-  onToggleChange3(): void {
-    console.log('El switch cambió. Nuevo valor:', this.isSpecial);
-    this.setCurrentStyles();
-  }
-
-  // -----------------------
-  // Métodos que actualizan clases/estilos
-  // -----------------------
-  setCurrentClasses(): void {
-    this.currentClasses = {
-      saveable: this.canSave,
-      modified: !this.isUnchanged,
-      special: this.isSpecial
-    };
-  }
-
-  setCurrentStyles(): void {
-    this.currentStyles = {
-      'font-style': this.canSave ? 'italic' : 'normal',
-      'font-weight': !this.isUnchanged ? 'bold' : 'normal',
-      'font-size': this.isSpecial ? '24px' : '12px'
-    };
   }
 }

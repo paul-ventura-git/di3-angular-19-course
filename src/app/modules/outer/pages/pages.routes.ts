@@ -8,8 +8,9 @@ import { ObservablesComponent } from './observables/observables.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { DependencyInjectionComponent } from './dependency-injection/dependency-injection.component';
 import { HttpMethodsComponent } from './http-methods/http-methods.component';
-import { NotFoundComponent } from '../../../shared/components/not-found/not-found.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { EventsComponent } from './events/events.component';
+import { SecurityComponent } from './security/security.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +23,8 @@ export const routes: Routes = [
   { path: 'services/observables', component: ObservablesComponent },
   { path: 'services/subscriptions', component: SubscriptionsComponent },
   { path: 'services/http-methods', component: HttpMethodsComponent },
-
+  { path: 'events', component: EventsComponent },
+  { path: 'security', component: SecurityComponent }
 ]
 
 

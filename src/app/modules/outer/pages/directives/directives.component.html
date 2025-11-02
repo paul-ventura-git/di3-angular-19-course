@@ -16,13 +16,28 @@
     </div>
     <div class="col-9">
       <h1 class="mt-4 mb-4">Directives</h1>
+      <!--WHATSECTION-->
+      <section #sectionRef id="whatSection" class="bg-light text-dark directives-section">
+        <h3 class="mb-4">¿Qué son las directivas?</h3>
+        <p>Una directiva es una instrucción que le dice a Angular cómo manipular el DOM (Document Object Model).
+        En otras palabras, extiende el comportamiento de los elementos HTML o de tus componentes personalizados.</p>
+        <p>Las directivas pueden:</p>
+        <ul>
+          <li>Cambiar la apariencia de un elemento.</li>
+          <li>Cambiar su comportamiento.</li>
+          <li>O crear estructuras dinámicas (por ejemplo, mostrar/ocultar o repetir elementos en la vista).</li>
+        </ul>
+
+      </section>
       <section #sectionRef id="ifSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">1. Conditionally display content with &#64;if (former *ngIf)</h3>
 
         <pre ngNonBindable class="card bg-dark text-white">
-          @if (a > b) {
-            {{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)
-          }
+          <code class="language-typescript">
+            &#64;if (a &gt; b) &#123;
+              &#123;&#123;a&#125;&#125; is greater than &#123;&#123;b&#125;&#125; // (Este mensaje solo se muestra cuando a es mayor que b)
+            &#125;
+          </code>
         </pre>
 
         @if (a > b) {
@@ -30,13 +45,15 @@
         }
 
         <pre ngNonBindable class="card bg-dark text-white">
-          @if (a > b) {
-            {{a}} is greater than {{b}}
-          } @else if (b > a) {
-            {{a}} is less than {{b}}
-          } @else {
-            {{a}} is equal to {{b}}
-          }
+          <code class="language-typescript">
+            &#64;if (a &gt; b) &#123;
+              &#123;&#123;a&#125;&#125; is greater than &#123;&#123;b&#125;&#125;
+            &#125; &#64;else if (b &gt; a) &#123;
+              &#123;&#123;a&#125;&#125; is less than &#123;&#123;b&#125;&#125;
+            &#125; &#64;else &#123;
+              &#123;&#123;a&#125;&#125; is equal to &#123;&#123;b&#125;&#125;
+            &#125;
+          </code>
         </pre>
 
         @if (a > b) {
@@ -52,11 +69,13 @@
         <h3 class="mb-4">2. Repeating content with &#64;for (former *ngFor)</h3>
 
         <pre ngNonBindable class="card bg-dark text-white">
-          @for (item of items; track item.id) {
-            &lt;li&gt;{{item.name}}&lt;/li&gt;
-          } @empty {
-            &lt;li aria-hidden="true"&gt; There are no items. &lt;/li&gt;
-          }
+          <code class="language-typescript">
+            &#64;for (item of items; track item.id) &#123;
+              &lt;li&gt;&#123;&#123;item.name&#125;&#125;&lt;/li&gt;
+            &#125; &#64;empty &#123;
+              &lt;li aria-hidden="true"&gt; There are no items. &lt;/li&gt;
+            &#125;
+          </code>
         </pre>
 
         @for (item of items; track item.id) {
@@ -84,20 +103,22 @@
         }
 
         <pre ngNonBindable class="card bg-dark text-white">
-          @switch (userPermissions) {
-            @case ('admin') {
-              &lt;p&gt;Se muestra el dashboard de "admin"&lt;/p&gt;
-            }
-            @case ('reviewer') {
-              &lt;p&gt;Se muestra el dashboard de "reviewer"&lt;/p&gt;
-            }
-            @case ('editor') {
-              &lt;p&gt;Se muestra el dashboard de "editor"&lt;/p&gt;
-            }
-            @default {
-              &lt;p&gt;Se muestra el dashboard de "viewer"&lt;/p&gt;
-            }
-          }
+          <code class="language-typescript">
+            &#64;switch (userPermissions) &#123;
+              &#64;case ('admin') &#123;
+                &lt;p&gt;Se muestra el dashboard de "admin"&lt;/p&gt;
+              &#125;
+              &#64;case ('reviewer') &#123;
+                &lt;p&gt;Se muestra el dashboard de "reviewer"&lt;/p&gt;
+              &#125;
+              &#64;case ('editor') &#123;
+                &lt;p&gt;Se muestra el dashboard de "editor"&lt;/p&gt;
+              &#125;
+              &#64;default &#123;
+                &lt;p&gt;Se muestra el dashboard de "viewer"&lt;/p&gt;
+              &#125;
+            &#125;
+          </code>
         </pre>
       </section>
 
