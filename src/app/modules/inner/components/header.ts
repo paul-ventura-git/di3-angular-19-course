@@ -9,7 +9,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
 @Component({
   selector: 'app-header',
   template: `
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
       <div class="container">
         <a class="navbar-brand mx-6" href="#">Sistema web con roles en Angular 20</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

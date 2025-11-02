@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'services/observables', component: ObservablesComponent },
   { path: 'services/subscriptions', component: SubscriptionsComponent },
   { path: 'services/http-methods', component: HttpMethodsComponent },
-  { path: '**', component: NotFoundComponent }
+
 ]
 
 

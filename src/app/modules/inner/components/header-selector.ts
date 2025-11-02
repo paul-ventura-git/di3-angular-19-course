@@ -11,7 +11,7 @@ import { User } from '../../../../../backend-vet'; // Adjust the import path as 
 @Component({
   selector: 'app-header-selector',
   template: `
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary pb-3">
     <div class="collapse navbar-collapse container" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>

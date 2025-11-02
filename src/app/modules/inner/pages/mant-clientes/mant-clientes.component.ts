@@ -1,49 +1,65 @@
-
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, signal, computed, effect } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CustomersService } from '../../../../core/services/customers.service';
+import { Customer } from '../../../../entity/Customer';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mant-clientes',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './mant-clientes.component.html',
-  styleUrl: './mant-clientes.component.css'
+  styleUrls: ['./mant-clientes.component.css']
 })
 export class MantClientesComponent implements OnInit {
-  customers: any[] = [];
+  /** ======================== DATOS CRUD ======================== **/
+  customers = signal<Customer[]>([]); // todos los clientes cargados
   selectedCustomer: any = null;
   editCustomer: any = null;
+
+  /** ======================== BUSCADOR ======================== **/
+  searchControl = new FormControl('');
+  // 👇 Convertimos el observable valueChanges a signal reactivo
+  searchValue = toSignal(this.searchControl.valueChanges, { initialValue: '' });
+
+  // 💡 computed se recalcula automáticamente cada vez que searchValue cambia
+  filteredCustomers = computed(() => {
+    const query = this.searchValue()?.toLowerCase() ?? '';
+    return this.customers().filter(customer =>
+      Object.values(customer).some(val =>
+        String(val).toLowerCase().includes(query)
+      )
+    );
+  });
 
   constructor(private customersService: CustomersService) {}
 
   ngOnInit(): void {
+    this.loadCustomers();
+  }
+
+  /** ======================== MÉTODOS CRUD ======================== **/
+  loadCustomers() {
     this.customersService.getCustomers().subscribe(data => {
-      this.customers = data.customers || data;
-      console.log(this.customers);
+      this.customers.set(data.customers || data);
     });
   }
 
   addCustomer(customer: any, form?: any) {
     this.customersService.createCustomer(customer).subscribe({
-      next: (data: any) => {
+      next: () => {
         alert('Cliente creado exitosamente');
-        this.customersService.getCustomers().subscribe(data => {
-          this.customers = data.customers || data;
-        });
-        // Cierra el modal de agregar cliente
+        this.loadCustomers();
         const modal = document.getElementById('customerModal');
         if (modal) {
           // @ts-ignore
           const bsModal = window.bootstrap.Modal.getInstance(modal);
           if (bsModal) bsModal.hide();
         }
-        if (form) {
-          form.resetForm();
-        }
+        form?.resetForm();
       },
-      error: (err) => {
-        alert('Error al crear el cliente: ' + err.message);
-      }
+      error: err => alert('Error al crear el cliente: ' + err.message)
     });
   }
 
@@ -71,10 +87,7 @@ export class MantClientesComponent implements OnInit {
     this.customersService.updateCustomer(this.editCustomer).subscribe({
       next: () => {
         alert('Cliente actualizado exitosamente');
-        this.customersService.getCustomers().subscribe(data => {
-          this.customers = data.customers || data;
-        });
-        // Cierra el modal
+        this.loadCustomers();
         const modal = document.getElementById('editarClienteModal');
         if (modal) {
           // @ts-ignore
@@ -82,32 +95,19 @@ export class MantClientesComponent implements OnInit {
           bsModal.hide();
         }
       },
-      error: (err) => {
-        alert('Error al actualizar el cliente: ' + err.message);
-      }
+      error: err => alert('Error al actualizar el cliente: ' + err.message)
     });
   }
 
   eliminarCliente(item: any) {
-    window.confirm(`¿Estás seguro de eliminar el cliente ${item.name}?`);
-    then((result: any) => {
-      if (result.isConfirmed) {
-        this.customersService.deleteCustomer(item.id).subscribe({
-          next: () => {
-            alert('Cliente eliminado exitosamente');
-            this.customersService.getCustomers().subscribe(data => {
-              this.customers = data.customers || data;
-            });
-          },
-          error: (err) => {
-            alert('Error al eliminar el cliente: ' + err.message);
-          }
-        });
-      }
-    });
+    if (window.confirm(`¿Estás seguro de eliminar el cliente ${item.name}?`)) {
+      this.customersService.deleteCustomer(item.id).subscribe({
+        next: () => {
+          alert('Cliente eliminado exitosamente');
+          this.loadCustomers();
+        },
+        error: err => alert('Error al eliminar el cliente: ' + err.message)
+      });
+    }
   }
-}
-
-function then(callback: (result: any) => void) {
-  callback({ isConfirmed: true });
 }
