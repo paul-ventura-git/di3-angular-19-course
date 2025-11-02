@@ -1,24 +1,17 @@
 import { Component, ElementRef, QueryList, ViewChildren, NgZone, Input } from '@angular/core';
 import { StepperComponent } from '../stepper/stepper.component';
 import { ScTitleComponent } from '../../subcomponents/sc-title/sc-title.component';
-import { SectionComponent } from '../section/section.component';
-import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-code-snippet.component';
 
 @Component({
   selector: 'app-base-page',
   standalone: true,
-  imports: [ StepperComponent, ScTitleComponent, SectionComponent ],
+  imports: [ StepperComponent, ScTitleComponent ],
   templateUrl: './base-page.component.html',
   styleUrl: './base-page.component.css',
 })
 export class BasePageComponent {
   // Propiedades del componente
   @Input() pageTitle: string = '';
-  @Input() sectionId: string = '';
-  @Input() sectionTitle: string = '';
-  @Input() sectionContent: string = '';
-  @Input() sectionCodeSample: string = '';
-  @Input() language: string = '';
 
   steps: any[] = [
     { id: 'whatSection', label: 'What are directives?', number: 1 },

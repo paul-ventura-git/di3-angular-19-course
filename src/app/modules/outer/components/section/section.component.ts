@@ -3,14 +3,14 @@ import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-c
 
 @Component({
   selector: 'app-section',
-  imports: [ ScCodeSnippetComponent],
+  imports: [],
   templateUrl: './section.component.html',
   styleUrl: './section.component.css',
 })
 export class SectionComponent {
-  @Input() sectionId: string = 'defaultSectionId';
-  @Input() sectionTitle: string = 'Default Section Title';
-  @Input() sectionContent: string = 'Default Section Content';
+  @Input() sectionId: string = '';
+  @Input() sectionTitle: string = '';
+  @Input() sectionContent: string = '';
   @Input() sectionCodeSample: string = '';
   @Input() language: string = '';
 }

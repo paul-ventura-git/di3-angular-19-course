@@ -14,10 +14,7 @@ import { CommonModule, NgClass } from '@angular/common';
   styleUrls: ['./sc-code-snippet.component.css']
 })
 export class ScCodeSnippetComponent implements AfterViewInit {
-  /** Código literal a mostrar */
   @Input() code: string = '';
-
-  /** Lenguaje para PrismJS (typescript, javascript, css, html, etc.) */
   @Input() language: string = 'typescript';
 
   /** Referencia al elemento <code> para aplicar PrismJS */

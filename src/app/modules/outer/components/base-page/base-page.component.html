@@ -13,14 +13,7 @@
         [titleText]="pageTitle"
       >
       </app-sc-title>
-      <app-section
-        [sectionId]="sectionId"
-        [sectionTitle]="sectionTitle"
-        [sectionContent]="sectionContent"
-        [sectionCodeSample]="sectionCodeSample"
-        [language]="language"
-      >
-      </app-section>
+      <ng-content></ng-content> <!-- CONTENT PROJECTION: Aquí se insertará el contenido proyectado -->
     </div>
   </div>
 </div>
