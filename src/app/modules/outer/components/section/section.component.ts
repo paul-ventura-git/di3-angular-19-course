@@ -9,6 +9,7 @@ import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-c
 })
 export class SectionComponent {
   @Input() sectionId: string = '';
+  @Input() sectionLabel: string = '';
   @Input() sectionTitle: string = '';
   @Input() sectionContent: string = '';
   @Input() sectionCodeSample: string = '';
