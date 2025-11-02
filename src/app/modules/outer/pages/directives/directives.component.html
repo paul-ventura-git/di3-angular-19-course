@@ -1,6 +1,6 @@
 <div class="component-directives container">
   <div class="row">
-    <div class="col-3">
+    <div class="col-3 text-bg-warning">
       <app-stepper
         [steps]="steps"
         [activeStep]="activeStep"
@@ -21,8 +21,9 @@
           <li>Cambiar su comportamiento.</li>
           <li>O crear estructuras dinámicas (por ejemplo, mostrar/ocultar o repetir elementos en la vista).</li>
         </ul>
-
       </section>
+
+      <!--IFSECTION -->
       <section #sectionRef id="ifSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">1. Conditionally display content with &#64;if (former *ngIf)</h3>
 
@@ -59,6 +60,7 @@
         }
       </section>
 
+      <!--FORSECTION -->
       <section #sectionRef id="forSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">2. Repeating content with &#64;for (former *ngFor)</h3>
 
@@ -79,6 +81,7 @@
         }
       </section>
 
+      <!--SWITCHSECTION -->
       <section #sectionRef id="switchSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
         @switch (userPermissions) {
@@ -116,6 +119,7 @@
         </pre>
       </section>
 
+      <!--NGCLASSSECTION -->
       <section #sectionRef id="ngClassSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">4. NgClass</h3>
         <div [ngClass]="currentClasses">
@@ -135,6 +139,7 @@
         </div>
       </section>
 
+      <!--NGSTYLESECTION -->
       <section #sectionRef id="ngStyleSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">5. NgStyle</h3>
         <div [ngStyle]="currentStyles">
@@ -142,6 +147,7 @@
         </div>
       </section>
 
+      <!--NGMODELSECTION -->
       <section #sectionRef id="ngModelSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">6. NgModel</h3>
         <p>Two-way data binding with ngModel</p>
@@ -150,11 +156,13 @@
           <input [(ngModel)]="abc">
       </section>
 
+      <!--NGONINITSECTION -->
       <section #sectionRef id="ngOnInitSection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">7. NgOnInit</h3>
         <p>Check the component code to see how ngOnInit is used to set initial styles and classes.</p>
       </section>
 
+      <!--NGONDESTROYSECTION -->
       <section #sectionRef id="ngOnDestroySection" class="bg-light text-dark directives-section">
         <h3 class="mb-4">8. NgOnDestroy</h3>
         <p>Check the component code to see how ngOnDestroy is used for cleanup.</p>

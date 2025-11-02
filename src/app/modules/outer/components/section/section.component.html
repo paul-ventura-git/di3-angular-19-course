@@ -1,0 +1,8 @@
+<section #sectionRef id="{{ sectionId }}" class="bg-light text-dark my-section">
+  <h3 class="mb-4">{{ sectionTitle }}</h3>
+  <p>{{ sectionContent }}</p>
+  <app-sc-code-snippet
+    [code]="sectionCodeSample"
+    [language]="language"
+  ></app-sc-code-snippet>
+</section>

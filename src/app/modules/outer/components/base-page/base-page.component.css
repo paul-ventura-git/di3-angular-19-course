@@ -1,0 +1,18 @@
+html {
+  scroll-behavior: smooth; /* animación suave al desplazarse */
+}
+
+section {
+  padding: 4rem 2rem;
+}
+
+.component-directives {
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.directives-section {
+  padding: 40px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}

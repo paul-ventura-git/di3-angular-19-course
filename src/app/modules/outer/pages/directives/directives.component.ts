@@ -38,7 +38,7 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
     { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
     { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
   ];
-  @Input() activeStep = '';
+  activeStep = '';
   @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
 
   private sectionObserver?: IntersectionObserver;
