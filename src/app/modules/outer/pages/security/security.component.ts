@@ -34,14 +34,5 @@ export class SecurityComponent {
       this.steps[i] = { id: this.sectionIds[i], label: this.sectionLabels[i], number: i+1}
     }
     console.log(this.steps);
-    /*
-    this.appBasePage.first.steps = [
-      { id: this.sectionIds[0] },
-      { id: this.sectionIds[1] },
-    ];
-    this.steps = this.appBasePage.first.steps
-    this.cd.detectChanges();
-    console.log(this.steps);
-    */
   }
 }

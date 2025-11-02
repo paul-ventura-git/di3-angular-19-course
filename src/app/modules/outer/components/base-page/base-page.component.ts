@@ -1,6 +1,7 @@
 import { Component, ElementRef, QueryList, ViewChildren, NgZone, Input } from '@angular/core';
 import { StepperComponent } from '../stepper/stepper.component';
 import { ScTitleComponent } from '../../subcomponents/sc-title/sc-title.component';
+import { Step } from '../../../../interfaces/interfaceStep';
 
 @Component({
   selector: 'app-base-page',
@@ -12,7 +13,8 @@ import { ScTitleComponent } from '../../subcomponents/sc-title/sc-title.componen
 export class BasePageComponent {
   // Propiedades del componente
   @Input() pageTitle: string = '';
-
+  @Input() steps: Step[] = [];
+  /*
   steps: any[] = [
     { id: 'whatSection', label: 'What are directives?', number: 1 },
     { id: 'ifSection', label: '@if', number: 2 },
@@ -24,6 +26,7 @@ export class BasePageComponent {
     { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
     { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
   ];
+  */
   activeStep = '';
 
   @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
