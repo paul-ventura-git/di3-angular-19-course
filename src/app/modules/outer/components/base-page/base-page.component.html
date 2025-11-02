@@ -9,17 +9,17 @@
       </app-stepper>
     </div>
     <div class="col-9">
-      <!--WHATSECTION-->
-      <app-sc-title [titleText]="'Directivas'"></app-sc-title>
-      <app-section
-        [sectionId]="'whatSection'"
-        [sectionTitle]="'¿Qué son las directivas?'"
-        [sectionContent]="'Las directivas son instrucciones en el DOM que le dicen a Angular cómo debe manipular elementos y componentes. Pueden cambiar la apariencia, el comportamiento o la estructura del DOM.'"
+      <app-sc-title
+        [titleText]="pageTitle"
       >
-        <app-sc-code-snippet
-          [code]="tsExample"
-          language="typescript"
-        ></app-sc-code-snippet>
+      </app-sc-title>
+      <app-section
+        [sectionId]="sectionId"
+        [sectionTitle]="sectionTitle"
+        [sectionContent]="sectionContent"
+        [sectionCodeSample]="sectionCodeSample"
+        [language]="language"
+      >
       </app-section>
     </div>
   </div>

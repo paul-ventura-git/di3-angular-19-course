@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren, NgZone } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, NgZone, Input } from '@angular/core';
 import { StepperComponent } from '../stepper/stepper.component';
 import { ScTitleComponent } from '../../subcomponents/sc-title/sc-title.component';
 import { SectionComponent } from '../section/section.component';
@@ -7,12 +7,19 @@ import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-c
 @Component({
   selector: 'app-base-page',
   standalone: true,
-  imports: [ StepperComponent, ScTitleComponent, SectionComponent, ScCodeSnippetComponent ],
+  imports: [ StepperComponent, ScTitleComponent, SectionComponent ],
   templateUrl: './base-page.component.html',
   styleUrl: './base-page.component.css',
 })
 export class BasePageComponent {
   // Propiedades del componente
+  @Input() pageTitle: string = '';
+  @Input() sectionId: string = '';
+  @Input() sectionTitle: string = '';
+  @Input() sectionContent: string = '';
+  @Input() sectionCodeSample: string = '';
+  @Input() language: string = '';
+
   steps: any[] = [
     { id: 'whatSection', label: 'What are directives?', number: 1 },
     { id: 'ifSection', label: '@if', number: 2 },
@@ -26,19 +33,14 @@ export class BasePageComponent {
   ];
   activeStep = '';
 
-  tsExample = `
-  function add(a: number, b: number): number {
-    return a + b;
-  }
-  console.log(add(2, 3));
-  `;
-
   @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
 
   constructor(
     private zone: NgZone,
     //@Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    //console.log(this.tsExample)
+  }
 
   scrollToSection(id: string): void {
     const section = this.sections.find(s => s.nativeElement.id === id);

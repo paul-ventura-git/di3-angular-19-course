@@ -1,12 +1,19 @@
 import { Component } from '@angular/core';
 import { BasePageComponent } from '../../components/base-page/base-page.component';
+import { SectionComponent } from '../../components/section/section.component';
 
 @Component({
   selector: 'app-security',
-  imports: [ BasePageComponent],
+  imports: [ BasePageComponent, SectionComponent],
   templateUrl: './security.component.html',
   styleUrls: ['./security.component.css'],
 })
 export class SecurityComponent {
+  tsExample = `
+    import { DomSanitizer } from '@angular/platform-browser';
 
+    constructor(private sanitizer: DomSanitizer) {}
+
+    const safeUrl = this.sanitizer.bypassSecurityTrustUrl(untrustedUrl);
+  `;
 }

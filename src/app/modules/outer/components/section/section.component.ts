@@ -12,5 +12,5 @@ export class SectionComponent {
   @Input() sectionTitle: string = 'Default Section Title';
   @Input() sectionContent: string = 'Default Section Content';
   @Input() sectionCodeSample: string = '';
-  @Input() language: string = 'typescript';
+  @Input() language: string = '';
 }

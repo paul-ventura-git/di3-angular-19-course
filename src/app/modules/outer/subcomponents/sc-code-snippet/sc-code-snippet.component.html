@@ -1,5 +1,4 @@
 <pre class="rounded p-3 bg-dark text-white overflow-auto">
-  <code #codeBlock [ngClass]="'language-' + language">
-    {{ code }}
+  <code #codeBlock [ngClass]="'language-' + language" [textContent]="code">
   </code>
 </pre>

@@ -1,1 +1,18 @@
-<app-base-page></app-base-page>
+<app-base-page
+  [pageTitle]="'Security in Angular'"
+  [sectionId]="'securitySection'"
+  [sectionTitle]="'Security in Angular Applications'"
+  [sectionContent]="'Angular provides several built-in security features to help protect your applications from common vulnerabilities such as XSS (Cross-Site Scripting) and CSRF (Cross-Site Request Forgery). It is important to follow best practices and use Angular\'s security mechanisms to ensure the safety of your applications.'"
+  [sectionCodeSample]="tsExample"
+  [language]="'typescript'"
+>
+Hola
+  <app-section
+    [sectionId]="'securitySection'"
+    [sectionTitle]="'Security in Angular Applications'"
+    [sectionContent]="'Angular provides several built-in security features to help protect your applications from common vulnerabilities such as XSS (Cross-Site Scripting) and CSRF (Cross-Site Request Forgery). It is important to follow best practices and use Angular\'s security mechanisms to ensure the safety of your applications.'"
+    [sectionCodeSample]="tsExample"
+    [language]="'typescript'"
+  >
+  </app-section>
+</app-base-page>
