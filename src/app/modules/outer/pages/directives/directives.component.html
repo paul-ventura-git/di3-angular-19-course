@@ -1,18 +1,12 @@
 <div class="component-directives container">
   <div class="row">
     <div class="col-3">
-      <div class="stepper-wrapper">
-        <ul class="stepper list-unstyled">
-          <li class="step"
-              *ngFor="let step of steps"
-              [class.active]="activeStep === step.id"
-              (click)="scrollToSection(step.id)"
-          >
-            <div class="step-icon bg-primary text-white">{{ step.number }}</div>
-            <div class="step-label">{{ step.label }}</div>
-          </li>
-        </ul>
-      </div>
+      <app-stepper
+        [steps]="steps"
+        [activeStep]="activeStep"
+        (stepClick)="scrollToSection($event)"
+      >
+      </app-stepper>
     </div>
     <div class="col-9">
       <h1 class="mt-4 mb-4">Directives</h1>

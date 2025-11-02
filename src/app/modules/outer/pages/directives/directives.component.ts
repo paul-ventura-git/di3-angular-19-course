@@ -8,23 +8,44 @@ import {
   QueryList,
   NgZone,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  Input
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
+import { StepperComponent } from '../../components/stepper/stepper.component';
 
 @Component({
   selector: 'app-directives',
   standalone: true,
-  imports: [NgClass, NgStyle, FormsModule, CommonModule],
+  imports: [NgClass, NgStyle, FormsModule, CommonModule, StepperComponent],
   templateUrl: './directives.component.html',
   styleUrls: ['./directives.component.css']
 })
 export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
-  // --- Datos y estado ---
+  // Propiedades del componente
+  steps: any[] = [
+    { id: 'whatSection', label: 'What are directives?', number: 1 },
+    { id: 'ifSection', label: '@if', number: 2 },
+    { id: 'forSection', label: '@for', number: 3 },
+    { id: 'switchSection', label: '@switch', number: 4 },
+    { id: 'ngClassSection', label: 'ngClass', number: 5 },
+    { id: 'ngStyleSection', label: 'ngStyle', number: 6 },
+    { id: 'ngModelSection', label: 'ngModel', number: 7 },
+    { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
+    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
+  ];
+  @Input() activeStep = '';
+  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
+
+  private sectionObserver?: IntersectionObserver;
+  private scrollHandler?: () => void;
+  private rafId: number | null = null;
+
+  // --- Datos y estado para explicación del curso ---
   a = 95;
   b = 5;
   abc = 'Hello World';
@@ -45,26 +66,6 @@ export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
   currentStyles: Record<string, string> = {};
 
   private timerSubscription?: Subscription;
-
-  steps = [
-    { id: 'whatSection', label: 'What are directives?', number: 1 },
-    { id: 'ifSection', label: '@if', number: 2 },
-    { id: 'forSection', label: '@for', number: 3 },
-    { id: 'switchSection', label: '@switch', number: 4 },
-    { id: 'ngClassSection', label: 'ngClass', number: 5 },
-    { id: 'ngStyleSection', label: 'ngStyle', number: 6 },
-    { id: 'ngModelSection', label: 'ngModel', number: 7 },
-    { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
-    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
-  ];
-
-  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
-
-  activeStep = '';
-
-  private sectionObserver?: IntersectionObserver;
-  private scrollHandler?: () => void;
-  private rafId: number | null = null;
 
   constructor(
     private zone: NgZone,
