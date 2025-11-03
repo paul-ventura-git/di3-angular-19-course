@@ -1,20 +1,15 @@
-<div class="component-directives container">
+<div class="container">
   <div class="row">
-    <div class="col-3 text-bg-warning">
+    <div class="col-3">
       <app-stepper
         [steps]="steps"
         [activeStep]="activeStep"
         (stepClick)="scrollToSection($event)"
-      >
-      </app-stepper>
+      ></app-stepper>
     </div>
     <div class="col-9">
-      <app-sc-title
-        [titleText]="pageTitle"
-      >
-      </app-sc-title>
-      <ng-content></ng-content> <!-- CONTENT PROJECTION: Aquí se insertará el contenido proyectado -->
+      <app-sc-title [title]="pageTitle"></app-sc-title>
+      <ng-content></ng-content>
     </div>
   </div>
 </div>
-

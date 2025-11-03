@@ -1,5 +1,13 @@
-.my-section {
-  padding: 40px;
-  border-radius: 5px;
-  margin-bottom: 30px;
+section {
+  scroll-margin-top: 80px; /* ayuda al scrollIntoView a no quedar oculto bajo navbars */
+}
+
+section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+section p {
+  color: #444;
+  line-height: 1.6;
 }

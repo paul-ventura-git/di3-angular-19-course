@@ -1,9 +1,5 @@
-<section
-  #sectionRef
-  id="sectionId"
-  class="bg-light text-dark my-section"
->
-  <h3 class="mb-4">{{ sectionTitle }}</h3>
+<section class="my-5 py-4 border-bottom" [attr.id]="sectionId">
+  <h2 class="mb-3">{{ sectionTitle }}</h2>
   <p>{{ sectionContent }}</p>
   <ng-content></ng-content>
 </section>

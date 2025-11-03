@@ -4,6 +4,7 @@
 >
   <!--WHATSECTION-->
   <app-section
+    id="'whatSection'"
     [sectionId]="'whatSection'"
     [sectionLabel]="'Intro'"
     [sectionTitle]="'Understanding Security in Angular'"
@@ -17,8 +18,37 @@
   </app-section>
   <!--XSSSECTION-->
   <app-section
+    id="'XSSSection'"
     [sectionId]="'XSSSection'"
     [sectionLabel]="'XSS'"
+    [sectionTitle]="'Understanding Security in Angular'"
+    [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
+  >
+    <app-sc-code-snippet
+      [code]="tsExample"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+  </app-section>
+  <!--DNSSECTION-->
+  <app-section
+    id="'DNSSection'"
+    [sectionId]="'DNSSection'"
+    [sectionLabel]="'DNS'"
+    [sectionTitle]="'Understanding Security in Angular'"
+    [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
+  >
+    <app-sc-code-snippet
+      [code]="tsExample"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+  </app-section>
+  <!--CSRF-->
+  <app-section
+    id="'CSRFSection'"
+    [sectionId]="'CSRFSection'"
+    [sectionLabel]="'CSRF'"
     [sectionTitle]="'Understanding Security in Angular'"
     [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
   >

@@ -1,48 +1,57 @@
-import { Component, ElementRef, QueryList, ViewChildren, NgZone, Input } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, ContentChildren, QueryList, AfterViewInit, NgZone, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { StepperComponent } from '../stepper/stepper.component';
 import { ScTitleComponent } from '../../subcomponents/sc-title/sc-title.component';
 import { Step } from '../../../../interfaces/interfaceStep';
+import { SectionComponent } from '../section/section.component';
 
 @Component({
   selector: 'app-base-page',
   standalone: true,
-  imports: [ StepperComponent, ScTitleComponent ],
+  imports: [StepperComponent, ScTitleComponent],
   templateUrl: './base-page.component.html',
-  styleUrl: './base-page.component.css',
+  styleUrls: ['./base-page.component.css'],
 })
-export class BasePageComponent {
-  // Propiedades del componente
-  @Input() pageTitle: string = '';
+export class BasePageComponent implements AfterViewInit {
+  @Input() pageTitle = '';
   @Input() steps: Step[] = [];
-  /*
-  steps: any[] = [
-    { id: 'whatSection', label: 'What are directives?', number: 1 },
-    { id: 'ifSection', label: '@if', number: 2 },
-    { id: 'forSection', label: '@for', number: 3 },
-    { id: 'switchSection', label: '@switch', number: 4 },
-    { id: 'ngClassSection', label: 'ngClass', number: 5 },
-    { id: 'ngStyleSection', label: 'ngStyle', number: 6 },
-    { id: 'ngModelSection', label: 'ngModel', number: 7 },
-    { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
-    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
-  ];
-  */
+  @ContentChildren(SectionComponent) sections!: QueryList<SectionComponent>;
+
   activeStep = '';
+  private observer?: IntersectionObserver;
 
-  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
+  constructor(private zone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {}
 
-  constructor(
-    private zone: NgZone,
-    //@Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    //console.log(this.tsExample)
+  ngAfterViewInit(): void {
+    // Solo ejecutar si estamos en el navegador
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    // 👁️ Configuramos el observador
+    this.observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            this.zone.run(() => (this.activeStep = id));
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    // Observa cada app-section
+    this.sections.forEach(s => {
+      const el = s.elementRef.nativeElement.querySelector('section');
+      if (el) this.observer!.observe(el);
+    });
   }
 
+  // 🔁 Scroll suave al hacer clic en el step
   scrollToSection(id: string): void {
-    const section = this.sections.find(s => s.nativeElement.id === id);
+    const section = this.sections.find(s => s.sectionId === id);
     if (section) {
-      section.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // aplicar activo inmediatamente al hacer click
+      const el = section.elementRef.nativeElement.querySelector('section');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       this.zone.run(() => (this.activeStep = id));
     }
   }

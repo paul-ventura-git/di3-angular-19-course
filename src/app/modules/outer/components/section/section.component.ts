@@ -1,17 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-code-snippet.component';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-section',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './section.component.html',
-  styleUrl: './section.component.css',
+  styleUrls: ['./section.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SectionComponent {
-  @Input() sectionId: string = '';
-  @Input() sectionLabel: string = '';
-  @Input() sectionTitle: string = '';
-  @Input() sectionContent: string = '';
-  @Input() sectionCodeSample: string = '';
-  @Input() language: string = '';
+  @Input() sectionId = '';
+  @Input() sectionLabel = '';
+  @Input() sectionTitle = '';
+  @Input() sectionContent = '';
+
+  constructor(public elementRef: ElementRef<HTMLElement>) {}
 }

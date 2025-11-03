@@ -1,13 +1,13 @@
-<div class="stepper-wrapper">
-  <h3 class="mt-5 px-5">Contenido</h3>
-  <ul class="stepper list-unstyled">
-    <li class="step"
-        *ngFor="let step of steps"
-        [class.active]="activeStep === step.id"
-        (click)="scrollToSection(step.id)"
+<div class="stepper-container">
+  <ul class="stepper-list">
+    <li
+      *ngFor="let step of steps"
+      (click)="scrollToSection(step.id)"
+      [class.active]="isActive(step.id)"
     >
-      <div class="step-icon bg-primary text-white">{{ step.number }}</div>
-      <div class="step-label">{{ step.label }}</div>
+      <span class="step-number">{{ step.number }}</span>
+      <span class="step-label">{{ step.label }}</span>
     </li>
   </ul>
 </div>
+
