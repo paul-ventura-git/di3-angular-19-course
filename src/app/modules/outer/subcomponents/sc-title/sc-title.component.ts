@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './sc-title.component.css',
 })
 export class ScTitleComponent {
-  @Input() titleText: string = 'Default Title';
+  @Input() titleText: string = '';
 }
