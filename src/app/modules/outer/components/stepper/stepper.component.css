@@ -6,7 +6,7 @@ html {
 .stepper-container {
   position: sticky;
   top: 60px;
-  width: 200px;
+  width: 300px;
   max-height: calc(100vh - 150px); /* 150px = altura aproximada del footer */
   overflow-y: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

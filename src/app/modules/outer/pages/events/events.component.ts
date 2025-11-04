@@ -1,61 +1,66 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ElementRef,
-  ViewChildren,
-  AfterViewInit,
-  AfterViewChecked,
-  QueryList,
-  NgZone,
-  Inject,
-  PLATFORM_ID
-} from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-typescript';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
+import { BasePageComponent } from '../../components/base-page/base-page.component';
+import { SectionComponent } from '../../components/section/section.component';
+import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-code-snippet.component';
+import { Step } from '../../../../interfaces/interfaceStep';
+import { StepsService } from '../../../../core/services/steps.service';
+
+import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-rxjs',
+  selector: 'app-events',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [BasePageComponent, SectionComponent, ScCodeSnippetComponent, CommonModule],
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  styleUrls: ['./events.component.css'],
 })
-export class EventsComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
-  // --- Datos y estado ---
+export class EventsComponent {
+  steps: Step[] = [];
+  sectionIds: string[] = [];
+  sectionLabels: string[] = [];
 
   users: any[] = [];
 
-  steps = [
-    { id: 'whatSection', label: '¿Qué es RxJS?', number: 1 },
-    { id: 'conceptsSection', label: 'Main Concepts', number: 2 },
-    { id: 'exampleSection', label: 'Example', number: 3 }
-  ];
+  v01rxjsExample = `
+    import { Component, OnInit } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+    import { map, catchError } from 'rxjs/operators';
+    import { of } from 'rxjs';
 
-  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
+    @Component({
+      selector: 'app-users',
+      template: \`<ul><li *ngFor="let user of users">{{ user.name }}</li></ul>\`
+    })
+    export class UsersComponent implements OnInit {
+      users: any[] = [];
 
-  activeStep = '';
+      constructor(private http: HttpClient) {}
 
-  private sectionObserver?: IntersectionObserver;
-  private scrollHandler?: () => void;
-  private rafId: number | null = null;
+      ngOnInit() {
+        this.http.get('https://jsonplaceholder.typicode.com/users')
+          .pipe(
+            map((data: any) => data.filter((u: any) => u.id < 5)),
+            catchError(err => {
+              console.error(err);
+              return of([]); // Devuelve un observable vacío si hay error
+            })
+          )
+          .subscribe(result => this.users = result);
+      }
+    }
+  `
 
-  constructor(
-    private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private http: HttpClient
-  ) {}
+  @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
-  // -----------------------
-  // Lifecycle
-  // -----------------------
-  ngOnInit(): void {
-    console.log('🆕 SignalsComponent inicializado');
+  constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.steps = this.stepsService.steps;
+
     this.http.get('https://jsonplaceholder.typicode.com/users')
       .pipe(
         map((data: any) => data.filter((u: any) => u.id < 5)),
@@ -67,108 +72,18 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
       .subscribe(result => this.users = result);
   }
 
-  ngAfterViewChecked() {
-    if (typeof document !== 'undefined') {
-      Prism.highlightAll();
-    }
-  }
+  ngAfterViewInit() {
+    this.sectionIds = this.appSections.map(s => s.sectionId);
+    this.sectionLabels = this.appSections.map(s => s.sectionLabel);
 
-  ngAfterViewInit(): void {
-    // Esto evita que Prism se ejecute en el servidor y solo lo haga en el navegador.
-    if (typeof document !== 'undefined') {
-      Prism.highlightAll();
-    }
-    // No ejecutar en SSR
-    if (!isPlatformBrowser(this.platformId)) return;
+    this.steps = this.sectionIds.map((id, i) => ({
+      id,
+      label: this.sectionLabels[i],
+      number: i + 1
+    }));
 
-    const win = window as unknown as Window & typeof globalThis;
+    this.stepsService.steps = this.steps;
 
-    // Si IntersectionObserver existe, usarlo
-    if (typeof (win as any).IntersectionObserver !== 'undefined') {
-      this.sectionObserver = new (win as any).IntersectionObserver(
-        (entries: IntersectionObserverEntry[]) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              // Aseguramos que Angular detecte el cambio
-              this.zone.run(() => (this.activeStep = entry.target.id));
-            }
-          });
-        },
-        { threshold: 0.6 }
-      );
-
-      this.sections.forEach(s => this.sectionObserver!.observe(s.nativeElement));
-      return;
-    }
-
-    // Fallback por scroll si IntersectionObserver no está disponible
-    console.warn('⚠️ IntersectionObserver no está disponible, usando fallback por scroll.');
-
-    const checkVisible = () => {
-      const vh = win.innerHeight || document.documentElement.clientHeight;
-      let bestId = this.activeStep;
-      let bestRatio = 0;
-
-      this.sections.forEach(s => {
-        const rect = s.nativeElement.getBoundingClientRect();
-        const height = rect.height <= 0 ? 1 : rect.height;
-        const intersectTop = Math.max(rect.top, 0);
-        const intersectBottom = Math.min(rect.bottom, vh);
-        const intersectionHeight = Math.max(0, intersectBottom - intersectTop);
-        const ratio = intersectionHeight / height;
-
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          bestId = s.nativeElement.id;
-        }
-      });
-
-      if (bestRatio >= 0.6 && this.activeStep !== bestId) {
-        this.zone.run(() => (this.activeStep = bestId));
-      }
-    };
-
-    this.scrollHandler = () => {
-      if (this.rafId != null) return;
-      this.rafId = win.requestAnimationFrame(() => {
-        checkVisible();
-        this.rafId = null;
-      });
-    };
-
-    // chequeo inicial y listeners
-    checkVisible();
-    win.addEventListener('scroll', this.scrollHandler!, { passive: true });
-    win.addEventListener('resize', this.scrollHandler!, { passive: true });
-  }
-
-  ngOnDestroy(): void {
-    console.log('🧹 SignalsComponent destruido');
-
-    if (this.sectionObserver) {
-      this.sectionObserver.disconnect();
-    }
-
-    if (typeof window !== 'undefined' && this.scrollHandler) {
-      const win = window as Window;
-      win.removeEventListener('scroll', this.scrollHandler);
-      win.removeEventListener('resize', this.scrollHandler);
-    }
-  }
-
-  // -----------------------
-  // Helpers / UI actions
-  // -----------------------
-  scrollToSection(id: string): void {
-    const section = this.sections.find(s => s.nativeElement.id === id);
-    if (section) {
-      section.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // aplicar activo inmediatamente al hacer click
-      this.zone.run(() => (this.activeStep = id));
-    }
-  }
-
-  setActiveStep(step: string): void {
-    this.activeStep = step;
+    this.cd.detectChanges();
   }
 }

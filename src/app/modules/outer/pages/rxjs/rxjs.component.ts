@@ -5,10 +5,16 @@ import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-c
 import { Step } from '../../../../interfaces/interfaceStep';
 import { StepsService } from '../../../../core/services/steps.service';
 
+import { OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
 @Component({
-  selector: 'app-security',
+  selector: 'app-rxjs',
   standalone: true,
-  imports: [BasePageComponent, SectionComponent, ScCodeSnippetComponent],
+  imports: [BasePageComponent, SectionComponent, ScCodeSnippetComponent, CommonModule],
   templateUrl: './rxjs.component.html',
   styleUrls: ['./rxjs.component.css'],
 })
@@ -16,18 +22,54 @@ export class RxjsComponent {
   steps: Step[] = [];
   sectionIds: string[] = [];
   sectionLabels: string[] = [];
-  tsExample = `
-    import { DomSanitizer } from '@angular/platform-browser';
-    constructor(private sanitizer: DomSanitizer) {}
-    const safeUrl = this.sanitizer.bypassSecurityTrustUrl(untrustedUrl);
-  `;
+
+  users: any[] = [];
+
+  v01rxjsExample = `
+    import { Component, OnInit } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+    import { map, catchError } from 'rxjs/operators';
+    import { of } from 'rxjs';
+
+    @Component({
+      selector: 'app-users',
+      template: \`<ul><li *ngFor="let user of users">{{ user.name }}</li></ul>\`
+    })
+    export class UsersComponent implements OnInit {
+      users: any[] = [];
+
+      constructor(private http: HttpClient) {}
+
+      ngOnInit() {
+        this.http.get('https://jsonplaceholder.typicode.com/users')
+          .pipe(
+            map((data: any) => data.filter((u: any) => u.id < 5)),
+            catchError(err => {
+              console.error(err);
+              return of([]); // Devuelve un observable vacío si hay error
+            })
+          )
+          .subscribe(result => this.users = result);
+      }
+    }
+  `
 
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
-  constructor(private cd: ChangeDetectorRef, private stepsService: StepsService) {}
+  constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}
 
   ngOnInit() {
     this.steps = this.stepsService.steps;
+
+    this.http.get('https://jsonplaceholder.typicode.com/users')
+      .pipe(
+        map((data: any) => data.filter((u: any) => u.id < 5)),
+        catchError(err => {
+          console.error(err);
+          return of([]); // Devuelve un observable vacío si hay error
+        })
+      )
+      .subscribe(result => this.users = result);
   }
 
   ngAfterViewInit() {

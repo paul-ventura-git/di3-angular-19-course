@@ -28,73 +28,56 @@
     [sectionTitle]="'Conceptos Principales en Rxjs'"
     [sectionContent]="''"
   >
-<table class="table">
-  <thead class="table-dark">
-    <tr>
-      <th scope="col">Concepto</th>
-      <th scope="col">Descripción</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Observable</th>
-      <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
-    </tr>
-    <tr>
-      <th scope="row">Observer (observador)</th>
-      <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
-    </tr>
-    <tr>
-      <th scope="row">Subscription (suscripción)</th>
-      <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con .unsubscribe().</td>
-    </tr>
-    <tr>
-    <th scope="row">Operators (operadores)</th>
-      <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: map, filter, mergeMap, switchMap, etc.</td>
-    </tr>
-    <tr>
-      <th scope="row">Subject</th>
-      <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
-    </tr>
-    <tr>
-      <th scope="row">Behavoir subject</th>
-      <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
-    </tr>
-  </tbody>
-</table>
-
-    <app-sc-code-snippet
-      [code]="tsExample"
-      language="typescript"
-    >
-    </app-sc-code-snippet>
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Concepto</th>
+          <th scope="col">Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Observable</th>
+          <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
+        </tr>
+        <tr>
+          <th scope="row">Observer (observador)</th>
+          <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
+        </tr>
+        <tr>
+          <th scope="row">Subscription (suscripción)</th>
+          <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con .unsubscribe().</td>
+        </tr>
+        <tr>
+        <th scope="row">Operators (operadores)</th>
+          <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: map, filter, mergeMap, switchMap, etc.</td>
+        </tr>
+        <tr>
+          <th scope="row">Subject</th>
+          <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
+        </tr>
+        <tr>
+          <th scope="row">Behavoir subject</th>
+          <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
+        </tr>
+      </tbody>
+    </table>
   </app-section>
   <!--DNSSECTION-->
   <app-section
-    id="'DNSSection'"
-    [sectionId]="'DNSSection'"
-    [sectionLabel]="'DNS'"
-    [sectionTitle]="'Understanding Security in Angular'"
+    id="'ejemploSection'"
+    [sectionId]="'ejemploSection'"
+    [sectionLabel]="'Ejemplo'"
+    [sectionTitle]="'Ejemplo'"
     [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
   >
     <app-sc-code-snippet
-      [code]="tsExample"
+      [code]="v01rxjsExample"
       language="typescript"
     >
     </app-sc-code-snippet>
-  </app-section>
-  <!--CSRF-->
-  <app-section
-    id="'CSRFSection'"
-    [sectionId]="'CSRFSection'"
-    [sectionLabel]="'CSRF'"
-    [sectionTitle]="'Understanding Security in Angular'"
-    [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
-  >
-    <app-sc-code-snippet
-      [code]="tsExample"
-      language="typescript"
-    >
-    </app-sc-code-snippet>
+
+    <p>Resultado:</p>
+    <ul><li *ngFor="let user of users">{{ user.name }}</li></ul>
   </app-section>
 </app-base-page>
