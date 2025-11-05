@@ -1,36 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+
 @Component({
-    selector: 'app-header',
-    standalone: true,
-    imports: [RouterModule],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.css'
+  selector: 'app-header',
+  standalone: true,
+  imports: [RouterModule],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+
   isDarkMode = false;
 
-  ngOnInit(): void {
-    const savedTheme = localStorage.getItem('theme');
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      this.applyTheme(savedTheme);
-    } else {
-      // Detecta la preferencia del sistema si no hay guardado válido
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.applyTheme(prefersDark ? 'dark' : 'light');
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // ✅ Solo se ejecuta en el navegador
+      const savedTheme = localStorage.getItem('theme');
+
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        this.applyTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        this.applyTheme(prefersDark ? 'dark' : 'light');
+      }
     }
   }
 
   toggleTheme(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    const newTheme = isChecked ? 'dark' : 'light';
-    this.applyTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+    if (isPlatformBrowser(this.platformId)) {
+      const isChecked = (event.target as HTMLInputElement).checked;
+      const newTheme = (isChecked ? 'dark' : 'light') as 'light' | 'dark';
+      this.applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
   }
 
   private applyTheme(theme: 'light' | 'dark'): void {
-    document.documentElement.setAttribute('data-bs-theme', theme);
-    this.isDarkMode = theme === 'dark';
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      this.isDarkMode = theme === 'dark';
+    }
   }
 }
