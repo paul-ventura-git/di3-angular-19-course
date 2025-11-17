@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, QueryList, signal, ViewChildren } from '@angular/core';
 import { BasePageComponent } from '../../components/base-page/base-page.component';
 import { SectionComponent } from '../../components/section/section.component';
 import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-code-snippet.component';
 import { Step } from '../../../../interfaces/interfaceStep';
 import { StepsService } from '../../../../core/services/steps.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -101,9 +102,19 @@ export class RxjsComponent {
     }
   `
 
+  safeUrl = signal<SafeResourceUrl | null>(null);
+
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
-  constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private stepsService: StepsService,
+    private http: HttpClient,
+    sanitizer: DomSanitizer
+  ) {
+    const url = 'https://www.youtube.com/embed/G7iQi_9WVkE?si=6jzgkiiUKZ4rJ9AV';
+    this.safeUrl.set(sanitizer.bypassSecurityTrustResourceUrl(url));
+  }
 
   ngOnInit() {
     this.steps = this.stepsService.steps;
