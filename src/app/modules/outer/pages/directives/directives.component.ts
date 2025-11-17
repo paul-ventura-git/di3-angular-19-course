@@ -1,228 +1,102 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ElementRef,
-  ViewChildren,
-  AfterViewInit,
-  QueryList,
-  NgZone,
-  Inject,
-  PLATFORM_ID,
-  Input
-} from '@angular/core';
-import { CommonModule, isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-typescript';
-import { StepperComponent } from '../../components/stepper/stepper.component';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
+import { BasePageComponent } from '../../components/base-page/base-page.component';
+import { SectionComponent } from '../../components/section/section.component';
+import { ScCodeSnippetComponent } from '../../subcomponents/sc-code-snippet/sc-code-snippet.component';
+import { Step } from '../../../../interfaces/interfaceStep';
+import { StepsService } from '../../../../core/services/steps.service';
+
+import { OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-directives',
   standalone: true,
-  imports: [NgClass, NgStyle, FormsModule, CommonModule, StepperComponent],
+  imports: [BasePageComponent, SectionComponent, ScCodeSnippetComponent, CommonModule],
   templateUrl: './directives.component.html',
-  styleUrls: ['./directives.component.css']
+  styleUrls: ['./directives.component.css'],
 })
-export class DirectivesComponent implements OnInit, AfterViewInit, OnDestroy {
-  // Propiedades del componente
-  steps: any[] = [
-    { id: 'whatSection', label: 'What are directives?', number: 1 },
-    { id: 'ifSection', label: '@if', number: 2 },
-    { id: 'forSection', label: '@for', number: 3 },
-    { id: 'switchSection', label: '@switch', number: 4 },
-    { id: 'ngClassSection', label: 'ngClass', number: 5 },
-    { id: 'ngStyleSection', label: 'ngStyle', number: 6 },
-    { id: 'ngModelSection', label: 'ngModel', number: 7 },
-    { id: 'ngOnInitSection', label: 'ngOnInit', number: 8 },
-    { id: 'ngOnDestroySection', label: 'ngOnDestroy', number: 9 }
-  ];
-  activeStep = '';
-  @ViewChildren('sectionRef') sections!: QueryList<ElementRef<HTMLElement>>;
+export class DirectivesComponent {
+  steps: Step[] = [];
+  sectionIds: string[] = [];
+  sectionLabels: string[] = [];
 
-  private sectionObserver?: IntersectionObserver;
-  private scrollHandler?: () => void;
-  private rafId: number | null = null;
+  users: any[] = [];
 
-  // --- Datos y estado para explicación del curso ---
-  a = 95;
-  b = 5;
-  abc = 'Hello World';
+  a="";
 
-  items = [
-    { id: 1, name: 'Item 1', value: 10 },
-    { id: 2, name: 'Item 2', value: 20 },
-    { id: 3, name: 'Item 3', value: 30 }
-  ];
+  directive01Example = `
+  import { Directive, TemplateRef, ViewContainerRef } from '@angular/core';
 
-  userPermissions = 'admin';
+  @Directive({
+    selector: '[appSi]'
+  })
+  export class SiDirective {
+    constructor(private tpl: TemplateRef<any>, private vcr: ViewContainerRef) {}
 
-  canSave = true;
-  isUnchanged = false;
-  isSpecial = true;
-
-  currentClasses: Record<string, boolean> = {};
-  currentStyles: Record<string, string> = {};
-
-  private timerSubscription?: Subscription;
-
-  constructor(
-    private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
-
-  // -----------------------
-  // Lifecycle
-  // -----------------------
-  ngOnInit(): void {
-    // inicializa clases/estilos reactivos
-    this.setCurrentClasses();
-    this.setCurrentStyles();
-    console.log('✅ DirectivesComponent inicializado');
-  }
-
-  ngAfterViewChecked() {
-    if (typeof document !== 'undefined') {
-      Prism.highlightAll();
+    @Input() set appSi(cond: boolean) {
+      cond ? this.vcr.createEmbeddedView(this.tpl) : this.vcr.clear();
     }
   }
+  `
 
-  ngAfterViewInit(): void {
-    // No ejecutar en SSR
-    if (!isPlatformBrowser(this.platformId)) return;
+  directive02Example = `
+  <div *appSi="mostrar">Esto se muestra si mostrar == true</div>
+  `
 
-    const win = window as unknown as Window & typeof globalThis;
+  directive03Example = `
+  @Directive({
+    selector: '[appResaltar]'
+  })
+  export class ResaltarDirective {
+    constructor(private el: ElementRef) {}
 
-    // Si IntersectionObserver existe, usarlo
-    if (typeof (win as any).IntersectionObserver !== 'undefined') {
-      this.sectionObserver = new (win as any).IntersectionObserver(
-        (entries: IntersectionObserverEntry[]) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              // Aseguramos que Angular detecte el cambio
-              this.zone.run(() => (this.activeStep = entry.target.id));
-            }
-          });
-        },
-        { threshold: 0.6 }
-      );
-
-      this.sections.forEach(s => this.sectionObserver!.observe(s.nativeElement));
-      return;
+    @HostListener('mouseenter') onEnter() {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
     }
 
-    // Fallback por scroll si IntersectionObserver no está disponible
-    console.warn('⚠️ IntersectionObserver no está disponible, usando fallback por scroll.');
-
-    const checkVisible = () => {
-      const vh = win.innerHeight || document.documentElement.clientHeight;
-      let bestId = this.activeStep;
-      let bestRatio = 0;
-
-      this.sections.forEach(s => {
-        const rect = s.nativeElement.getBoundingClientRect();
-        const height = rect.height <= 0 ? 1 : rect.height;
-        const intersectTop = Math.max(rect.top, 0);
-        const intersectBottom = Math.min(rect.bottom, vh);
-        const intersectionHeight = Math.max(0, intersectBottom - intersectTop);
-        const ratio = intersectionHeight / height;
-
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          bestId = s.nativeElement.id;
-        }
-      });
-
-      if (bestRatio >= 0.6 && this.activeStep !== bestId) {
-        this.zone.run(() => (this.activeStep = bestId));
-      }
-    };
-
-    this.scrollHandler = () => {
-      if (this.rafId != null) return;
-      this.rafId = win.requestAnimationFrame(() => {
-        checkVisible();
-        this.rafId = null;
-      });
-    };
-
-    // chequeo inicial y listeners
-    checkVisible();
-    win.addEventListener('scroll', this.scrollHandler!, { passive: true });
-    win.addEventListener('resize', this.scrollHandler!, { passive: true });
-  }
-
-  ngOnDestroy(): void {
-    console.log('🧹 DirectivesComponent destruido');
-
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
-
-    if (this.sectionObserver) {
-      this.sectionObserver.disconnect();
-    }
-
-    if (typeof window !== 'undefined' && this.scrollHandler) {
-      const win = window as Window;
-      win.removeEventListener('scroll', this.scrollHandler);
-      win.removeEventListener('resize', this.scrollHandler);
-    }
-
-    // limpiar referencias
-    this.items = [];
-    this.currentClasses = {};
-    this.currentStyles = {};
-  }
-
-  // -----------------------
-  // Helpers / UI actions
-  // -----------------------
-  scrollToSection(id: string): void {
-    const section = this.sections.find(s => s.nativeElement.id === id);
-    if (section) {
-      section.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // aplicar activo inmediatamente al hacer click
-      this.zone.run(() => (this.activeStep = id));
+    @HostListener('mouseleave') onLeave() {
+      this.el.nativeElement.style.backgroundColor = null;
     }
   }
+  `
 
-  setActiveStep(step: string): void {
-    this.activeStep = step;
+  directive04Example = `
+    <p appResaltar>Pasa el mouse por aquí</p>
+  `
+
+  @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
+
+  constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.steps = this.stepsService.steps;
+
+    this.http.get('https://jsonplaceholder.typicode.com/users')
+      .pipe(
+        map((data: any) => data.filter((u: any) => u.id < 5)),
+        catchError(err => {
+          console.error(err);
+          return of([]); // Devuelve un observable vacío si hay error
+        })
+      )
+      .subscribe(result => this.users = result);
   }
 
-  onToggleChange1(): void {
-    console.log('El switch cambió. Nuevo valor:', this.canSave);
-    this.setCurrentStyles();
-  }
+  ngAfterViewInit() {
+    this.sectionIds = this.appSections.map(s => s.sectionId);
+    this.sectionLabels = this.appSections.map(s => s.sectionLabel);
 
-  onToggleChange2(): void {
-    console.log('El switch cambió. Nuevo valor:', this.isUnchanged);
-    this.setCurrentStyles();
-  }
+    this.steps = this.sectionIds.map((id, i) => ({
+      id,
+      label: this.sectionLabels[i],
+      number: i + 1
+    }));
 
-  onToggleChange3(): void {
-    console.log('El switch cambió. Nuevo valor:', this.isSpecial);
-    this.setCurrentStyles();
-  }
+    this.stepsService.steps = this.steps;
 
-  // -----------------------
-  // Métodos que actualizan clases/estilos
-  // -----------------------
-  setCurrentClasses(): void {
-    this.currentClasses = {
-      saveable: this.canSave,
-      modified: !this.isUnchanged,
-      special: this.isSpecial
-    };
-  }
-
-  setCurrentStyles(): void {
-    this.currentStyles = {
-      'font-style': this.canSave ? 'italic' : 'normal',
-      'font-weight': !this.isUnchanged ? 'bold' : 'normal',
-      'font-size': this.isSpecial ? '24px' : '12px'
-    };
+    this.cd.detectChanges();
   }
 }

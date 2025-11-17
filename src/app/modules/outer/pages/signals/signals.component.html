@@ -1,22 +1,33 @@
 <app-base-page
-  [pageTitle]="'¿Qué es un signal?'"
+  [pageTitle]="'Signals'"
   [steps]="steps"
 >
-  <p>
-    En Angular 20, los signals son una nueva forma de manejar el estado reactivo, introducida oficialmente a partir de Angular 16 y ya totalmente integrada y optimizada en Angular 20.
-    Son una alternativa más simple, directa y predecible a las soluciones tradicionales como RxJS (Observables) y Change Detection basado en zonas.
-  </p>
-  <p>
-    Un signal es una fuente de datos reactiva que:
-  </p>
-  <ul>
-    <li>guarda un valor,</li>
-    <li>notifica automáticamente a cualquier parte del código que depende de él cuando ese valor cambia.</li>
-  </ul>
-  <p>
-    En pocas palabras: “Un signal es una variable reactiva que dispara actualizaciones automáticas en la vista o en otras funciones cuando su valor cambia.”
-  </p>
   <!--WHATSECTION-->
+  <app-section
+    id="'whatSection'"
+    [sectionId]="'whatSection'"
+    [sectionLabel]="'¿Qué es un Signal?'"
+    [sectionTitle]="'¿Qué es un Signal?'"
+    [sectionContent]="''"
+  >
+    <p>
+      En Angular 20, los signals son una nueva forma de manejar el estado reactivo, introducida oficialmente a partir de Angular 16 y ya totalmente integrada y optimizada en Angular 20.
+      Son una alternativa más simple, directa y predecible a las soluciones tradicionales como RxJS (Observables) y Change Detection basado en zonas.
+    </p>
+    <p>
+      Un signal es una fuente de datos reactiva que:
+    </p>
+    <ul>
+      <li>guarda un valor,</li>
+      <li>notifica automáticamente a cualquier parte del código que depende de él cuando ese valor cambia.</li>
+    </ul>
+    <p>
+      En pocas palabras: “Un signal es una variable reactiva que dispara actualizaciones automáticas en la vista o en otras funciones cuando su valor cambia.”
+    </p>
+  </app-section>
+
+
+  <!--METODOSPRINCIPALESSECTION-->
   <app-section
     id="'metodosPrincipalesSection'"
     [sectionId]="'metodosPrincipalesSection'"

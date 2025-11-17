@@ -61,6 +61,46 @@ export class RxjsComponent {
     user$.next({ name: 'Paul' });
   `
 
+  o07observablesExample = `
+    import { Injectable } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+
+    @Injectable({ providedIn: 'root' })
+    export class UsersService {
+      constructor(private http: HttpClient) {}
+
+      getUsers() {
+        return this.http.get<any[]>('https://jsonplaceholder.typicode.com/users');
+      }
+    }
+  `
+
+  o08observablesExample = `
+    import { Component } from '@angular/core';
+    import { CommonModule } from '@angular/common';
+    import { UsersService } from './users.service';
+
+    @Component({
+      selector: 'app-users',
+      standalone: true,
+      imports: [CommonModule],
+      template: \`
+        <h2>Usuarios</h2>
+
+        <ul>
+          <li *ngFor="let user of users$ | async">
+            {{ user.name }}
+          </li>
+        </ul>
+      \`
+    })
+    export class UsersComponent {
+      users$ = this.usersService.getUsers(); // <-- Observable
+
+      constructor(private usersService: UsersService) {}
+    }
+  `
+
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
   constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}

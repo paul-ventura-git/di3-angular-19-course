@@ -1,177 +1,200 @@
-<div class="component-directives container">
-  <div class="row">
-    <div class="col-3 text-bg-warning">
-      <app-stepper
-        [steps]="steps"
-        (stepClick)="scrollToSection($event)"
+<app-base-page
+  [pageTitle]="'Directivas'"
+  [steps]="steps"
+>
+  <!--WHATSECTION-->
+  <app-section
+    id="'whatSection'"
+    [sectionId]="'whatSection'"
+    [sectionLabel]="'¿Qué son las directivas'"
+    [sectionTitle]="'¿Qué son las directivas en Angular 20?'"
+    [sectionContent]="''"
+  >
+    <p>Una directiva es una instrucción que le dice a Angular cómo manipular el DOM (Document Object Model). En otras palabras, extiende el comportamiento de los elementos HTML o de tus componentes personalizados.</p>
+    <p>Las directivas pueden:</p>
+    <ul>
+      <li>Cambiar la apariencia de un elemento</li>
+      <li>Cambiar su comportamiento</li>
+      <li>Crear estructuras dinámicas</li>
+    </ul>
+  </app-section>
+  <!--TIPOSDEDIRECTIVASSECTION-->
+  <app-section
+    id="'tiposSection'"
+    [sectionId]="'tiposSection'"
+    [sectionLabel]="'Tipos de directivas'"
+    [sectionTitle]="'Tipos de directivas'"
+    [sectionContent]="''"
+  >
+    <h5>1. Directivas de componente (Component directives)</h5>
+    <p>Son directivas con plantilla.</p>
+    <p>De hecho, todo componente en Angular es una directiva + una vista.</p>
+    <ul>
+      <li>Tienen selector</li>
+      <li>Ofrecen HTML propio</li>
+      <li>Controlan una plantilla completa</li>
+    </ul>
+    <h5>2. Directivas estructurales (Structural directives)</h5>
+    <p>Cambian la estructura del DOM: agregan, quitan o reemplazan elementos.</p>
+    <p>Siempre llevan un asterisco <code>*</code> cuando se usan.</p>
+    <p>Ejemplo: *ngIf, *ngFor, *ngSwitch</p>
+    <p>Ejemplo de una directiva estructural personalizada:</p>
+    <app-sc-code-snippet
+        [code]="directive01Example"
+        language="typescript"
       >
-      </app-stepper>
-    </div>
-    <div class="col-9">
-      <h1 class="mt-4 mb-4">Directives</h1>
-      <!--WHATSECTION-->
-      <section #sectionRef id="whatSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">¿Qué son las directivas?</h3>
-        <p>Una directiva es una instrucción que le dice a Angular cómo manipular el DOM (Document Object Model).
-        En otras palabras, extiende el comportamiento de los elementos HTML o de tus componentes personalizados.</p>
-        <p>Las directivas pueden:</p>
-        <ul>
-          <li>Cambiar la apariencia de un elemento.</li>
-          <li>Cambiar su comportamiento.</li>
-          <li>O crear estructuras dinámicas (por ejemplo, mostrar/ocultar o repetir elementos en la vista).</li>
-        </ul>
-      </section>
-
-      <!--IFSECTION -->
-      <section #sectionRef id="ifSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">1. Conditionally display content with &#64;if (former *ngIf)</h3>
-
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            &#64;if (a &gt; b) &#123;
-              &#123;&#123;a&#125;&#125; is greater than &#123;&#123;b&#125;&#125; // (Este mensaje solo se muestra cuando a es mayor que b)
-            &#125;
-          </code>
-        </pre>
-
-        @if (a > b) {
-          <p>{{a}} is greater than {{b}} (Este mensaje solo se muestra cuando a es mayor que b)</p>
-        }
-
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            &#64;if (a &gt; b) &#123;
-              &#123;&#123;a&#125;&#125; is greater than &#123;&#123;b&#125;&#125;
-            &#125; &#64;else if (b &gt; a) &#123;
-              &#123;&#123;a&#125;&#125; is less than &#123;&#123;b&#125;&#125;
-            &#125; &#64;else &#123;
-              &#123;&#123;a&#125;&#125; is equal to &#123;&#123;b&#125;&#125;
-            &#125;
-          </code>
-        </pre>
-
-        @if (a > b) {
-          {{a}} is greater than {{b}}
-        } @else if (b > a) {
-          {{a}} is less than {{b}}
-        } @else {
-          {{a}} is equal to {{b}}
-        }
-      </section>
-
-      <!--FORSECTION -->
-      <section #sectionRef id="forSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">2. Repeating content with &#64;for (former *ngFor)</h3>
-
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            &#64;for (item of items; track item.id) &#123;
-              &lt;li&gt;&#123;&#123;item.name&#125;&#125;&lt;/li&gt;
-            &#125; &#64;empty &#123;
-              &lt;li aria-hidden="true"&gt; There are no items. &lt;/li&gt;
-            &#125;
-          </code>
-        </pre>
-
-        @for (item of items; track item.id) {
-          <li>{{item.name}}</li>
-        } @empty {
-          <li aria-hidden="true"> There are no items. </li>
-        }
-      </section>
-
-      <!--SWITCHSECTION -->
-      <section #sectionRef id="switchSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">3. Conditionally display content with &#64;switch (former *ngSwitch)</h3>
-        @switch (userPermissions) {
-          @case ('admin') {
-            <p>Se muestra el dashboard de "admin"</p>
-          }
-          @case ('reviewer') {
-            <p>Se muestra el dashboard de "reviewer"</p>
-          }
-          @case ('editor') {
-            <p>Se muestra el dashboard de "editor"</p>
-          }
-          @default {
-            <p>Se muestra el dashboard de "viewer"</p>
-          }
-        }
-
-        <pre ngNonBindable class="card bg-dark text-white">
-          <code class="language-typescript">
-            &#64;switch (userPermissions) &#123;
-              &#64;case ('admin') &#123;
-                &lt;p&gt;Se muestra el dashboard de "admin"&lt;/p&gt;
-              &#125;
-              &#64;case ('reviewer') &#123;
-                &lt;p&gt;Se muestra el dashboard de "reviewer"&lt;/p&gt;
-              &#125;
-              &#64;case ('editor') &#123;
-                &lt;p&gt;Se muestra el dashboard de "editor"&lt;/p&gt;
-              &#125;
-              &#64;default &#123;
-                &lt;p&gt;Se muestra el dashboard de "viewer"&lt;/p&gt;
-              &#125;
-            &#125;
-          </code>
-        </pre>
-      </section>
-
-      <!--NGCLASSSECTION -->
-      <section #sectionRef id="ngClassSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">4. NgClass</h3>
-        <div [ngClass]="currentClasses">
-          <p>This div is initially saveable ({{canSave}}), unchanged ({{isUnchanged}}), and special ({{isSpecial}}).</p>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="canSave" (change)="onToggleChange1()" checked>
-          <label class="form-check-label" for="switchCheckChecked">Saveable ("Guardable")</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isUnchanged" (change)="onToggleChange2()" unchecked>
-          <label class="form-check-label" for="switchCheckChecked">Unchanged ("Inmutable")</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="isSpecial" (change)="onToggleChange3()" checked>
-          <label class="form-check-label" for="switchCheckChecked">Special ("Especial")</label>
-        </div>
-      </section>
-
-      <!--NGSTYLESECTION -->
-      <section #sectionRef id="ngStyleSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">5. NgStyle</h3>
-        <div [ngStyle]="currentStyles">
-          This div is initially italic, normal weight, and extra large (24px).
-        </div>
-      </section>
-
-      <!--NGMODELSECTION -->
-      <section #sectionRef id="ngModelSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">6. NgModel</h3>
-        <p>Two-way data binding with ngModel</p>
-
-          <h5>{{abc}}</h5>
-          <input [(ngModel)]="abc">
-      </section>
-
-      <!--NGONINITSECTION -->
-      <section #sectionRef id="ngOnInitSection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">7. NgOnInit</h3>
-        <p>Check the component code to see how ngOnInit is used to set initial styles and classes.</p>
-      </section>
-
-      <!--NGONDESTROYSECTION -->
-      <section #sectionRef id="ngOnDestroySection" class="bg-light text-dark directives-section">
-        <h3 class="mb-4">8. NgOnDestroy</h3>
-        <p>Check the component code to see how ngOnDestroy is used for cleanup.</p>
-        <p>
-          Angular destruye el componente cuando navegas fuera de la ruta, incluso si el cambio está controlado por un guard.
-        </p>
-        <p>
-          Ver el guard: "CanDeactivate".
-        </p>
-      </section>
-    </div>
-  </div>
-</div>
+      </app-sc-code-snippet>
+      <p>Uso:</p>
+      <app-sc-code-snippet
+        [code]="directive02Example"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+    <h5>3. Directivas de atributo (Attribute directives)</h5>
+    <p>Modifican apariencia o comportamiento de un elemento existente. No cambian la estructura del DOM.</p>
+    <p>Siempre llevan un asterisco <code>*</code> cuando se usan.</p>
+    <p>Ejemplo: ngClass, ngStyle, ngModel</p>
+    <p>Ejemplo de una directiva de atributo personalizada:</p>
+    <app-sc-code-snippet
+        [code]="directive03Example"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+      <p>Uso:</p>
+      <app-sc-code-snippet
+        [code]="directive04Example"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+  </app-section>
+  <!--IFSECTION-->
+  <app-section
+    id="'ifSection'"
+    [sectionId]="'ifSection'"
+    [sectionLabel]="'@if'"
+    [sectionTitle]="'@if (*ngIf)'"
+    [sectionContent]="''"
+  >
+    <p>Angular 20 depende de RxJS para muchas operaciones clave:</p>
+    <h5>HTTPClient usa Observables</h5>
+      <p>Cada vez que haces:</p>
+      <app-sc-code-snippet
+        [code]="directive02Example"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+      <p>Estás recibiendo un Observable.</p>
+    <h5>Los formularios reactivos usan Observables</h5>
+      <p>Los FormControls exponen <code>valueChanges</code>, <code>statusChanges</code>, etc.</p>
+    <h5>El sistema de routing puede devolver Observables</h5>
+      <p>Parámetros de ruta, eventos del router, etc.</p>
+    <h5>Integración con Signals</h5>
+      <p>En Angular 16+ llegaron los signals.</p>
+      <p>En Angular 20, los signals coexisten con RxJS:</p>
+      <ul>
+        <li>signals: estado local reactivo</li>
+        <li>RxJS: flujos complejos, asincronía, streams externos</li>
+      </ul>
+      <p>Hay utilidades modernas como:</p>
+      <app-sc-code-snippet
+        [code]="directive02Example"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+  </app-section>
+  <!--CONCEPTOSPRINCIPALESSECTION-->
+  <app-section
+    id="'conceptosPrincipalesSection'"
+    [sectionId]="'conceptosPrincipalesSection'"
+    [sectionLabel]="'Conceptos Principales'"
+    [sectionTitle]="'Conceptos Principales en Rxjs'"
+    [sectionContent]="''"
+  >
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Concepto</th>
+          <th scope="col">Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Observable</th>
+          <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
+        </tr>
+        <tr>
+          <th scope="row">Observer (observador)</th>
+          <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
+        </tr>
+        <tr>
+          <th scope="row">Subscription (suscripción)</th>
+          <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con .unsubscribe().</td>
+        </tr>
+        <tr>
+        <th scope="row">Operators (operadores)</th>
+          <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: map, filter, mergeMap, switchMap, etc.</td>
+        </tr>
+        <tr>
+          <th scope="row">Subject</th>
+          <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
+        </tr>
+        <tr>
+          <th scope="row">Behavoir subject</th>
+          <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5>1. Observable</h5>
+    <p>Es un stream de datos:</p>
+    <app-sc-code-snippet
+        [code]="a"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <p>El caracter <code>$</code> es una convención para identificar Observables.</p>
+    <h5>2. Observer</h5>
+    <p>Es quien "escucha" al observable:</p>
+    <app-sc-code-snippet
+        [code]="a"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <h5>3. Operators</h5>
+    <p>RxJS sobresale por sus operadores (<code>pipe</code>):</p>
+    <app-sc-code-snippet
+        [code]="a"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <h5>4. Subjects</h5>
+    <p>Observables multicast, ideales para compartir estado o eventos.</p>
+    <app-sc-code-snippet
+        [code]="a"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+  </app-section>
+  <!--EJEMPLOSECTION-->
+  <app-section
+    id="'ejemploSection'"
+    [sectionId]="'ejemploSection'"
+    [sectionLabel]="'Ejemplo'"
+    [sectionTitle]="'Ejemplo'"
+    [sectionContent]="''"
+  >
+    <h5>1. Servicio (<code>users.service.ts</code>)</h5>
+    <p>Retorna un observable usando HttpClient.</p>
+    <app-sc-code-snippet
+      [code]="a"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+    <h5>2. Componente standalone (<code>users.component.ts</code>)</h5>
+    <p>El componente simplemente expone el Observable.</p>
+    <app-sc-code-snippet
+      [code]="a"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+  </app-section>
+</app-base-page>

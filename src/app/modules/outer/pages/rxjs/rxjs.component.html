@@ -129,16 +129,25 @@
       >
     </app-sc-code-snippet>
   </app-section>
-  <!--DNSSECTION-->
+  <!--EJEMPLOSECTION-->
   <app-section
     id="'ejemploSection'"
     [sectionId]="'ejemploSection'"
     [sectionLabel]="'Ejemplo'"
     [sectionTitle]="'Ejemplo'"
-    [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
+    [sectionContent]="''"
   >
+    <h5>1. Servicio (<code>users.service.ts</code>)</h5>
+    <p>Retorna un observable usando HttpClient.</p>
     <app-sc-code-snippet
-      [code]="o01observablesExample"
+      [code]="o07observablesExample"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+    <h5>2. Componente standalone (<code>users.component.ts</code>)</h5>
+    <p>El componente simplemente expone el Observable.</p>
+    <app-sc-code-snippet
+      [code]="o08observablesExample"
       language="typescript"
     >
     </app-sc-code-snippet>
