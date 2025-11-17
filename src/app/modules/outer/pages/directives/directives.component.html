@@ -72,129 +72,104 @@
     id="'ifSection'"
     [sectionId]="'ifSection'"
     [sectionLabel]="'@if'"
-    [sectionTitle]="'@if (*ngIf)'"
+    [sectionTitle]="'1. Mostrando contenido condicional con @if (*ngIf)'"
     [sectionContent]="''"
   >
-    <p>Angular 20 depende de RxJS para muchas operaciones clave:</p>
-    <h5>HTTPClient usa Observables</h5>
-      <p>Cada vez que haces:</p>
-      <app-sc-code-snippet
-        [code]="directive02Example"
-        language="typescript"
-      >
-      </app-sc-code-snippet>
-      <p>Estás recibiendo un Observable.</p>
-    <h5>Los formularios reactivos usan Observables</h5>
-      <p>Los FormControls exponen <code>valueChanges</code>, <code>statusChanges</code>, etc.</p>
-    <h5>El sistema de routing puede devolver Observables</h5>
-      <p>Parámetros de ruta, eventos del router, etc.</p>
-    <h5>Integración con Signals</h5>
-      <p>En Angular 16+ llegaron los signals.</p>
-      <p>En Angular 20, los signals coexisten con RxJS:</p>
-      <ul>
-        <li>signals: estado local reactivo</li>
-        <li>RxJS: flujos complejos, asincronía, streams externos</li>
-      </ul>
-      <p>Hay utilidades modernas como:</p>
-      <app-sc-code-snippet
-        [code]="directive02Example"
-        language="typescript"
-      >
-      </app-sc-code-snippet>
-  </app-section>
-  <!--CONCEPTOSPRINCIPALESSECTION-->
-  <app-section
-    id="'conceptosPrincipalesSection'"
-    [sectionId]="'conceptosPrincipalesSection'"
-    [sectionLabel]="'Conceptos Principales'"
-    [sectionTitle]="'Conceptos Principales en Rxjs'"
-    [sectionContent]="''"
-  >
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">Concepto</th>
-          <th scope="col">Descripción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Observable</th>
-          <td>Es la fuente del flujo de datos. Emite valores (sincrónicos o asincrónicos) a lo largo del tiempo.</td>
-        </tr>
-        <tr>
-          <th scope="row">Observer (observador)</th>
-          <td>Es el "suscriptor" que recibe los valores emitidos por el Observable.</td>
-        </tr>
-        <tr>
-          <th scope="row">Subscription (suscripción)</th>
-          <td>Representa la conexión entre el Observable y el Observer; se puede cancelar con .unsubscribe().</td>
-        </tr>
-        <tr>
-        <th scope="row">Operators (operadores)</th>
-          <td>Son funciones que permiten transformar, filtrar, combinar o manipular los datos emitidos por los Observables. Ej: map, filter, mergeMap, switchMap, etc.</td>
-        </tr>
-        <tr>
-          <th scope="row">Subject</th>
-          <td>Es un tipo especial de Observable que también puede emitir valores manualmente. Actúa como Observable + Observer a la vez.</td>
-        </tr>
-        <tr>
-          <th scope="row">Behavoir subject</th>
-          <td>Similar a Subject, pero almacena el último valor emitido, de modo que los nuevos suscriptores lo reciben inmediatamente.</td>
-        </tr>
-      </tbody>
-    </table>
-    <h5>1. Observable</h5>
-    <p>Es un stream de datos:</p>
     <app-sc-code-snippet
-        [code]="a"
-        language="typescript"
-      >
-    </app-sc-code-snippet>
-    <p>El caracter <code>$</code> es una convención para identificar Observables.</p>
-    <h5>2. Observer</h5>
-    <p>Es quien "escucha" al observable:</p>
-    <app-sc-code-snippet
-        [code]="a"
-        language="typescript"
-      >
-    </app-sc-code-snippet>
-    <h5>3. Operators</h5>
-    <p>RxJS sobresale por sus operadores (<code>pipe</code>):</p>
-    <app-sc-code-snippet
-        [code]="a"
-        language="typescript"
-      >
-    </app-sc-code-snippet>
-    <h5>4. Subjects</h5>
-    <p>Observables multicast, ideales para compartir estado o eventos.</p>
-    <app-sc-code-snippet
-        [code]="a"
-        language="typescript"
-      >
-    </app-sc-code-snippet>
-  </app-section>
-  <!--EJEMPLOSECTION-->
-  <app-section
-    id="'ejemploSection'"
-    [sectionId]="'ejemploSection'"
-    [sectionLabel]="'Ejemplo'"
-    [sectionTitle]="'Ejemplo'"
-    [sectionContent]="''"
-  >
-    <h5>1. Servicio (<code>users.service.ts</code>)</h5>
-    <p>Retorna un observable usando HttpClient.</p>
-    <app-sc-code-snippet
-      [code]="a"
+      [code]="directive05Example"
       language="typescript"
     >
     </app-sc-code-snippet>
-    <h5>2. Componente standalone (<code>users.component.ts</code>)</h5>
-    <p>El componente simplemente expone el Observable.</p>
     <app-sc-code-snippet
-      [code]="a"
+      [code]="directive06Example"
       language="typescript"
     >
     </app-sc-code-snippet>
   </app-section>
+  <!--FORSECTION-->
+  <app-section
+    id="'forSection'"
+    [sectionId]="'forSection'"
+    [sectionLabel]="'@for'"
+    [sectionTitle]="'2. Repitiendo contenido con @for (*ngFor)'"
+    [sectionContent]="''"
+  >
+    <app-sc-code-snippet
+      [code]="directive07Example"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+  </app-section>
+  <!--SWITCHSECTION-->
+  <app-section
+    id="'switchSection'"
+    [sectionId]="'switchSection'"
+    [sectionLabel]="'@switch'"
+    [sectionTitle]="'3. Mostrando contenido condicional con @switch (*ngSwitch)'"
+    [sectionContent]="''"
+  >
+    <app-sc-code-snippet
+      [code]="directive08Example"
+      language="typescript"
+    >
+    </app-sc-code-snippet>
+  </app-section>
+  <!--NGCLASSSECTION-->
+  <app-section
+    id="'ngclassSection'"
+    [sectionId]="'ngclassSection'"
+    [sectionLabel]="'@ngClass'"
+    [sectionTitle]="'4. ngClass'"
+    [sectionContent]="''"
+  >
+    <p>Este <code>div</code> es inicialmente guardable (true), no-cambiado (false) y especial (true).</p>
+    <p>Saveable("Guardable")</p>
+    <p>Unchanged("Sin cambios")</p>
+    <p>Special("Especial")</p>
+  </app-section>
+  <!--NGSTYLESECTION-->
+  <app-section
+    id="'ngstyleSection'"
+    [sectionId]="'ngstyleSection'"
+    [sectionLabel]="'@ngStyle'"
+    [sectionTitle]="'4. ngStyle'"
+    [sectionContent]="''"
+  >
+    <p>Este <code>div</code> es inicialmente en cursiva, peso normal, y extra-large.</p>
+  </app-section>
+  <!--NGMODELSECTION-->
+  <app-section
+    id="'ngmodelSection'"
+    [sectionId]="'ngmodelSection'"
+    [sectionLabel]="'@ngModel'"
+    [sectionTitle]="'4. ngModel'"
+    [sectionContent]="''"
+  >
+    <p>Binding en ambas direcciones con <code>ngModel</code>.</p>
+    <input>
+    <p>{{a}}</p>
+  </app-section>
+  <!--NGONINITSECTION-->
+  <app-section
+    id="'ngoninitSection'"
+    [sectionId]="'ngoninitSection'"
+    [sectionLabel]="'@ngOnInit'"
+    [sectionTitle]="'4. ngOnInit'"
+    [sectionContent]="''"
+  >
+    <p>Revisar el código para ver cómo se implementa.</p>
+  </app-section>
+  <!--NGONINITSECTION-->
+  <app-section
+    id="'ngondestroySection'"
+    [sectionId]="'ngondestroySection'"
+    [sectionLabel]="'@ngOnDestroy'"
+    [sectionTitle]="'4. ngOnDestroy'"
+    [sectionContent]="''"
+  >
+    <p>Revisar el código para ver cómo se implementa.</p>
+    <p>Angular destruye el componente cuando navegas fuera de la ruta, incluso si el cambio está controlado por un guard.</p>
+    <p>Ver el guard: "CanDeactivate".</p>
+  </app-section>
+
 </app-base-page>

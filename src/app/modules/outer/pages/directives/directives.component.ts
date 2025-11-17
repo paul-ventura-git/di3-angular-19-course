@@ -67,6 +67,47 @@ export class DirectivesComponent {
     <p appResaltar>Pasa el mouse por aquí</p>
   `
 
+  directive05Example = `
+    @if (a > b) {
+      {{a}} is greater than {{b}} // (Este mensaje solo se muestra cuando a es mayor que b)
+    }
+  `
+
+  directive06Example = `
+    @if (a > b) {
+      {{a}} is greater than {{b}}
+    } @else if (b > a) {
+      {{a}} is less than {{b}}
+    } @else {
+      {{a}} is equal to {{b}}
+    }
+  `
+
+  directive07Example = `
+    @for (item of items; track item.id) {
+      <li>{{item.name}}</li>
+    } @empty {
+      <li aria-hidden="true"> There are no items. </li>
+    }
+  `
+
+  directive08Example = `
+    @switch (userPermissions) {
+    @case ('admin') {
+      <p>Se muestra el dashboard de "admin"</p>
+    }
+    @case ('reviewer') {
+      <p>Se muestra el dashboard de "reviewer"</p>
+    }
+    @case ('editor') {
+      <p>Se muestra el dashboard de "editor"</p>
+    }
+    @default {
+      <p>Se muestra el dashboard de "viewer"</p>
+    }
+  }
+  `
+
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
   constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}
