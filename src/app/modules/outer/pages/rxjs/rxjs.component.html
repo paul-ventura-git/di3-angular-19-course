@@ -17,8 +17,32 @@
       <li>Eventos del usuario</li>
       <li>Temporizadores</li>
       <li>Streams en tiempo real</li>
+      <li>Gestión avanzada de concurrencia</li>
     </ul>
-    <p>Todo esto lo hace usando un modelo basado en streams (flujos) y observadores.</p>
+    <p>Todo esto lo hace usando un modelo basado en streams (flujos) y observadores.
+      Su unidad fundamental es el <b>Observable</b>, que "emite" valores con el tiempo.</p>
+  </app-section>
+  <!--USOS-->
+  <app-section
+    id="'usosSection'"
+    [sectionId]="'usosSection'"
+    [sectionLabel]="'Usos más comunes'"
+    [sectionTitle]="'Usos más comunes'"
+    [sectionContent]="''"
+  >
+    <p>Angular 20 depende de RxJS para muchas operaciones clave:</p>
+    <h5>HTTPClient usa Observables</h5>
+      <p>Cada vez que haces:</p>
+      <app-sc-code-snippet
+        [code]="o01observablesExample"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
+      <p>Estás recibiendo un Observable.</p>
+    <h5>Los formularios reactivos usan Observables</h5>
+      <p>Los FormControls exponen <code>valueChanges</code>, <code>statusChanges</code>, etc.</p>
+    <h5>El sistema de routing puede devolver Observables</h5>
+    <h5>Integración con Signals</h5>
   </app-section>
   <!--XSSSECTION-->
   <app-section
@@ -72,7 +96,7 @@
     [sectionContent]="'Security is a critical aspect of web development. In Angular, there are several built-in features and best practices to help ensure your application is secure against common vulnerabilities.'"
   >
     <app-sc-code-snippet
-      [code]="v01rxjsExample"
+      [code]="o01observablesExample"
       language="typescript"
     >
     </app-sc-code-snippet>

@@ -10,7 +10,6 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-
   isDarkMode = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}

@@ -25,33 +25,8 @@ export class RxjsComponent {
 
   users: any[] = [];
 
-  v01rxjsExample = `
-    import { Component, OnInit } from '@angular/core';
-    import { HttpClient } from '@angular/common/http';
-    import { map, catchError } from 'rxjs/operators';
-    import { of } from 'rxjs';
-
-    @Component({
-      selector: 'app-users',
-      template: \`<ul><li *ngFor="let user of users">{{ user.name }}</li></ul>\`
-    })
-    export class UsersComponent implements OnInit {
-      users: any[] = [];
-
-      constructor(private http: HttpClient) {}
-
-      ngOnInit() {
-        this.http.get('https://jsonplaceholder.typicode.com/users')
-          .pipe(
-            map((data: any) => data.filter((u: any) => u.id < 5)),
-            catchError(err => {
-              console.error(err);
-              return of([]); // Devuelve un observable vacío si hay error
-            })
-          )
-          .subscribe(result => this.users = result);
-      }
-    }
+  o01observablesExample = `
+    this.http.get('/api/users')
   `
 
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
