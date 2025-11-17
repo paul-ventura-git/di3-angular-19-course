@@ -29,6 +29,38 @@ export class RxjsComponent {
     this.http.get('/api/users')
   `
 
+  o02observablesExample = `
+    toSignal(observable)
+    toObservable(signal)
+  `
+
+  o03observablesExample = `
+    const obs$ = new Observable(observer => {
+      observer.next('Hola');
+      observer.next('Mundo');
+      observer.complete();
+    });
+  `
+
+  o04observablesExample = `
+    obs$.subscribe(value => console.log(value));
+  `
+
+  o05observablesExample = `
+    this.http.get('/api/users')
+      .pipe(
+        map(users => users.length),
+        filter(count => count > 0),
+        delay(1000)
+      )
+      .subscribe(console.log);
+  `
+
+  o06observablesExample = `
+    const user$ = new BehaviorSubject(null);
+    user$.next({ name: 'Paul' });
+  `
+
   @ViewChildren(SectionComponent) appSections!: QueryList<SectionComponent>;
 
   constructor(private cd: ChangeDetectorRef, private stepsService: StepsService, private http: HttpClient) {}

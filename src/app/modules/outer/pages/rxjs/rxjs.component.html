@@ -22,7 +22,7 @@
     <p>Todo esto lo hace usando un modelo basado en streams (flujos) y observadores.
       Su unidad fundamental es el <b>Observable</b>, que "emite" valores con el tiempo.</p>
   </app-section>
-  <!--USOS-->
+  <!--USOSSECTION-->
   <app-section
     id="'usosSection'"
     [sectionId]="'usosSection'"
@@ -42,9 +42,22 @@
     <h5>Los formularios reactivos usan Observables</h5>
       <p>Los FormControls exponen <code>valueChanges</code>, <code>statusChanges</code>, etc.</p>
     <h5>El sistema de routing puede devolver Observables</h5>
+      <p>Parámetros de ruta, eventos del router, etc.</p>
     <h5>Integración con Signals</h5>
+      <p>En Angular 16+ llegaron los signals.</p>
+      <p>En Angular 20, los signals coexisten con RxJS:</p>
+      <ul>
+        <li>signals: estado local reactivo</li>
+        <li>RxJS: flujos complejos, asincronía, streams externos</li>
+      </ul>
+      <p>Hay utilidades modernas como:</p>
+      <app-sc-code-snippet
+        [code]="o02observablesExample"
+        language="typescript"
+      >
+      </app-sc-code-snippet>
   </app-section>
-  <!--XSSSECTION-->
+  <!--CONCEPTOSPRINCIPALESSECTION-->
   <app-section
     id="'conceptosPrincipalesSection'"
     [sectionId]="'conceptosPrincipalesSection'"
@@ -86,6 +99,35 @@
         </tr>
       </tbody>
     </table>
+    <h5>1. Observable</h5>
+    <p>Es un stream de datos:</p>
+    <app-sc-code-snippet
+        [code]="o03observablesExample"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <p>El caracter <code>$</code> es una convención para identificar Observables.</p>
+    <h5>2. Observer</h5>
+    <p>Es quien "escucha" al observable:</p>
+    <app-sc-code-snippet
+        [code]="o04observablesExample"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <h5>3. Operators</h5>
+    <p>RxJS sobresale por sus operadores (<code>pipe</code>):</p>
+    <app-sc-code-snippet
+        [code]="o05observablesExample"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
+    <h5>4. Subjects</h5>
+    <p>Observables multicast, ideales para compartir estado o eventos.</p>
+    <app-sc-code-snippet
+        [code]="o06observablesExample"
+        language="typescript"
+      >
+    </app-sc-code-snippet>
   </app-section>
   <!--DNSSECTION-->
   <app-section
