@@ -3,16 +3,16 @@
   <p>[This is the component app-user-profile]</p>
 
   <h3>Binding dynamic [properties] (for example, in a button)</h3>
-  <button type="button" class="btn btn-warning" attr.aria-label="Save changes to {{ objectType }}">aria-label</button>
+  <button type="button" class="btn btn-warning" attr.aria-label="Save changes to {{ objectType }}">{{objectType}}</button>
   <p>Inspeccionar elemento y ver el atributo aria-label.</p>
 
-  <h3>Binding CSS Classes (styles are applied when TRUE)</h3>
+  <h3>Binding CSS Classes (styles are applied when TRUE. Estilos condicionales)</h3>
   <ul [class.expanded]="isExpanded">
     <li>item 1</li>
   </ul>
 
   <h3>Two-way binding</h3>
-  <h5>Hello {{ firstName }}!</h5>
+  <h5>Hello, {{ firstName }}!</h5>
   <input type="text" [(ngModel)]="firstName" />
   <br/>
   <br/>
