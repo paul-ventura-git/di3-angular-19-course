@@ -1,112 +1,128 @@
-import { Component, OnInit, signal, computed, effect } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { CustomersService } from '../../../../core/services/customers.service';
-import { Customer } from '../../../../entity/Customer';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-ventas',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './ventas.component.html',
-  styleUrl: './ventas.component.css',
+selector: 'app-ventas',
+standalone: true,
+imports: [CommonModule, ReactiveFormsModule],
+templateUrl: './ventas.component.html'
 })
-export class VentasComponent implements OnInit {
-  /** ======================== DATOS CRUD ======================== **/
-  customers = signal<Customer[]>([]); // todos los clientes cargados
-  selectedCustomer: any = null;
-  editCustomer: any = null;
 
-  /** ======================== BUSCADOR ======================== **/
-  searchControl = new FormControl('');
-  // 👇 Convertimos el observable valueChanges a signal reactivo
-  searchValue = toSignal(this.searchControl.valueChanges, { initialValue: '' });
+export class VentasComponent {
 
-  // 💡 computed se recalcula automáticamente cada vez que searchValue cambia
-  filteredCustomers = computed(() => {
-    const query = this.searchValue()?.toLowerCase() ?? '';
-    return this.customers().filter(customer =>
-      Object.values(customer).some(val =>
-        String(val).toLowerCase().includes(query)
-      )
-    );
-  });
+formVenta: FormGroup;
 
-  constructor(private customersService: CustomersService) {}
+tasaIGV = 0.18;
 
-  ngOnInit(): void {
-    this.loadCustomers();
-  }
+productos = [
+{ nombre: "Laptop", precio: 3500 },
+{ nombre: "Mouse", precio: 50 },
+{ nombre: "Teclado", precio: 120 },
+{ nombre: "Monitor", precio: 900 }
+];
 
-  /** ======================== MÉTODOS CRUD ======================== **/
-  loadCustomers() {
-    this.customersService.getCustomers().subscribe(data => {
-      this.customers.set(data.customers || data);
-    });
-  }
+constructor(private fb: FormBuilder) {
 
-  addCustomer(customer: any, form?: any) {
-    this.customersService.createCustomer(customer).subscribe({
-      next: () => {
-        alert('Cliente creado exitosamente');
-        this.loadCustomers();
-        const modal = document.getElementById('customerModal');
-        if (modal) {
-          // @ts-ignore
-          const bsModal = window.bootstrap.Modal.getInstance(modal);
-          if (bsModal) bsModal.hide();
-        }
-        form?.resetForm();
-      },
-      error: err => alert('Error al crear el cliente: ' + err.message)
-    });
-  }
+this.formVenta = this.fb.group({
 
-  verCliente(item: any) {
-    this.selectedCustomer = item;
-    const modal = document.getElementById('verClienteModal');
-    if (modal) {
-      // @ts-ignore
-      const bsModal = new window.bootstrap.Modal(modal);
-      bsModal.show();
-    }
-  }
+codigo: [''],
+fechaHora: [''],
+cliente: [''],
 
-  abrirEditarCliente(item: any) {
-    this.editCustomer = { ...item };
-    const modal = document.getElementById('editarClienteModal');
-    if (modal) {
-      // @ts-ignore
-      const bsModal = new window.bootstrap.Modal(modal);
-      bsModal.show();
-    }
-  }
+detalle: this.fb.array([]),
 
-  updateCustomer(form: any) {
-    this.customersService.updateCustomer(this.editCustomer).subscribe({
-      next: () => {
-        alert('Cliente actualizado exitosamente');
-        this.loadCustomers();
-        const modal = document.getElementById('editarClienteModal');
-        if (modal) {
-          // @ts-ignore
-          const bsModal = window.bootstrap.Modal.getInstance(modal);
-          if (bsModal) bsModal.hide();
-        }
-      },
-      error: err => alert('Error al actualizar el cliente: ' + err.message)
-    });
-  }
+monto: [{value:0, disabled:true}]
 
-  eliminarCliente(item: any) {
-    if (window.confirm(`¿Estás seguro de eliminar el cliente ${item.name}?`)) {
-      this.customersService.deleteCustomer(item.id).subscribe({
-        next: () => {
-          alert('Cliente eliminado exitosamente');
-          this.loadCustomers();
-        },
-        error: err => alert('Error al eliminar el cliente: ' + err.message)
-      });
-    }
-  }
+});
+
+this.agregarProducto();
+
+}
+
+get detalle(): FormArray {
+
+return this.formVenta.get('detalle') as FormArray;
+
+}
+
+crearFila(): FormGroup {
+
+return this.fb.group({
+
+producto: ['', Validators.required],
+precio: [{value:0, disabled:true}],
+cantidad: [1, [Validators.required, Validators.min(1)]],
+igv: [{value:0, disabled:true}],
+subtotal: [{value:0, disabled:true}]
+
+});
+
+}
+
+agregarProducto() {
+
+this.detalle.push(this.crearFila());
+
+}
+
+eliminarProducto(index:number) {
+
+this.detalle.removeAt(index);
+this.calcularTotal();
+
+}
+
+seleccionarProducto(index:number) {
+
+const fila = this.detalle.at(index);
+
+const nombreProducto = fila.get('producto')?.value;
+
+const encontrado = this.productos.find(p => p.nombre === nombreProducto);
+
+if(encontrado){
+
+fila.get('precio')?.setValue(encontrado.precio);
+
+}
+
+this.calcularFila(index);
+
+}
+
+calcularFila(index:number){
+
+const fila = this.detalle.at(index);
+
+const precio = fila.get('precio')?.value || 0;
+const cantidad = fila.get('cantidad')?.value || 0;
+
+const base = precio * cantidad;
+
+const igv = base * this.tasaIGV;
+
+const subtotal = base + igv;
+
+fila.get('igv')?.setValue(igv);
+fila.get('subtotal')?.setValue(subtotal);
+
+this.calcularTotal();
+
+}
+
+calcularTotal(){
+
+let total = 0;
+
+this.detalle.controls.forEach(fila => {
+
+total += fila.get('subtotal')?.value || 0;
+
+});
+
+this.formVenta.get('monto')?.setValue(total);
+
+}
+
 }

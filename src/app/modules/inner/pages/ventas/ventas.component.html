@@ -1,146 +1,162 @@
-<div class="container myTables">
-  <h1 class="my-5">Mantenimiento de Clientes</h1>
-  <div class="row mb-2">
-    <div class="col-8">
-      <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#clienteModal">Nuevo cliente</button>
-    </div>
-    <div class="col-4 text-end">
-      <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Buscar en la tabla..."
-          [formControl]="searchControl"
-        >
-      </div>
-    </div>
-  </div>
-  <div class="table-responsive rounded-2 overflow-hidden">
-    <table class="table table-striped table-hover align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Email</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Dirección</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of filteredCustomers(); track item.id) {
-          <tr>
-            <td>{{item.name}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.phone}}</td>
-            <td>{{item.address}}</td>
-            <td>
-              <div class="d-flex gap-2">
-                <button type="button" class="btn btn-primary text-white flex-grow-1" (click)="verCliente(item)">Ver</button>
-                <button type="button" class="btn btn-secondary text-white flex-grow-1" (click)="abrirEditarCliente(item)">Editar</button>
-                <button type="button" class="btn btn-danger flex-grow-1" (click)="eliminarCliente(item)">Eliminar</button>
-              </div>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+<div class="container mt-4">
 
-  <span class="badge bg-secondary">Total de clientes: {{(customers().length)}}</span>
-  <!-- Modal agregar producto -->
-  <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="customerModalLabel">Agregar nuevo Cliente</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form #customerForm="ngForm" (ngSubmit)="addCustomer(customerForm.value, customerForm)">
-            <input type="text" class="form-control" placeholder="Nombre" name="name" ngModel>
-            <br>
-              <input type="text" class="form-control" placeholder="Email" name="email" ngModel>
-              <br>
-                <input type="text" class="form-control" placeholder="Teléfono" name="phone" ngModel>
-                <br>
-                  <input type="text" class="form-control" placeholder="Dirección" name="address" ngModel>
-                  <br>
-                    <div class="d-flex justify-content-end gap-2">
-                      <button type="submit" class="btn text-white" style="background-color: #dc3545;">Agregar Cliente</button>
-                      <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="card shadow">
 
-          <!-- Modal Detalles Producto -->
-          <div class="modal fade" id="verClienteModal" tabindex="-1" aria-labelledby="verClienteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="verClienteModalLabel">Detalles del Cliente</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                @if (selectedCustomer) {
-                  <div class="modal-body">
-                    @if (selectedCustomer.image) {
-                      <div class="mb-3 text-center">
-                        <img [src]="selectedCustomer.image" alt="Imagen del cliente" class="img-fluid rounded" style="max-height:180px;">
-                      </div>
-                    }
-                    <ul class="list-group">
-                      <li class="list-group-item"><strong>Nombre:</strong> {{selectedCustomer.name}}</li>
-                      <li class="list-group-item"><strong>Email:</strong> {{selectedCustomer.email}}</li>
-                      <li class="list-group-item"><strong>Phone:</strong> {{selectedCustomer.phone}}</li>
-                      <li class="list-group-item"><strong>Address:</strong> {{selectedCustomer.address}}</li>
-                    </ul>
-                  </div>
-                }
-                <div class="modal-footer">
-                  <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="card-header bg-primary text-white">
+<h5 class="mb-0">Registro de Venta</h5>
+</div>
 
-          <!-- Modal Editar Producto -->
-          <div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="editarClienteModalLabel">Editar cliente</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  @if (editCustomer) {
-                    <form #editForm="ngForm" (ngSubmit)="updateCustomer(editForm)">
-                      <label for="editTitle" class="form-label"><strong>Nombre:</strong></label>
-                      <input id="editTitle" type="text" class="form-control" placeholder="Nombre" name="name" [(ngModel)]="editCustomer.name">
-                      <br>
-                      <label for="editDescription" class="form-label"><strong>Email:</strong></label>
-                      <input id="editDescription" type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="editCustomer.email">
-                      <br>
-                      <label for="editCategory" class="form-label"><strong>Telefóno:</strong></label>
-                      <input id="editCategory" type="text" class="form-control" placeholder="Teléfono" name="phone" [(ngModel)]="editCustomer.phone">
-                      <br>
-                      <label for="editPrice" class="form-label"><strong>Dirección:</strong></label>
-                      <input id="editPrice" type="number" class="form-control" placeholder="Dirección" name="address" [(ngModel)]="editCustomer.address">
-                      <br>
-                      <div class="d-flex justify-content-end gap-2">
-                        <button type="submit" class="btn text-white" style="background-color: #6f42c1;">Guardar Cambios</button>
-                        <button type="button" class="btn text-white" style="background-color: #6c757d;" data-bs-dismiss="modal">Cerrar</button>
-                      </div>
-                    </form>
-                          }
-                        </div>
-                        <div class="modal-footer"></div>
-                      </div>
-                    </div>
-                  </div>
+<div class="card-body">
 
-                </div>
+<form [formGroup]="formVenta">
 
+<!-- DATOS GENERALES -->
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Código</label>
+<input class="form-control" formControlName="codigo">
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Fecha y hora</label>
+<input type="datetime-local" class="form-control" formControlName="fechaHora">
+</div>
+
+<div class="col-md-12">
+<label class="form-label">Cliente</label>
+<input class="form-control" formControlName="cliente">
+</div>
+
+</div>
+
+<hr class="my-4">
+
+<h5>Detalle</h5>
+
+<div class="table-responsive">
+
+<table class="table table-bordered align-middle">
+
+<thead class="table-light">
+<tr>
+<th>Producto</th>
+<th>Precio</th>
+<th>Cantidad</th>
+<th>IGV</th>
+<th>Subtotal</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody formArrayName="detalle">
+
+<tr *ngFor="let fila of detalle.controls; let i=index"
+[formGroupName]="i">
+
+<td>
+
+<select class="form-select"
+formControlName="producto"
+(change)="seleccionarProducto(i)">
+
+<option value="">Seleccione</option>
+
+<option *ngFor="let p of productos"
+[value]="p.nombre">
+
+{{p.nombre}}
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<input class="form-control"
+formControlName="precio"
+readonly>
+
+</td>
+
+<td>
+
+<input type="number"
+class="form-control"
+formControlName="cantidad"
+min="1"
+step="1"
+(input)="calcularFila(i)">
+
+</td>
+
+<td>
+
+<input class="form-control"
+formControlName="igv"
+readonly>
+
+</td>
+
+<td>
+
+<input class="form-control"
+formControlName="subtotal"
+readonly>
+
+</td>
+
+<td class="text-center">
+
+<button type="button"
+class="btn btn-danger btn-sm"
+(click)="eliminarProducto(i)">
+
+Eliminar
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button
+type="button"
+class="btn btn-outline-primary"
+(click)="agregarProducto()">
+
+Agregar producto
+
+</button>
+
+<hr class="my-4">
+
+<div class="row">
+
+<div class="col-md-4 ms-auto">
+
+<label class="form-label fw-bold">Monto Total</label>
+
+<input
+class="form-control form-control-lg text-end"
+formControlName="monto"
+readonly>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+</div>
