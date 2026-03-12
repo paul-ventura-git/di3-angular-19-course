@@ -11,118 +11,88 @@ templateUrl: './ventas.component.html'
 
 export class VentasComponent {
 
-formVenta: FormGroup;
+  formVenta: FormGroup;
 
-tasaIGV = 0.18;
+  tasaIGV = 0.18;
 
-productos = [
-{ nombre: "Laptop", precio: 3500 },
-{ nombre: "Mouse", precio: 50 },
-{ nombre: "Teclado", precio: 120 },
-{ nombre: "Monitor", precio: 900 }
-];
+  productos = [
+    { nombre: "Laptop", precio: 3500 },
+    { nombre: "Mouse", precio: 50 },
+    { nombre: "Teclado", precio: 120 },
+    { nombre: "Monitor", precio: 900 }
+  ];
 
-constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {
+    this.formVenta = this.fb.group({
+      codigo: [''],
+      fechaHora: [''],
+      cliente: [''],
 
-this.formVenta = this.fb.group({
+      detalle: this.fb.array([]),
+      monto: [{value:0, disabled:true}]
+    });
+    this.agregarProducto();
+  }
 
-codigo: [''],
-fechaHora: [''],
-cliente: [''],
+  get detalle(): FormArray {
 
-detalle: this.fb.array([]),
+    return this.formVenta.get('detalle') as FormArray;
 
-monto: [{value:0, disabled:true}]
+  }
 
-});
+  crearFila(): FormGroup {
+    return this.fb.group({
+      producto: ['', Validators.required],
+      precio: [{value:0, disabled:true}],
+      cantidad: [1, [Validators.required, Validators.min(1)]],
+      igv: [{value:0, disabled:true}],
+      subtotal: [{value:0, disabled:true}]
+    });
+  }
 
-this.agregarProducto();
+  agregarProducto() {
+    this.detalle.push(this.crearFila());
+  }
 
-}
+  eliminarProducto(index:number) {
+    this.detalle.removeAt(index);
+    this.calcularTotal();
+  }
 
-get detalle(): FormArray {
+  seleccionarProducto(index:number) {
+    const fila = this.detalle.at(index);
+    const nombreProducto = fila.get('producto')?.value;
+    const encontrado = this.productos.find(p => p.nombre === nombreProducto);
 
-return this.formVenta.get('detalle') as FormArray;
+    if(encontrado){
+      fila.get('precio')?.setValue(encontrado.precio);
+    }
+    this.calcularFila(index);
+  }
 
-}
+  calcularFila(index:number){
+    const fila = this.detalle.at(index);
 
-crearFila(): FormGroup {
+    const precio = fila.get('precio')?.value || 0;
+    const cantidad = fila.get('cantidad')?.value || 0;
 
-return this.fb.group({
+    const base = precio * cantidad;
+    const igv = base * this.tasaIGV;
+    const subtotal = base + igv;
 
-producto: ['', Validators.required],
-precio: [{value:0, disabled:true}],
-cantidad: [1, [Validators.required, Validators.min(1)]],
-igv: [{value:0, disabled:true}],
-subtotal: [{value:0, disabled:true}]
+    fila.get('igv')?.setValue(igv);
+    fila.get('subtotal')?.setValue(subtotal);
 
-});
+    this.calcularTotal();
+  }
 
-}
+  calcularTotal(){
+    let total = 0;
 
-agregarProducto() {
+    this.detalle.controls.forEach(fila => {
+      total += fila.get('subtotal')?.value || 0;
+    });
 
-this.detalle.push(this.crearFila());
-
-}
-
-eliminarProducto(index:number) {
-
-this.detalle.removeAt(index);
-this.calcularTotal();
-
-}
-
-seleccionarProducto(index:number) {
-
-const fila = this.detalle.at(index);
-
-const nombreProducto = fila.get('producto')?.value;
-
-const encontrado = this.productos.find(p => p.nombre === nombreProducto);
-
-if(encontrado){
-
-fila.get('precio')?.setValue(encontrado.precio);
-
-}
-
-this.calcularFila(index);
-
-}
-
-calcularFila(index:number){
-
-const fila = this.detalle.at(index);
-
-const precio = fila.get('precio')?.value || 0;
-const cantidad = fila.get('cantidad')?.value || 0;
-
-const base = precio * cantidad;
-
-const igv = base * this.tasaIGV;
-
-const subtotal = base + igv;
-
-fila.get('igv')?.setValue(igv);
-fila.get('subtotal')?.setValue(subtotal);
-
-this.calcularTotal();
-
-}
-
-calcularTotal(){
-
-let total = 0;
-
-this.detalle.controls.forEach(fila => {
-
-total += fila.get('subtotal')?.value || 0;
-
-});
-
-this.formVenta.get('monto')?.setValue(total);
-
-}
-
+    this.formVenta.get('monto')?.setValue(total);
+  }
 }
