@@ -11,7 +11,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
   template: `
     <nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
       <div class="container">
-        <a class="navbar-brand mx-6" href="#">Sistema web con roles en Angular 20</a>
+        <a class="navbar-brand mx-2 px-4" href="#">Intranet</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,7 +24,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 routerLinkActive="active"
                 routerLink="/intranet"
               >
-                Mascotas
+                Galería
               </a>
             </li>
             <li class="nav-item">
@@ -32,9 +32,9 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
                 class="nav-link active"
                 *hasRole="['veterinary', 'admin']"
                 routerLinkActive="active"
-                routerLink="/intranet/citas"
+                routerLink="/intranet/ventas"
               >
-                Citas
+                Ventas
               </a>
             </li>
             <li class="nav-item">

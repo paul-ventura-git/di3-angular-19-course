@@ -7,9 +7,9 @@ export default [
     loadComponent: () => import('./mascotas/mascotas.component').then(m => m.MascotasComponent), // public
   },
   {
-    path: 'citas',
+    path: 'ventas',
     canActivate: [hasRoleGuard(['veterinary', 'admin'])],
-    loadComponent: () => import('./citas/citas.component').then(m => m.CitasComponent), // sales
+    loadComponent: () => import('./ventas/ventas.component').then(m => m.VentasComponent), // sales
   },
   {
     path: 'historial',
