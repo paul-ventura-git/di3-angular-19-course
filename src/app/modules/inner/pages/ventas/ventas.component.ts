@@ -10,11 +10,8 @@ templateUrl: './ventas.component.html'
 })
 
 export class VentasComponent {
-
   formVenta: FormGroup;
-
   tasaIGV = 0.18;
-
   productos = [
     { nombre: "Laptop", precio: 3500 },
     { nombre: "Mouse", precio: 50 },
@@ -30,7 +27,6 @@ export class VentasComponent {
       dniCliente: [''],
       telefonoCliente: [''],
       emailCliente: [''],
-
       detalle: this.fb.array([]),
       monto: [{value:0, disabled:true}]
     });
@@ -38,9 +34,11 @@ export class VentasComponent {
   }
 
   get detalle(): FormArray {
-
     return this.formVenta.get('detalle') as FormArray;
+  }
 
+  agregarProducto() {
+    this.detalle.push(this.crearFila());
   }
 
   crearFila(): FormGroup {
@@ -51,10 +49,6 @@ export class VentasComponent {
       igv: [{value:0, disabled:true}],
       subtotal: [{value:0, disabled:true}]
     });
-  }
-
-  agregarProducto() {
-    this.detalle.push(this.crearFila());
   }
 
   eliminarProducto(index:number) {
@@ -75,17 +69,13 @@ export class VentasComponent {
 
   calcularFila(index:number){
     const fila = this.detalle.at(index);
-
     const precio = fila.get('precio')?.value || 0;
     const cantidad = fila.get('cantidad')?.value || 0;
-
     const base = precio * cantidad;
     const igv = base * this.tasaIGV;
     const subtotal = base + igv;
-
     fila.get('igv')?.setValue(igv);
     fila.get('subtotal')?.setValue(subtotal);
-
     this.calcularTotal();
   }
 
