@@ -26,7 +26,10 @@ export class VentasComponent {
     this.formVenta = this.fb.group({
       codigo: [''],
       fechaHora: [''],
-      cliente: [''],
+      nombreCliente: [''],
+      dniCliente: [''],
+      telefonoCliente: [''],
+      emailCliente: [''],
 
       detalle: this.fb.array([]),
       monto: [{value:0, disabled:true}]

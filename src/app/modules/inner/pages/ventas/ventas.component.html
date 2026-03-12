@@ -9,16 +9,29 @@
         <!-- DATOS GENERALES -->
         <div class="row g-3">
           <div class="col-md-6">
-            <label class="form-label">Código</label>
+            <label class="form-label">Código:</label>
             <input class="form-control" formControlName="codigo">
           </div>
           <div class="col-md-6">
-            <label class="form-label">Fecha y hora</label>
+            <label class="form-label">Fecha y hora:</label>
             <input type="datetime-local" class="form-control" formControlName="fechaHora">
           </div>
-          <div class="col-md-12">
-            <label class="form-label">Cliente</label>
-            <input class="form-control" formControlName="cliente">
+        </div>
+        <div class="row">
+          <label class="form-label mt-3 mb-2">Datos del cliente:</label>
+        </div>
+        <div class="row border bg-light pt-2 pb-4 m-1 rounded">
+          <div class="col-md-6">
+            <label class="form-label">Nombre: </label>
+            <input class="form-control" formControlName="nombreCliente">
+            <label class="form-label">DNI: </label>
+            <input class="form-control" formControlName="dniCliente">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Teléfono: </label>
+            <input class="form-control" formControlName="telefonoCliente">
+            <label class="form-label">Email: </label>
+            <input class="form-control" formControlName="emailCliente">
           </div>
         </div>
 
