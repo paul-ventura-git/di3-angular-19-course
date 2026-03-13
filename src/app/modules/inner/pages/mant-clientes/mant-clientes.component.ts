@@ -20,10 +20,10 @@ export class MantClientesComponent implements OnInit {
 
   /** ======================== BUSCADOR ======================== **/
   searchControl = new FormControl('');
-  // 👇 Convertimos el observable valueChanges a signal reactivo
+  // Convertimos el observable valueChanges a signal reactivo
   searchValue = toSignal(this.searchControl.valueChanges, { initialValue: '' });
 
-  // 💡 computed se recalcula automáticamente cada vez que searchValue cambia
+  // computed se recalcula automáticamente cada vez que searchValue cambia
   filteredCustomers = computed(() => {
     const query = this.searchValue()?.toLowerCase() ?? '';
     return this.customers().filter(customer =>

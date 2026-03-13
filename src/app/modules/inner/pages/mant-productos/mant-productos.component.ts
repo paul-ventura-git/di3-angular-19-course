@@ -1,23 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed, effect } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ProductsService } from '../../../../core/services/products.service';
-import { FormsModule } from '@angular/forms';
-
+import { Product } from '../../../../entity/Product'
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mant-productos',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './mant-productos.component.html',
-  styleUrls: ['./mant-productos.component.css'],
-  imports: [FormsModule]
+  styleUrls: ['./mant-productos.component.css']
 })
 export class MantProductosComponent implements OnInit {
-  products: any[] = [];
+  /** ======================== DATOS CRUD ======================== **/
+  products = signal<Product[]>([]);
   selectedProduct: any = null;
   editProduct: any = null;
+
+  /** ======================== BUSCADOR ======================== **/
+  searchControl = new FormControl('');
+  // Convertimos el observable valueChanges a signal reactivo
+  searchValue = toSignal(this.searchControl.valueChanges, { initialValue: '' });
+
+  // computed se recalcula automáticamente cada vez que searchValue cambia
+  filteredProducts = computed(() => {
+    const query = this.searchValue()?.toLowerCase() ?? '';
+    return this.products().filter(product =>
+      Object.values(product).some(val =>
+        String(val).toLowerCase().includes(query)
+      )
+    );
+  });
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
+    /*
     this.productsService.getProducts().subscribe(data => {
       this.products = data.products || data;
+    });
+    */
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsService.getProducts().subscribe(data => {
+      this.products.set(data.products || data);
     });
   }
 
@@ -77,7 +105,7 @@ export class MantProductosComponent implements OnInit {
         if (modal) {
           // @ts-ignore
           const bsModal = window.bootstrap.Modal.getInstance(modal);
-          bsModal.hide();
+          if (bsModal) bsModal.hide();
         }
       },
       error: (err) => {
