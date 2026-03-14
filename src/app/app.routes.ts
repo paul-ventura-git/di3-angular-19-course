@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { hasRoleGuard } from './core/guards/has-role.guard';
 
 export const routes: Routes = [
   {

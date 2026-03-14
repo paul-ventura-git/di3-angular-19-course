@@ -1,36 +1,48 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow">
   <div class="container">
-    <a class="navbar-brand" href="#">Angular 20 Tutorial</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">Magdeburg Shop</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink="">Home</a>
+          <a class="nav-link" routerLink="">Home</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="gallery">Gallery</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="binding">Binding</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="directives">Directives</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="signals">Signals</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="rxjs">RxJS</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="reactive-forms">Reactive Forms</a>
         </li>
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
             Services
           </a>
+
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="services/dependency-injection">Dependency Injection</a></li>
             <li><a class="dropdown-item" routerLink="services/observables">Observables</a></li>
@@ -40,28 +52,229 @@
             <li><a class="dropdown-item" routerLink="services/interceptors">Interceptors</a></li>
           </ul>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="events">Eventos</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="security">Seguridad</a>
         </li>
+
       </ul>
-      <div class="form-check form-switch ms-auto mr-2">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          id="themeSwitch"
-          [checked]="isDarkMode"
-          (change)="toggleTheme($event)"
-        />
-        <label class="form-check-label" for="themeSwitch">
-          {{ isDarkMode ? '🌙' : '☀️' }}
-        </label>
+
+      <!-- USER AVATAR -->
+      <div
+        class="dropdown mx-3"
+        *hasRole="['customer']"
+      >
+        <a
+          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://i.pravatar.cc/40?img=12"
+            alt="avatar"
+            width="32"
+            height="32"
+            class="rounded-circle me-2"
+          >
+          Hola, {{userName}}
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" routerLink="profile">
+              <i class="bi bi-person"></i> Profile
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="settings">
+              <i class="bi bi-gear"></i> Settings
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-item d-flex justify-content-between align-items-center">
+              <span>
+                <i class="bi bi-palette"></i> Appearance
+              </span>
+              <div class="form-check form-switch m-0">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="themeSwitch"
+                  [checked]="isDarkMode"
+                  (change)="toggleTheme($event)"
+                >
+              </div>
+
+            </div>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="billing">
+              <i class="bi bi-credit-card"></i> Billing
+            </a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item text-danger" routerLink="auth/logout">
+              <i class="bi bi-box-arrow-right"></i> Sign Out
+            </a>
+          </li>
+        </ul>
       </div>
-      <button class="btn btn-primary mx-2" type="button">
-        <a class="nav-link" routerLink="auth/login">Login</a>
+
+      <!-- BOTÓN CART -->
+      <button
+        *hasRole="['customer']"
+        class="btn btn-outline-light position-relative d-flex align-items-center justify-content-center me-3"
+        style="width:42px;height:42px;"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#shoppingCart"
+      >
+
+        <i class="bi bi-cart3"></i>
+
+        <span
+          *ngIf="cart.totalItems() > 0"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+          {{cart.totalItems()}}
+
+        </span>
+
       </button>
+
+      <!-- NOTIFICATIONS -->
+      <button
+        *hasRole="['customer']"
+        class="btn btn-outline-light position-relative d-flex align-items-center justify-content-center me-3"
+        style="width:42px;height:42px;">
+        <i class="bi bi-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          5
+        </span>
+      </button>
+
+      <!-- LOGIN -->
+      <button
+        *ngIf="!(authService.currentUser$ | async)"
+        class="btn btn-outline-light d-flex align-items-center justify-content-center me-3"
+        style="width:42px;height:42px;"
+        routerLink="auth/login"
+      >
+        <i class="bi bi-box-arrow-in-right"></i>
+      </button>
+
     </div>
   </div>
 </nav>
+
+<!-- SHOPPING CART (OFFCANVAS) -->
+<div class="offcanvas offcanvas-end cart-wide" tabindex="-1" id="shoppingCart">
+
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+      🛒 Shopping Cart
+    </h5>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+
+    <p class="text-muted">
+      Total items: <strong>{{cart.totalItems()}}</strong>
+    </p>
+
+    <div *ngFor="let item of cart.cartItems()" class="card mb-3 shadow-sm">
+
+      <div class="card-body p-2">
+
+        <div class="row align-items-center">
+
+          <div class="col-3">
+            <img
+              [src]="item.image"
+              class="img-fluid rounded"
+            >
+          </div>
+
+          <div class="col-5">
+
+            <div class="fw-semibold">
+              {{item.name}}
+            </div>
+
+            <small class="text-muted">
+              ${{item.price}}
+            </small>
+
+          </div>
+
+          <div class="col-4 text-end">
+
+            <div class="btn-group btn-group-sm mb-2">
+
+              <button
+                class="btn btn-outline-secondary"
+                (click)="cart.decrease(item)">
+                <i class="bi bi-dash"></i>
+              </button>
+
+              <button
+                class="btn btn-outline-secondary"
+                (click)="cart.increase(item)">
+                <i class="bi bi-plus"></i>
+              </button>
+
+            </div>
+
+            <div>
+
+              <small class="text-muted">
+                Subtotal
+              </small>
+
+              <div class="fw-bold">
+                ${{item.quantity * item.price}}
+              </div>
+
+            </div>
+
+            <button
+              class="btn btn-sm btn-link text-danger p-0 mt-1"
+              (click)="cart.remove(item)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center">
+
+      <h5>
+        Total: ${{cart.totalPrice()}}
+      </h5>
+
+      <button class="btn btn-success">
+
+        <i class="bi bi-credit-card"></i>
+        Checkout
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

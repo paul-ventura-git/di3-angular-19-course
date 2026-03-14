@@ -90,9 +90,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
 })
 export default class Header {
   private _authService = inject(AuthService);
-
   currentUser = toSignal(this._authService.currentUser$);
-
   users = signal(users);
 
   logout() {

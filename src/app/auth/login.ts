@@ -25,14 +25,14 @@ export default class Login implements AfterViewInit {
           html: true,
           title: 'Intente ingresando como:',
           content: `
-<div>
-  <div><b>admin</b>: admin@miempresa.com</div>
-  <div><b>cashier</b>: cashier@miempresa.com</div>
-  <div><b>customer</b>: customer@miempresa.com</div>
-  <div><b>guest</b>: visitor@miempresa.com</div>
-  <hr style="margin:6px 0">
-  <div><b>Password:</b> any</div>
-</div>
+            <div>
+              <div><b>admin</b>: admin@miempresa.com</div>
+              <div><b>cashier</b>: cashier@miempresa.com</div>
+              <div><b>customer</b>: customer@miempresa.com</div>
+              <div><b>guest</b>: visitor@miempresa.com</div>
+              <hr style="margin:6px 0">
+              <div><b>Password:</b> any</div>
+            </div>
           `
         });
 

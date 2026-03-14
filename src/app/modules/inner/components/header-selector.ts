@@ -28,6 +28,7 @@ import { User } from '../../../../../backend-vet'; // Adjust the import path as 
           }
           <li>
             <a class="dropdown-item" (click)="logout.emit(); showMenu.set(false)">Logout</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -36,13 +37,9 @@ import { User } from '../../../../../backend-vet'; // Adjust the import path as 
 })
 export default class HeaderSelector implements OnInit, OnDestroy {
   showMenu = signal(false);
-
   users = input.required<User[]>();
-
   userChanged = output<User>();
-
   currentUser = input<User | null>();
-
   logout = output();
 
   private closeMenu = (event: MouseEvent) => {

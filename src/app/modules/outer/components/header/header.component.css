@@ -1,0 +1,9 @@
+.cart-wide {
+  --bs-offcanvas-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .cart-wide {
+    --bs-offcanvas-width: 100%;
+  }
+}

@@ -21,7 +21,11 @@ export class AuthService {
         if (user) {
           this.saveToken(user);
           this._currentUser.next(user);
-          this.router.navigateByUrl('/intranet');
+          if (user.roles.includes('customer')) {
+            this.router.navigateByUrl('/');
+          } else {
+            this.router.navigateByUrl('/intranet');
+          }
         } else {
           this.removeToken();
         }
