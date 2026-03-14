@@ -35,11 +35,6 @@ export class MantProductosComponent implements OnInit {
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
-    /*
-    this.productsService.getProducts().subscribe(data => {
-      this.products = data.products || data;
-    });
-    */
     this.loadProducts();
   }
 
@@ -49,6 +44,7 @@ export class MantProductosComponent implements OnInit {
     });
   }
 
+  /** ======================== MÉTODOS CRUD ======================== **/
   addProduct(product: any, form?: any) {
     this.productsService.createProduct(product).subscribe({
       next: (data: any) => {
