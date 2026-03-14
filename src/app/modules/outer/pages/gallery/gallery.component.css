@@ -9,3 +9,7 @@ transition:0.25s;
 .product-card:hover .product-overlay{
 opacity:1;
 }
+
+select {
+  max-height: 40px;
+}
