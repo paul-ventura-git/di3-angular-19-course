@@ -13,6 +13,7 @@
         <form class="p-4 p-md-5 border rounded-3 bg-light text-dark" [formGroup]="form" (ngSubmit)="login()">
           <div class="form-floating mb-3">
             <input
+              #myPopover
               type="email"
               id="email"
               name="email"
@@ -20,8 +21,10 @@
               class="form-control"
               placeholder="name@example.com"
               required
+              data-bs-toggle="popover"
+              data-bs-trigger="focus"
             >
-            <label for="floatingInput">Email address</label>
+            <label for="email">Email address</label>
           </div>
           <div class="form-floating mb-3">
             <input

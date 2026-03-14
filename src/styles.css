@@ -1,6 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
-.layout {
-  display: flex;
-  flex-direction: column;
-  background-color: lightCoral;
+
+/* contenedor del popover */
+.popover {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  max-width: 260px;
+}
+
+/* título */
+.popover-header {
+  background: linear-gradient(135deg, #0d6efd, #4dabf7);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* contenido */
+.popover-body {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #333;
+  padding: 0.75rem;
+}
+
+/* correos dentro del contenido */
+.popover-body b {
+  color: #0d6efd;
+}
+
+/* flecha */
+.popover .popover-arrow::before {
+  border-top-color: #0d6efd !important;
+}
+
+/* animación suave */
+.popover {
+  animation: popFade 0.2s ease-out;
+}
+
+@keyframes popFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
