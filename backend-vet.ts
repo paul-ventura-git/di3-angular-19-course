@@ -1,4 +1,4 @@
-export type UserRole = 'admin' | 'veterinary';
+export type UserRole = 'admin' | 'cashier' | 'customer' | 'visitor';
 
 export interface User {
   id: number;
@@ -16,14 +16,20 @@ export const users: User[] = [
   },
   {
     id: 2,
-    name: 'Bob',
-    roles: ['veterinary'],
-    email: 'bob@miempresa.com',
+    name: 'Cashier',
+    roles: ['cashier'],
+    email: 'cashier@miempresa.com',
   },
   {
     id: 3,
-    name: 'Charlie',
-    roles: ['veterinary'],
-    email: 'charlie@miempresa.com',
+    name: 'OnlineCustomer',
+    roles: ['customer'],
+    email: 'customer@miempresa.com',
+  },
+  {
+    id: 4,
+    name: 'Visitor',
+    roles: ['visitor'],
+    email: 'visitor@miempresa.com',
   }
 ];

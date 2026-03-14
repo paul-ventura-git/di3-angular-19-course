@@ -1,5 +1,269 @@
-<div class="container component-home">
-  <h1>This is the HOME PAGE! </h1>
-  <p>[This is the component app-home].</p>
-  <app-user-profile />
-</div>
+<!-- HERO / INTRO -->
+<section class="py-5 bg-body-tertiary border-bottom">
+  <div class="container text-center py-5">
+    <h1 class="fw-semibold mb-3">
+      Plataforma de Comercio Electrónico
+    </h1>
+
+    <p class="text-body-secondary col-lg-7 mx-auto">
+      Sistema corporativo para la gestión y comercialización de productos.
+      Explore nuestro catálogo y descubra una amplia variedad de artículos
+      disponibles para compra inmediata.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <a class="btn btn-primary px-4" routerLink="/products">
+        Explorar productos
+      </a>
+
+      <a class="btn btn-outline-secondary px-4" routerLink="/categories">
+        Ver categorías
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- CATEGORÍAS -->
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h2 class="fw-semibold">Categorías principales</h2>
+      <p class="text-body-secondary">
+        Seleccione una categoría para explorar productos disponibles.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/600/400?random=1"
+               class="card-img-top"
+               alt="Categoría">
+          <div class="card-body">
+            <h5 class="card-title">Electrónica</h5>
+            <p class="card-text text-body-secondary small">
+              Dispositivos electrónicos y accesorios tecnológicos.
+            </p>
+            <a routerLink="/category/electronics" class="btn btn-outline-secondary btn-sm">
+              Ver productos
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/600/400?random=2"
+               class="card-img-top"
+               alt="Categoría">
+          <div class="card-body">
+            <h5 class="card-title">Hogar</h5>
+            <p class="card-text text-body-secondary small">
+              Artículos domésticos y soluciones para el hogar.
+            </p>
+            <a routerLink="/category/home" class="btn btn-outline-secondary btn-sm">
+              Ver productos
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/600/400?random=3"
+               class="card-img-top"
+               alt="Categoría">
+          <div class="card-body">
+            <h5 class="card-title">Oficina</h5>
+            <p class="card-text text-body-secondary small">
+              Equipamiento y suministros para espacios de trabajo.
+            </p>
+            <a routerLink="/category/office" class="btn btn-outline-secondary btn-sm">
+              Ver productos
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- PRODUCTOS DESTACADOS -->
+<section class="py-5 bg-body-tertiary border-top border-bottom">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h2 class="fw-semibold">Productos destacados</h2>
+      <p class="text-body-secondary">
+        Una selección de productos populares dentro de nuestra plataforma.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/400/300?random=11" class="card-img-top">
+          <div class="card-body">
+            <h6 class="card-title">Producto 1</h6>
+            <p class="small text-body-secondary">
+              Descripción breve del producto.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">$99</span>
+              <button class="btn btn-sm btn-primary">
+                Comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/400/300?random=12" class="card-img-top">
+          <div class="card-body">
+            <h6 class="card-title">Producto 2</h6>
+            <p class="small text-body-secondary">
+              Descripción breve del producto.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">$129</span>
+              <button class="btn btn-sm btn-primary">
+                Comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/400/300?random=13" class="card-img-top">
+          <div class="card-body">
+            <h6 class="card-title">Producto 3</h6>
+            <p class="small text-body-secondary">
+              Descripción breve del producto.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">$89</span>
+              <button class="btn btn-sm btn-primary">
+                Comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="https://picsum.photos/400/300?random=14" class="card-img-top">
+          <div class="card-body">
+            <h6 class="card-title">Producto 4</h6>
+            <p class="small text-body-secondary">
+              Descripción breve del producto.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">$149</span>
+              <button class="btn btn-sm btn-primary">
+                Comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SECCIÓN INSTITUCIONAL -->
+<section class="py-5">
+  <div class="container">
+
+    <div class="row align-items-center g-5">
+
+      <div class="col-md-6">
+        <img src="https://picsum.photos/800/500?random=21"
+             class="img-fluid rounded shadow-sm">
+      </div>
+
+      <div class="col-md-6">
+        <h2 class="fw-semibold">
+          Plataforma confiable para compras en línea
+        </h2>
+
+        <p class="text-body-secondary">
+          Nuestro sistema permite la gestión eficiente de productos,
+          pedidos y clientes. Diseñado bajo estándares modernos de
+          desarrollo web, ofrece una experiencia estable y segura
+          para operaciones comerciales.
+        </p>
+
+        <ul class="text-body-secondary">
+          <li>Catálogo estructurado de productos</li>
+          <li>Gestión de pedidos en tiempo real</li>
+          <li>Plataforma segura y escalable</li>
+        </ul>
+
+        <a routerLink="/about" class="btn btn-outline-secondary mt-3">
+          Conocer más
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CALL TO ACTION -->
+<section class="py-5 bg-body-tertiary border-top">
+  <div class="container text-center">
+
+    <h3 class="fw-semibold">
+      Comience a explorar nuestro catálogo
+    </h3>
+
+    <p class="text-body-secondary">
+      Acceda a cientos de productos disponibles dentro de la plataforma.
+    </p>
+
+    <a routerLink="/products" class="btn btn-primary px-5">
+      Ver catálogo
+    </a>
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="py-4 border-top">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+
+    <p class="small text-body-secondary mb-2 mb-md-0">
+      © 2026 Plataforma de Comercio Electrónico
+    </p>
+
+    <div class="d-flex gap-3 small">
+      <a routerLink="/privacy" class="text-decoration-none text-body-secondary">
+        Privacidad
+      </a>
+      <a routerLink="/terms" class="text-decoration-none text-body-secondary">
+        Términos
+      </a>
+      <a routerLink="/contact" class="text-decoration-none text-body-secondary">
+        Contacto
+      </a>
+    </div>
+
+  </div>
+</footer>

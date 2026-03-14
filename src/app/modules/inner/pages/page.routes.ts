@@ -8,12 +8,12 @@ export default [
   },
   {
     path: 'ventas',
-    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    canActivate: [hasRoleGuard(['cashier', 'admin'])],
     loadComponent: () => import('./ventas/ventas.component').then(m => m.VentasComponent), // sales
   },
   {
     path: 'historial',
-    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    canActivate: [hasRoleGuard(['cashier', 'admin'])],
     loadComponent: () => import('./historial/historial.component').then(m => m.HistorialComponent), // manager
   },
   {
@@ -33,7 +33,7 @@ export default [
   },
   {
     path: 'formNuevaMascota',
-    canActivate: [hasRoleGuard(['veterinary', 'admin'])],
+    canActivate: [hasRoleGuard(['cashier', 'admin'])],
     loadComponent: () => import('../components/form-nueva-mascota/form-nueva-mascota.component').then(m => m.FormNuevaMascotaComponent), // admin
   }
 ] as Routes;

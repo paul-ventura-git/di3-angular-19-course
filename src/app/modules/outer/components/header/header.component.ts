@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      // ✅ Solo se ejecuta en el navegador
+      // Solo se ejecuta en el navegador
       const savedTheme = localStorage.getItem('theme');
 
       if (savedTheme === 'light' || savedTheme === 'dark') {

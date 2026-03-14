@@ -30,7 +30,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
             <li class="nav-item">
               <a
                 class="nav-link active"
-                *hasRole="['veterinary', 'admin']"
+                *hasRole="['cashier', 'admin']"
                 routerLinkActive="active"
                 routerLink="/intranet/ventas"
               >
@@ -40,7 +40,7 @@ import { HasRoleDirective } from '../../../core/hasRole.directive';
             <li class="nav-item">
               <a
                 class="nav-link active"
-                *hasRole="['veterinary', 'admin']"
+                *hasRole="['cashier', 'admin']"
                 routerLinkActive="active"
                 routerLink="/intranet/historial"
               >

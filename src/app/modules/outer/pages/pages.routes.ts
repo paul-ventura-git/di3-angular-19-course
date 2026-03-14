@@ -11,9 +11,11 @@ import { HttpMethodsComponent } from './http-methods/http-methods.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { EventsComponent } from './events/events.component';
 import { SecurityComponent } from './security/security.component';
+import { BindingComponent } from './binding/binding.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'binding', component: BindingComponent },
   { path: 'directives', component: DirectivesComponent},
   { path: 'signals', component: SignalsComponent},
   { path: 'rxjs', component: RxjsComponent },

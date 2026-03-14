@@ -1,14 +1,44 @@
-<div class="p-5 mb-4 bg-body-tertiary rounded-3">
-  <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">No se encuentra la página solicitada</h1>
-    <p class="col-md-8 fs-4">
-      Using a series of utilities, you can create this jumbotron, just
-      like the one in previous versions of Bootstrap. Check out the
-      examples below for how you can remix and restyle it to your
-      liking.
-    </p>
-    <button class="btn btn-primary btn-lg" type="button" routerLink="/" routerLinkActive="active">
-      Volver a la página principal
-    </button>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+
+      <div class="p-5 bg-body-tertiary border rounded-3 shadow-sm">
+
+        <h1 class="fw-semibold mb-3">
+          Error 404
+        </h1>
+
+        <h2 class="h4 text-body-secondary mb-4">
+          Página no encontrada
+        </h2>
+
+        <p class="fs-6 text-body-secondary mb-4">
+          El recurso solicitado no está disponible en el servidor o la dirección
+          ingresada es incorrecta. Verifique la URL o regrese a la página
+          principal del sistema.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+          <a class="btn btn-primary px-4"
+             routerLink=""
+             routerLinkActive="active">
+            Volver al inicio
+          </a>
+
+          <a class="btn btn-outline-secondary px-4"
+             href="javascript:history.back()">
+            Regresar
+          </a>
+        </div>
+
+        <hr class="my-4">
+
+        <p class="small text-body-secondary mb-0">
+          Código de estado HTTP: <strong>404 – Not Found</strong>
+        </p>
+
+      </div>
+
+    </div>
   </div>
 </div>
