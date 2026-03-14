@@ -1,0 +1,11 @@
+.product-overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.45);
+opacity:0;
+transition:0.25s;
+}
+
+.product-card:hover .product-overlay{
+opacity:1;
+}

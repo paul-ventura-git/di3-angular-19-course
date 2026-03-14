@@ -12,9 +12,11 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { EventsComponent } from './events/events.component';
 import { SecurityComponent } from './security/security.component';
 import { BindingComponent } from './binding/binding.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'gallery', component: GalleryComponent },
   { path: 'binding', component: BindingComponent },
   { path: 'directives', component: DirectivesComponent},
   { path: 'signals', component: SignalsComponent},
