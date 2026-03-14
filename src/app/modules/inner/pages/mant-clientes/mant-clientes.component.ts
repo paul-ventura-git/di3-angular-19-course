@@ -14,9 +14,21 @@ import { CommonModule } from '@angular/common';
 })
 export class MantClientesComponent implements OnInit {
   /** ======================== DATOS CRUD ======================== **/
-  customers = signal<Customer[]>([]); // todos los clientes cargados
+  customers = signal<Customer[]>([]);
   selectedCustomer: any = null;
   editCustomer: any = null;
+
+  constructor(private customersService: CustomersService) {}
+
+  ngOnInit(): void {
+    this.loadCustomers();
+  }
+
+  loadCustomers() {
+    this.customersService.getCustomers().subscribe(data => {
+      this.customers.set(data.customers || data);
+    });
+  }
 
   /** ======================== BUSCADOR ======================== **/
   searchControl = new FormControl('');
@@ -33,19 +45,7 @@ export class MantClientesComponent implements OnInit {
     );
   });
 
-  constructor(private customersService: CustomersService) {}
-
-  ngOnInit(): void {
-    this.loadCustomers();
-  }
-
   /** ======================== MÉTODOS CRUD ======================== **/
-  loadCustomers() {
-    this.customersService.getCustomers().subscribe(data => {
-      this.customers.set(data.customers || data);
-    });
-  }
-
   addCustomer(customer: any, form?: any) {
     this.customersService.createCustomer(customer).subscribe({
       next: () => {

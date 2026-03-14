@@ -53,15 +53,14 @@
             <tbody formArrayName="detalle">
               <tr *ngFor="let fila of detalle.controls; let i=index"
               [formGroupName]="i">
-
                 <td>
                   <select class="form-select"
                   formControlName="producto"
                   (change)="seleccionarProducto(i)">
                     <option value="">Seleccione</option>
                     <option *ngFor="let p of productos"
-                    [value]="p.nombre">
-                      {{p.nombre}}
+                    [value]="p.title">
+                      {{p.title}}
                     </option>
                   </select>
                 </td>

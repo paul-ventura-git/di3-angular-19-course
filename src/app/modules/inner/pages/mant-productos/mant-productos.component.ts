@@ -17,6 +17,18 @@ export class MantProductosComponent implements OnInit {
   selectedProduct: any = null;
   editProduct: any = null;
 
+  constructor(private productsService: ProductsService) { }
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsService.getProducts().subscribe(data => {
+      this.products.set(data.products || data);
+    });
+  }
+
   /** ======================== BUSCADOR ======================== **/
   searchControl = new FormControl('');
   // Convertimos el observable valueChanges a signal reactivo
@@ -31,18 +43,6 @@ export class MantProductosComponent implements OnInit {
       )
     );
   });
-
-  constructor(private productsService: ProductsService) { }
-
-  ngOnInit(): void {
-    this.loadProducts();
-  }
-
-  loadProducts() {
-    this.productsService.getProducts().subscribe(data => {
-      this.products.set(data.products || data);
-    });
-  }
 
   /** ======================== MÉTODOS CRUD ======================== **/
   addProduct(product: any, form?: any) {

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductsService } from '../../../../core/services/products.service';
+import { Product } from '../../../../entity/Product';
 
 @Component({
 selector: 'app-ventas',
@@ -9,17 +11,12 @@ imports: [CommonModule, ReactiveFormsModule],
 templateUrl: './ventas.component.html'
 })
 
-export class VentasComponent {
+export class VentasComponent implements OnInit {
   formVenta: FormGroup;
   tasaIGV = 0.18;
-  productos = [
-    { nombre: "Laptop", precio: 3500 },
-    { nombre: "Mouse", precio: 50 },
-    { nombre: "Teclado", precio: 120 },
-    { nombre: "Monitor", precio: 900 }
-  ];
+  productos: Product[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productsService: ProductsService) {
     this.formVenta = this.fb.group({
       codigo: [''],
       fechaHora: [''],
@@ -32,6 +29,17 @@ export class VentasComponent {
     });
     this.agregarProducto();
   }
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsService.getProducts().subscribe(data => {
+      this.productos = data.products || data;
+    });
+  }
+
 
   get detalle(): FormArray {
     return this.formVenta.get('detalle') as FormArray;
@@ -59,10 +67,10 @@ export class VentasComponent {
   seleccionarProducto(index:number) {
     const fila = this.detalle.at(index);
     const nombreProducto = fila.get('producto')?.value;
-    const encontrado = this.productos.find(p => p.nombre === nombreProducto);
+    const encontrado = this.productos.find(p => p.title === nombreProducto);
 
     if(encontrado){
-      fila.get('precio')?.setValue(encontrado.precio);
+      fila.get('precio')?.setValue(encontrado.price);
     }
     this.calcularFila(index);
   }
